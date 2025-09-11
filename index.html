@@ -45,6 +45,17 @@
             color: var(--primary-color);
         }
         
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        
+        .dropdown-item:hover {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
         .hero {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -302,6 +313,12 @@
                 width: 100%;
                 margin: 5px 0;
             }
+            
+            .dropdown-menu {
+                margin-left: 0;
+                border-radius: 0;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -321,8 +338,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#apropos">À propos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#projets">Projets</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Projets
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#projets">Tous les projets</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" data-folder="bloc1">BLOC 1</a></li>
+                            <li><a class="dropdown-item" href="#" data-folder="pro">ATELIER DE PROFESSIONALISATION</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#experience">Expérience</a>
@@ -519,21 +544,21 @@
                     file: "TP01_BEAUVALLET.pdf",
                     type: "pdf"
                 },
-				{
+                {
                     name: "TP01 - SOTOCA",
                     description: "Travail pratique : Paramétrage du matériel informatique",
                     image: "https://ajsinformatique.fr/wp-content/uploads/2021/06/installation-et-parametrage-materiel-informatique.png",
                     file: "TP01_SOTOCA.pdf",
                     type: "pdf"
                 },
-				{
+                {
                     name: "TP02 - BEAUVALLET",
                     description: "Premier pas en JAVA",
                     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3S9FqOWEjqGZPQ98L55jzxu9OXbJqwXx_Gw&s",
                     file: "TP02_BEAUVALLET.pdf",
                     type: "pdf"
                 },
-				{
+                {
                     name: "TP02 - SOTOCA",
                     description: "Logiciels de diagnostic",
                     image: "https://overclocking.com/wp-content/uploads/2021/04/hwinfo-.jpg",
@@ -552,7 +577,7 @@
                     file: "TP01_ATELIER.pdf",
                     type: "pdf"
                  },
-				 {
+                 {
                     name: "TP02 - ATELIER",
                     description: "HTML",
                     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8tGtuLs5kBlKBkl1vhb6EDqXQLgwfv2xH7g&s",
@@ -719,6 +744,28 @@
                 navbar.style.padding = '15px 0';
                 navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
             }
+        });
+
+        // Gérer les clics sur les éléments du dropdown de projets
+        document.querySelectorAll('.dropdown-item[data-folder]').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const folder = this.getAttribute('data-folder');
+                
+                // Fermer le dropdown
+                const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('navbarDropdown'));
+                if (dropdown) {
+                    dropdown.hide();
+                }
+                
+                // Scroll vers la section projets
+                document.getElementById('projets').scrollIntoView({ behavior: 'smooth' });
+                
+                // Changer de dossier après un court délai pour laisser le temps au scroll
+                setTimeout(() => {
+                    switchFolder(folder);
+                }, 500);
+            });
         });
 
         // Charger les projets au démarrage
