@@ -3,290 +3,335 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Alexandre Ewan - Développeur Web (Halloween)</title>
+  <title>Alexandre Ewan - Développeur Web (Édition de Noël)</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
   <style>
     /* ==============================
-       Thème Halloween élégant & animé
+       Thème Noël Magique 🎄
        ============================== */
     :root{
-      --h-orange:#ff7a00;
-      --h-orange-2:#ffb26b;
-      --h-violet:#7a3cff;
-      --h-violet-2:#9b5de5;
-      --h-black:#0c0a15;
-      --h-ink:#131022;
-      --h-card:#1a162b;
-      --h-text:#eae6ff;
-      --h-muted:#bfb8e6;
-      --h-accent:#ffd166;
-      --glow:0 0 15px rgba(255,122,0,.45), 0 0 35px rgba(155,93,229,.35);
+      --c-red: #d42426;       /* Rouge Noël */
+      --c-green: #165b33;     /* Vert Sapin */
+      --c-green-light: #2d8a55;
+      --c-gold: #f8b229;      /* Or */
+      --c-gold-glow: #ffd700;
+      --c-night: #0b1026;     /* Bleu Nuit */
+      --c-ink: #050711;
+      --c-snow: #f0f4f8;
+      --c-card: rgba(20, 30, 60, 0.75); /* Fond givré */
+      --c-text: #eef2f5;
+      --c-muted: #aab4c5;
+      
+      /* Effet de lueur magique (Rouge et Or) */
+      --glow: 0 0 15px rgba(212, 36, 38, 0.5), 0 0 25px rgba(248, 178, 41, 0.3);
+      --frost-border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     html,body{height:100%;}
     body{
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
-      color:var(--h-text);
-      background: radial-gradient(1200px 600px at 10% -10%,#1b1533 0 40%,transparent 60%),
-                  radial-gradient(900px 500px at 110% 10%,#1b1533 0 40%,transparent 60%),
-                  linear-gradient(180deg,#120f22 0%, #0c0a15 60%, #0a0814 100%);
+      color:var(--c-text);
+      /* Fond Nuit d'hiver */
+      background: radial-gradient(circle at 50% 0%, #1b2949 0%, #0b1026 60%, #050711 100%);
       overflow-x:hidden;
       scroll-behavior:smooth;
     }
 
-    /* --- Fond : étoiles, brume, chauves-souris --- */
-    .sky, .fog, .fog2, .grain{
+    /* --- Décors : Ciel étoilé, Aurores, Neige --- */
+    .sky, .aurora, .aurora2{
       position:fixed; inset:0; pointer-events:none; z-index:-3;
     }
+    
+    /* Étoiles scintillantes */
     .sky{
       background:
-        radial-gradient(2px 2px at 15% 20%, rgba(255,255,255,.7) 40%, transparent 42%) repeat,
-        radial-gradient(2px 2px at 35% 70%, rgba(255,255,255,.6) 40%, transparent 42%) repeat,
-        radial-gradient(1.5px 1.5px at 80% 30%, rgba(255,255,255,.65) 40%, transparent 42%) repeat;
-      background-size: 900px 600px, 1000px 700px, 800px 500px;
-      animation: twinkle 14s linear infinite;
-      opacity:.55;
+        radial-gradient(2px 2px at 10% 15%, rgba(255,255,255,.9) 50%, transparent 55%) repeat,
+        radial-gradient(2px 2px at 30% 60%, rgba(255,255,255,.8) 50%, transparent 55%) repeat,
+        radial-gradient(1.5px 1.5px at 70% 25%, rgba(255,255,255,.8) 50%, transparent 55%) repeat,
+        radial-gradient(2.5px 2.5px at 85% 80%, rgba(255,255,255,.7) 50%, transparent 55%) repeat;
+      background-size: 800px 800px, 900px 500px, 600px 600px, 700px 700px;
+      opacity:0.7;
+      animation: twinkle 8s ease-in-out infinite alternate;
     }
     @keyframes twinkle{
-      0%,100%{filter:brightness(1);}
-      50%{filter:brightness(1.25);}
+      0%{opacity:0.5;} 100%{opacity:0.9;}
     }
 
-    .fog, .fog2{
+    /* Aurores boréales subtiles (Vert/Bleu) */
+    .aurora, .aurora2{
       background:
-        radial-gradient(50% 30% at 50% 20%, rgba(255,255,255,.06) 0 60%, transparent 70%),
-        radial-gradient(60% 35% at 40% 80%, rgba(255,255,255,.05) 0 55%, transparent 65%);
-      mix-blend-mode:screen;
-      filter: blur(18px);
-      animation: fogmove 60s linear infinite;
+        radial-gradient(60% 40% at 50% 10%, rgba(45, 138, 85, 0.15) 0%, transparent 70%),
+        radial-gradient(50% 50% at 20% 30%, rgba(20, 80, 160, 0.1) 0%, transparent 60%);
+      filter: blur(40px);
+      opacity: 0.6;
+      animation: auroraMove 20s ease-in-out infinite alternate;
     }
-    .fog2{
-      animation-duration:95s; opacity:.75; filter: blur(22px) contrast(105%);
+    .aurora2{
+      background: radial-gradient(50% 40% at 80% 20%, rgba(212, 36, 38, 0.08) 0%, transparent 60%); /* Touche subtile de rouge */
+      animation-duration: 35s;
     }
-    @keyframes fogmove{
-      0%{transform:translateX(-8%) translateY(0)}
-      50%{transform:translateX(8%) translateY(-2%)}
-      100%{transform:translateX(-8%) translateY(0)}
-    }
-    .grain{
-      background-image: repeating-conic-gradient(rgba(255,255,255,.015) 0 0.25deg, transparent 0 0.5deg);
-      mix-blend-mode:overlay; opacity:.7; animation:grain 14s linear infinite;
-    }
-    @keyframes grain{
-      to{transform:translate3d(-3%, -3%,0)}
+    @keyframes auroraMove{
+      0%{transform: translateX(-5%);} 100%{transform: translateX(5%);}
     }
 
-    .bats{ position:fixed; inset:0; pointer-events:none; z-index:-1; }
-    .bat{
-      position:absolute; width:34px; height:18px; opacity:.7;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="68" height="36" viewBox="0 0 68 36"><path fill="%23e7d5ff" d="M34 8c4 0 8 4 12 6 4 2 8 2 12 4-2 2-6 2-10 2-4 0-8-2-12-2s-8 2-12 2-8 0-10-2c4-2 8-2 12-4 4-2 8-6 12-6z"/><circle cx="31" cy="13" r="1.2" fill="%23ff7a00"/><circle cx="37" cy="13" r="1.2" fill="%23ff7a00"/></svg>') no-repeat center/contain;
-      animation: fly linear infinite, flap .9s ease-in-out infinite;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,.5));
+    /* Conteneur de neige */
+    .snow-container {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none; z-index: -1; overflow: hidden;
     }
-    @keyframes flap{
-      0%,100%{transform: translateY(0) scaleY(1)}
-      50%{transform: translateY(-2px) scaleY(.96)}
+    .snowflake {
+        position: absolute; top: -10px;
+        color: white; opacity: 0.8;
+        font-size: 1em;
+        user-select: none;
+        /* Animation de chute */
+        animation-name: fall;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+    @keyframes fall {
+        to { transform: translateY(110vh); }
     }
 
     /* --- Navbar --- */
     .navbar{
-      backdrop-filter: blur(8px);
-      background: rgba(12,10,21,.55);
-      border-bottom:1px solid rgba(155,93,229,.25);
+      backdrop-filter: blur(12px);
+      background: rgba(11, 16, 38, 0.7);
+      border-bottom: var(--frost-border);
       transition:all .3s ease;
     }
     .navbar.scrolled{
-      background: rgba(12,10,21,.9);
-      box-shadow: 0 6px 30px rgba(0,0,0,.35);
+      background: rgba(11, 16, 38, 0.95);
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
     }
     .navbar-brand{
       font-weight:800; letter-spacing:.8px;
-      background: linear-gradient(90deg, var(--h-orange), var(--h-violet-2));
+      /* Dégradé Rouge vers Or */
+      background: linear-gradient(45deg, var(--c-red), #ff4d4d, var(--c-gold));
       -webkit-background-clip:text; background-clip:text; color:transparent;
-      text-shadow: 0 0 18px rgba(255,122,0,.25);
+      text-shadow: 0 0 20px rgba(212, 36, 38, 0.3);
     }
-    .nav-link{ color:var(--h-muted); font-weight:600; }
-    .nav-link:hover{ color:var(--h-orange); text-shadow:var(--glow); }
+    .nav-link{ color:var(--c-muted); font-weight:600; transition: color 0.3s; }
+    .nav-link:hover{ color:var(--c-gold); text-shadow: 0 0 10px rgba(248, 178, 41, 0.6); }
 
     /* --- Hero --- */
     .hero{
       position:relative; padding: 160px 0 110px;
-      background:
-        radial-gradient(80% 80% at 80% -10%, rgba(155,93,229,.25), transparent 60%),
-        radial-gradient(70% 60% at 10% 0%, rgba(255,122,0,.13), transparent 65%);
       overflow:hidden;
     }
     .hero h1{
       font-weight:900; line-height:1.05;
       text-shadow: 0 10px 30px rgba(0,0,0,.55);
     }
-    .hero p{ color:var(--h-muted); max-width:580px }
+    .hero p{ color:var(--c-muted); max-width:580px }
     .hero-badge{
-      display:inline-block; padding:6px 12px; border-radius:999px;
-      background:linear-gradient(90deg, rgba(255,122,0,.18), rgba(155,93,229,.18));
-      border:1px solid rgba(255,255,255,.1); font-size:.85rem; margin-bottom:14px;
+      display:inline-block; padding:6px 14px; border-radius:999px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--c-gold);
+      font-size:.85rem; margin-bottom:14px;
+      box-shadow: 0 0 15px rgba(248, 178, 41, 0.15);
     }
     .hero-img{
       width:260px; height:260px; border-radius:50%;
-      object-fit:cover; border: 4px solid rgba(255,255,255,.12);
-      box-shadow: 0 25px 60px rgba(0,0,0,.6), 0 0 40px rgba(155,93,229,.25);
+      object-fit:cover; 
+      border: 5px solid rgba(255,255,255,0.9); /* Bordure blanche neige */
+      outline: 3px solid var(--c-red); /* Double bordure esprit "sucre d'orge" simple */
+      box-shadow: 0 20px 50px rgba(0,0,0,.6), 0 0 40px rgba(255,255,255,.15);
       animation: float 6s ease-in-out infinite;
     }
-    @keyframes float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    @keyframes float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
 
-    /* --- Boutons --- */
+    /* --- Boutons (Esprit Cadeau) --- */
     .btn-primary{
-      background: linear-gradient(90deg, var(--h-orange), var(--h-violet-2));
+      background: linear-gradient(135deg, var(--c-red), #e04648);
       border:none; padding:12px 28px; border-radius:40px; font-weight:700;
-      box-shadow: var(--glow);
-      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+      color: white;
+      box-shadow: 0 4px 15px rgba(212, 36, 38, 0.4);
+      transition: all .2s ease;
     }
-    .btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 0 25px rgba(255,122,0,.55), 0 0 35px rgba(155,93,229,.45); filter:saturate(1.08); }
-    .btn-outline-light, .btn-outline-primary{
+    .btn-primary:hover{ 
+      transform: translateY(-3px); 
+      box-shadow: 0 8px 25px rgba(212, 36, 38, 0.6);
+      background: linear-gradient(135deg, #e04648, var(--c-red));
+    }
+    
+    .btn-outline-light{
       border-radius:40px; font-weight:700; border-width:2px;
     }
-    .btn-outline-light:hover{ background:rgba(255,255,255,.1) }
+    .btn-outline-light:hover{ background:rgba(255,255,255,.15); color: var(--c-gold); border-color: var(--c-gold); }
+    
     .btn-outline-primary{
-      color:var(--h-orange); border-color:rgba(255,122,0,.6);
+      color:var(--c-green-light); border-color:var(--c-green-light);
+      border-radius:40px; font-weight:700; border-width:2px;
     }
     .btn-outline-primary:hover{
-      color:#fff; background:linear-gradient(90deg, var(--h-orange), var(--h-violet-2)); border-color:transparent; box-shadow:var(--glow);
+      color:#fff; background:var(--c-green); border-color:var(--c-green); 
+      box-shadow: 0 0 20px rgba(45, 138, 85, 0.4);
     }
 
     /* --- Sections --- */
     .section-title{
       font-weight:800; margin-bottom:10px;
-      background: linear-gradient(90deg,#fff, #cdbdff 40%, #ffbe7a 80%);
+      /* Dégradé Or/Blanc */
+      background: linear-gradient(90deg, #fff, #ffeebb 40%, var(--c-gold) 80%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
     }
     .title-underline{
       width:60px; height:4px; border-radius:999px;
-      background: linear-gradient(90deg, var(--h-violet-2), var(--h-orange));
-      box-shadow:0 0 20px rgba(155,93,229,.55);
+      background: linear-gradient(90deg, var(--c-red), var(--c-gold));
+      box-shadow:0 0 15px rgba(248, 178, 41, 0.4);
       margin:14px 0 36px;
     }
 
     .about-content{ padding: 90px 0; }
     .about-card{
-      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      border:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: var(--frost-border);
+      backdrop-filter: blur(5px);
       border-radius:16px; padding:20px;
     }
 
-    /* --- Cartes projets --- */
+    /* --- Cartes projets (Style Hivernal) --- */
     .project-card{
-      background: var(--h-card);
-      border:1px solid rgba(255,255,255,.08);
+      background: var(--c-card);
+      backdrop-filter: blur(10px);
+      border: var(--frost-border);
       border-radius:16px; overflow:hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,.35);
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      box-shadow: 0 15px 40px rgba(0,0,0,.3);
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
       height:100%;
     }
     .project-card:hover{
       transform: translateY(-8px);
-      border-color: rgba(155,93,229,.35);
-      box-shadow: 0 30px 60px rgba(0,0,0,.5), 0 0 35px rgba(155,93,229,.25);
+      border-color: rgba(248, 178, 41, 0.5); /* Bordure dorée au survol */
+      box-shadow: 0 25px 60px rgba(0,0,0,.5), 0 0 25px rgba(248, 178, 41, 0.15);
     }
-    .project-img{ height:210px; object-fit:cover; width:100%; filter:saturate(.95) contrast(1.05); }
+    .project-img{ height:210px; object-fit:cover; width:100%; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .card-title { color: #fff; font-weight: 700; }
 
-    /* --- Timeline --- */
+    /* --- Timeline (Style Guirlande) --- */
     .timeline{
       position:relative; padding:10px 0 30px;
     }
     .timeline:before{
       content:''; position:absolute; left:50%; transform:translateX(-50%);
       width:2px; height:100%;
-      background: linear-gradient(180deg, rgba(155,93,229,.0), rgba(155,93,229,.6), rgba(255,122,0,.6), rgba(155,93,229,.0));
-      box-shadow:0 0 18px rgba(155,93,229,.45);
+      /* Fil de guirlande */
+      background: linear-gradient(180deg, rgba(255,255,255,0), var(--c-gold), var(--c-red), rgba(255,255,255,0));
+      box-shadow:0 0 15px rgba(255,255,255,.2);
     }
     .timeline-item{
       margin-bottom:40px; position:relative; width:50%; padding-right:28px; clear:both;
     }
     .timeline-item:nth-child(even){ float:right; padding-right:0; padding-left:28px; }
     .timeline-content{
-      background: var(--h-card);
-      border:1px solid rgba(255,255,255,.08);
+      background: var(--c-card);
+      border: var(--frost-border);
+      backdrop-filter: blur(5px);
       border-radius:14px; padding:20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,.35);
+      box-shadow: 0 15px 35px rgba(0,0,0,.25);
     }
-    .timeline-date{ font-weight:700; color:var(--h-orange); }
+    .timeline-date{ font-weight:700; color:var(--c-gold); }
 
-    /* --- Veille Technologique (Nouveau) --- */
+    /* --- Veille Technologique (Tableau givré) --- */
     .veille-table{
-      background: var(--h-card);
-      border:1px solid rgba(255,255,255,.1);
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(10px);
       border-radius:16px;
       overflow: hidden;
       box-shadow: 0 20px 40px rgba(0,0,0,.35);
-      color: var(--h-text);
+      color: var(--c-text);
+      width: 100%;
+      margin-bottom: 0;
     }
     .veille-table th, .veille-table td{
-      border-color: rgba(255,255,255,.12) !important;
+      border-color: rgba(255,255,255,.1) !important;
+      padding: 12px 10px;
     }
-    .veille-table th{
-      background: var(--h-ink);
-      color: var(--h-orange);
+    .veille-table thead th{
+      background: rgba(22, 91, 51, 0.3); /* Fond vert subtil pour l'entête */
+      color: var(--c-gold);
       font-weight: 700;
-      text-shadow: 0 0 5px rgba(255,122,0,.3);
+      border-bottom: 2px solid rgba(255,255,255,0.1) !important;
+      text-shadow: 0 0 5px rgba(0,0,0,.5);
+      vertical-align: middle;
     }
-    .veille-table td a{
-      color: var(--h-text);
-      text-decoration: none;
-      display: block; /* Rend toute la cellule cliquable */
-      padding: 0.5rem;
-      margin: -0.5rem; /* Compense le padding pour une zone de clic complète */
+    .veille-table tbody tr:hover{
+      background-color: rgba(255, 255, 255, 0.05);
+      cursor: default;
     }
-    .veille-table tr:hover{
-      background-color: rgba(155,93,229,.1);
-      cursor: pointer;
+    .veille-table tbody td{
+        vertical-align: top;
+        text-align: left;
+    }
+    .veille-table .date-col{
+        font-weight: 600;
+        color: #ff8fab; /* Rose/Rouge pâle pour la date */
+        white-space: nowrap;
+        width: 10%;
+    }
+    .veille-table .sujet-col{
+        font-weight: 700;
+        color: #fff;
+        width: 30%;
+    }
+    .veille-table .desc-col{
+        color: var(--c-muted);
+        width: 60%;
     }
 
     /* --- Contact --- */
     .contact{
-      background: radial-gradient(80% 80% at 20% 0%, rgba(255,122,0,.1), transparent 60%),
-                  radial-gradient(80% 80% at 80% 0%, rgba(155,93,229,.12), transparent 65%),
-                  linear-gradient(180deg, #120f22, #0e0b1b 60%, #0c0a15 100%);
+      background: radial-gradient(80% 80% at 20% 0%, rgba(22, 91, 51, .15), transparent 60%),
+                  radial-gradient(80% 80% at 80% 0%, rgba(212, 36, 38, .15), transparent 65%),
+                  linear-gradient(180deg, #0b1026, #050711 100%);
       color:#fff; padding: 100px 0;
       position:relative; overflow:hidden;
     }
     .contact-form{
-      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,0.03);
+      border: var(--frost-border);
       padding:40px; border-radius:16px;
       box-shadow: 0 20px 50px rgba(0,0,0,.45);
     }
     .form-control{
-      background:#140f26; border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,0.3); 
+      border: 1px solid rgba(255,255,255,.1);
       color:#fff; border-radius:10px;
     }
     .form-control:focus{
-      border-color: rgba(155,93,229,.55);
-      box-shadow: 0 0 0 .25rem rgba(155,93,229,.25);
-      background:#16112a; color:#fff;
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 .25rem rgba(248, 178, 41, .25);
+      background: rgba(0,0,0,0.5); color:#fff;
     }
 
     /* --- Social --- */
     .social-links a{
       display:inline-block; width:52px; height:52px; border-radius:50%;
-      background: linear-gradient(90deg, var(--h-violet-2), var(--h-orange));
+      background: linear-gradient(135deg, var(--c-green), #2d8a55);
       color:#fff; text-align:center; line-height:52px; margin-right:14px;
-      box-shadow:var(--glow); transition: transform .2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+      transition: transform .2s ease;
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    .social-links a:hover{ transform: translateY(-4px); }
+    .social-links a:hover{ transform: translateY(-4px); background: var(--c-red); }
 
     /* --- Footer --- */
-    footer{ background:var(--h-ink); color:#d9d6f2; padding:30px 0; border-top:1px solid rgba(255,255,255,.08); }
+    footer{ background:var(--c-ink); color:#8892b0; padding:30px 0; border-top:1px solid rgba(255,255,255,.08); }
 
     /* --- Back to top --- */
     .back-to-top{
       position:fixed; bottom:28px; right:28px; width:52px; height:52px; border-radius:50%;
-      background: linear-gradient(90deg, var(--h-orange), var(--h-violet-2));
+      background: linear-gradient(135deg, var(--c-red), var(--c-gold));
       color:#fff; text-align:center; line-height:52px; font-size:20px;
-      box-shadow: var(--glow);
+      box-shadow: 0 0 20px rgba(212, 36, 38, 0.5);
       opacity:0; visibility:hidden; transition: all .25s ease; z-index:999;
+      border: 2px solid rgba(255,255,255,0.2);
     }
     .back-to-top.active{ opacity:1; visibility:visible; }
 
@@ -294,7 +339,7 @@
     .folder-selector{ margin-bottom:26px; text-align:center; }
     .folder-btn{ margin:0 10px 10px; padding:10px 20px; border-radius:999px; font-weight:700; }
 
-    .file-icon{ font-size:3rem; margin-bottom:10px; color: var(--h-violet-2); text-shadow: var(--glow); }
+    .file-icon{ font-size:3rem; margin-bottom:10px; color: var(--c-gold); text-shadow: 0 0 15px rgba(248, 178, 41, 0.4); }
 
     /* --- Scroll reveal --- */
     .reveal{ opacity:0; transform: translateY(18px) scale(.98); transition: opacity .7s ease, transform .7s ease; }
@@ -306,19 +351,24 @@
       .timeline-item:nth-child(even){ float:none; padding-left:48px; }
       .dropdown-menu{ margin-left:0; border-radius:12px; text-align:center; }
       .hero{ padding-top:130px; }
+      .veille-table th, .veille-table td{ padding: 8px 6px; font-size: 0.9rem; }
+      .veille-table .date-col{ width: 15%; }
     }
   </style>
 </head>
 <body>
+  <!-- Background Layers -->
   <div class="sky"></div>
-  <div class="fog"></div>
-  <div class="fog2"></div>
-  <div class="grain"></div>
-  <div class="bats" id="bats-layer" aria-hidden="true"></div>
+  <div class="aurora"></div>
+  <div class="aurora2"></div>
+  
+  <!-- Snow Layer -->
+  <div class="snow-container" id="snow-layer" aria-hidden="true"></div>
 
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">ALEXANDRE EWAN</a>
+      <!-- Brand avec icône flocon -->
+      <a class="navbar-brand" href="#"><i class="bi bi-snow2 me-2"></i>ALEXANDRE EWAN</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -348,13 +398,15 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6 hero-content reveal">
-          <span class="hero-badge"><i class="bi bi-moon-stars me-1"></i>Spécial Halloween</span>
+          <!-- Badge Noël -->
+          <span class="hero-badge"><i class="bi bi-gift-fill me-2"></i>Édition Spéciale Noël</span>
           <h1>Développeur Web en devenir</h1>
           <p>Passionné par l'informatique, les langues étrangères et les sports de terrain. Mon objectif est de devenir développeur web et de voyager à travers le monde.</p>
           <a href="#contact" class="btn btn-primary me-3">Me contacter</a>
           <a href="#" class="btn btn-outline-light" id="downloadCV">Télécharger mon CV</a>
         </div>
         <div class="col-lg-6 text-center reveal">
+          <!-- Image avec bordure sucre d'orge en CSS (voir style .hero-img) -->
           <img src="PHOTO.png" alt="Alexandre Ewan" class="hero-img mt-5 mt-lg-0">
         </div>
       </div>
@@ -368,7 +420,7 @@
       <div class="row">
         <div class="col-lg-6 reveal">
           <div class="about-card">
-            <p>Je suis bachelier de filière technologique STI2D, passionné par les sports de terreno, l'informatique et les langues étrangères. J'ai de bonnes compétences en anglais (niveau C1) et des bases solides en italien (niveau B1).</p>
+            <p>Je suis bachelier de filière technologique STI2D, passionné par les sports de terrain, l'informatique et les langues étrangères. J'ai de bonnes compétences en anglais (niveau C1) et des bases solides en italien (niveau B1).</p>
             <p>Mon parcours académique m'a permis d'acquérir des compétences techniques solides et une approche pratique de la résolution de problèmes. Je suis déterminé à poursuivre mes études dans le domaine du développement web et des applications.</p>
             <p>À long terme, je vise un master en développement de logiciels ou d'applications, avec peut-être une spécialisation dans le développement de jeux vidéo. Mon objectif est de combiner ma passion pour la technologie avec mon désir de voyager à travers le monde.</p>
           </div>
@@ -426,13 +478,13 @@
 
   <div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-      <div class="modal-content" style="background:#141129; color:#fff; border:1px solid rgba(255,255,255,.1);">
-        <div class="modal-header">
+      <div class="modal-content" style="background:#141c33; color:#fff; border:1px solid rgba(255,255,255,.1);">
+        <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
           <h5 class="modal-title" id="modalProjectTitle">Détails du projet</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="modalProjectBody"></div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="border-top: 1px solid rgba(255,255,255,0.1);">
           <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Fermer</button>
           <a href="#" class="btn btn-primary" id="modalProjectLink">Voir le projet</a>
         </div>
@@ -478,9 +530,20 @@
       <div class="title-underline"></div>
       <div class="row justify-content-center">
         <div class="col-lg-10 reveal">
-          <p class="text-center" style="color:var(--h-muted);">Pour rester à jour sur les nouveautés du développement web et de l'informatique, j'utilise différents outils de veille.</p>
+          <p class="text-center" style="color:var(--c-muted);">Pour rester à jour sur les nouveautés du développement web et de l'informatique, j'utilise différents outils de veille et j'organise mes trouvailles.</p>
           <div class="table-responsive">
             <table class="table table-dark table-hover align-middle text-center veille-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="date-col">Date</th>
+                  <th scope="col" class="sujet-col">Sujet</th>
+                  <th scope="col" class="desc-col">Description</th>
+                </tr>
+              </thead>
+              <tbody id="veille-tech-body">
+                </tbody>
+            </table>
+            <table class="table table-dark table-hover align-middle text-center veille-table mt-4" style="display: none;">
               <thead>
                 <tr>
                   <th scope="col">Outil</th>
@@ -517,10 +580,50 @@
               </tbody>
             </table>
           </div>
+          <h4 class="mt-5 text-center section-title" style="font-size:1.5rem; color:var(--c-text); background:none; -webkit-text-fill-color:initial; text-shadow:none;">Outils de Veille Utilisés</h4>
+          <div class="table-responsive">
+             <table class="table table-dark table-hover align-middle text-center veille-table">
+              <thead>
+                <tr>
+                  <th scope="col">Outil</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Type de Veille</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr onclick="window.open('https://www.google.com/alerts', '_blank');">
+                  <td><a href="https://www.google.com/alerts" target="_blank" style="color:var(--c-gold);">Google Alertes <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Recevez des emails pour des sujets d'intérêts dès qu'une nouvelle publication apparaît sur le web.</td>
+                  <td>Automatisée / Suivi</td>
+                </tr>
+                <tr onclick="window.open('https://www.google.com/sheets/about/', '_blank');">
+                  <td><a href="https://www.google.com/sheets/about/" target="_blank" style="color:var(--c-gold);">Google Sheets / Excel <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Organiser les informations, les sources, les dates de publication et les synthèses des articles.</td>
+                  <td>Organisation / Structuration</td>
+                </tr>
+                <tr onclick="window.open('https://news.google.com/', '_blank');">
+                  <td><a href="https://news.google.com/" target="_blank" style="color:var(--c-gold);">Google News <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Algorithme personnalisé pour découvrir les dernières actualités sur des sujets technologiques spécifiques.</td>
+                  <td>Automatisée / Découverte</td>
+                </tr>
+                <tr onclick="window.open('https://x.com/', '_blank');">
+                  <td><a href="https://x.com/" target="_blank" style="color:var(--c-gold);">X.com (ex-Twitter) <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Flux rapide d'actualités, d'avis d'experts et de tendances en temps réel dans le domaine tech.</td>
+                  <td>Réseaux Sociaux / Tendance</td>
+                </tr>
+                <tr onclick="window.open('https://www.youtube.com/', '_blank');">
+                  <td><a href="https://www.youtube.com/" target="_blank" style="color:var(--c-gold);">YouTube <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Plateforme idéale pour les revues technologiques, tutoriels et l'actualité tech en format vidéo.</td>
+                  <td>Vidéo / Éducative</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
   <section id="contact" class="contact">
     <div class="container">
       <h2 class="section-title text-white">Me contacter</h2>
@@ -563,6 +666,19 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
+    /* ==============================================================
+       DONNÉES DE VEILLE TECHNOLOGIQUE (FACILE À MODIFIER) 🚀
+       Ajoutez une nouvelle ligne dans le tableau ci-dessous
+       ============================================================== */
+    const veilleEntries = [
+      { date: "20/11/2023", sujet: "Web Assembly (Wasm)", description: "Technologie permettant d'exécuter du code écrit dans d'autres langages (C++, Rust) directement dans le navigateur à des vitesses proches du natif. Potentiel pour le développement de jeux et applications lourdes en ligne.", link: "https://webassembly.org/" },
+      { date: "15/11/2023", sujet: "Framework Astro", description: "Un framework web moderne axé sur la performance (Island Architecture) pour créer des sites statiques ultra-rapides. Idéal pour les portfolios et les blogs.", link: "https://astro.build/" },
+      { date: "05/11/2023", sujet: "CSS Subgrid", description: "Évolution de CSS Grid qui permet à des éléments enfants de s'aligner sur la grille de leur parent, simplifiant les layouts complexes et imbriqués.", link: "https://developer.mozilla.org/fr/docs/Web/CSS/CSS_Grid_Layout/Subgrid" },
+      { date: "28/10/2023", sujet: "Intelligence Artificielle et Code", description: "Exploration des outils d'IA comme GitHub Copilot pour l'assistance à la programmation et la complétion de code. Gain de temps potentiel, mais nécessite vérification.", link: "https://github.com/features/copilot" },
+      // Ajoutez de nouvelles lignes ici :
+      // { date: "JOUR/MOIS/ANNÉE", sujet: "Le Sujet de votre Veille", description: "Votre description ou résumé de l'article/vidéo", link: "URL_DE_LA_SOURCE" },
+    ].sort((a,b)=> new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-'))); // Tri par date descendante
+    
     /* ============
        Projets (inchangés dans le fond, juste animés)
        ============ */
@@ -634,7 +750,7 @@
             <img src="${project.image}" class="project-img" alt="${project.name}">
             <div class="card-body">
               <h5 class="card-title">${project.name}</h5>
-              <p class="card-text" style="color:#cfc9ec">${project.description}</p>
+              <p class="card-text" style="color:var(--c-muted)">${project.description}</p>
               <button type="button" class="btn btn-primary view-project" data-folder="${folder}" data-index="${index}">
                 Voir les détails
               </button>
@@ -673,19 +789,48 @@
     }
 
     function switchFolder(folder){
-  document.querySelectorAll('.folder-section').forEach(s=>s.style.display = 'none');
-  document.getElementById(`folder-${folder}`).style.display = 'block';
-  document.querySelectorAll('.folder-btn').forEach(b=>{
-    if(b.getAttribute('data-folder')===folder){ 
-      b.classList.remove('btn-outline-primary'); 
-      b.classList.add('btn-primary'); 
-    } else { 
-      b.classList.remove('btn-primary'); 
-      b.classList.add('btn-outline-primary'); 
+      document.querySelectorAll('.folder-section').forEach(s=>s.style.display = 'none');
+      document.getElementById(`folder-${folder}`).style.display = 'block';
+      document.querySelectorAll('.folder-btn').forEach(b=>{
+        if(b.getAttribute('data-folder')===folder){ 
+          b.classList.remove('btn-outline-primary'); 
+          b.classList.add('btn-primary'); 
+        } else { 
+          b.classList.remove('btn-primary'); 
+          b.classList.add('btn-outline-primary'); 
+        }
+      });
+      loadProjects(folder);
     }
-  });
-  loadProjects(folder);
-}
+
+    /**
+     * @function loadVeilleTable
+     * Génère dynamiquement les lignes du tableau de veille à partir de l'objet veilleEntries.
+     */
+    function loadVeilleTable(){
+        const tbody = document.getElementById('veille-tech-body');
+        tbody.innerHTML = ''; 
+
+        if(!veilleEntries || veilleEntries.length === 0) return;
+
+        veilleEntries.forEach(entry => {
+            const tr = document.createElement('tr');
+            // Ajout d'un événement de clic sur la ligne pour ouvrir le lien s'il existe
+            if(entry.link) {
+                tr.onclick = () => window.open(entry.link, '_blank');
+                tr.style.cursor = 'pointer';
+            }
+            
+            tr.innerHTML = `
+                <td class="date-col">${entry.date}</td>
+                <td class="sujet-col">${entry.link ? `<a href="${entry.link}" target="_blank" style="color:inherit; text-decoration:none;">${entry.sujet} <i class="bi bi-box-arrow-up-right small"></i></a>` : entry.sujet}</td>
+                <td class="desc-col">${entry.description}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+        revealScan(); // Applique l'effet d'apparition après le chargement
+    }
+
 
     // Back to top
     const backToTopButton = document.querySelector('.back-to-top');
@@ -694,6 +839,9 @@
       else backToTopButton.classList.remove('active');
       const navbar = document.querySelector('.navbar');
       if(window.scrollY>50) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
+      
+      // Animations scroll
+      revealScan();
     });
     backToTopButton.addEventListener('click',(e)=>{ e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}) });
 
@@ -725,15 +873,16 @@
       });
     });
     document.querySelectorAll('.folder-section').forEach(s=>s.style.display='none');
-document.getElementById('folder-bloc1').style.display='block';
+    document.getElementById('folder-bloc1').style.display='block';
 
     // Chargement initial
     document.addEventListener('DOMContentLoaded', function(){
       loadProjects('bloc1');
+      loadVeilleTable(); // Chargement des données de veille
       document.querySelectorAll('.folder-btn').forEach(btn=>{
         btn.addEventListener('click',()=> switchFolder(btn.getAttribute('data-folder')));
       });
-      spawnBats();    // chauves-souris
+      spawnSnow();    // Neige !
       revealScan();   // animations d’apparition
     });
 
@@ -751,38 +900,31 @@ document.getElementById('folder-bloc1').style.display='block';
     }
 
     /* ============
-       Chauves-souris animées
+       Neige animée (NOUVEAU)
        ============ */
-    function spawnBats(){
-      const layer = document.getElementById('bats-layer');
-      const count = 10;
-      for(let i=0;i<count;i++){
-        const b = document.createElement('div');
-        b.className = 'bat';
-        const startY = Math.random()*70 + 5; // 5% à 75% de la hauteur
-        const dur = Math.random()*18 + 22;   // 22s - 40s
-        const delay = Math.random()*-20;
-        const size = Math.random()*14 + 22;  // 22 - 36px
-        const invert = Math.random()>.5 ? 1 : -1;
-        b.style.top = startY + 'vh';
-        b.style.left = invert===1 ? '-60px':'calc(100vw + 60px)';
-        b.style.width = size + 'px'; b.style.height = size*0.55 + 'px';
-        b.style.animationDuration = dur+'s, '+(0.8+Math.random()*0.6)+'s';
-        b.style.animationDelay = delay+'s, '+(Math.random()*0.6)+'s';
-        // Trajectoire
-        const key = document.createElement('style');
-        const name = 'fly'+i;
-        key.textContent =
-          `@keyframes ${name}{
-            0%{ transform: translateX(0) translateY(0) scaleX(${invert}); }
-            20%{ transform: translateX(${invert*25}vw) translateY(-2vh) scaleX(${invert}); }
-            40%{ transform: translateX(${invert*50}vw) translateY(1vh) scaleX(${invert}); }
-            60%{ transform: translateX(${invert*75}vw) translateY(-1vh) scaleX(${invert}); }
-            100%{ transform: translateX(${invert*110}vw) translateY(0) scaleX(${invert}); }
-          }`;
-        document.head.appendChild(key);
-        b.style.animationName = name+', flap';
-        layer.appendChild(b);
+    function spawnSnow(){
+      const layer = document.getElementById('snow-layer');
+      const count = 50; // Nombre de flocons
+      const chars = ['❄', '❅', '❆', '•']; // Différents types de flocons
+
+      for(let i=0; i<count; i++){
+        const s = document.createElement('div');
+        s.className = 'snowflake';
+        s.textContent = chars[Math.floor(Math.random() * chars.length)];
+        
+        // Position et taille aléatoires
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.opacity = Math.random();
+        s.style.fontSize = (Math.random() * 10 + 10) + 'px';
+        
+        // Durée de chute variable
+        const duration = Math.random() * 5 + 5; // Entre 5 et 10 secondes
+        s.style.animationDuration = duration + 's';
+        
+        // Délai aléatoire
+        s.style.animationDelay = '-' + (Math.random() * 5) + 's';
+        
+        layer.appendChild(s);
       }
     }
   </script>
