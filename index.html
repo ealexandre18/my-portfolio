@@ -116,6 +116,7 @@
     }
     .nav-link{ color:var(--c-muted); font-weight:600; transition: color 0.3s; }
     .nav-link:hover{ color:var(--c-gold); text-shadow: 0 0 10px rgba(248, 178, 41, 0.6); }
+    .nav-link-custom{ color: var(--c-text); font-weight: 500; } /* Pour les sous-liens de la veille */
 
     /* --- Hero --- */
     .hero{
@@ -248,10 +249,12 @@
       color: var(--c-text);
       width: 100%;
       margin-bottom: 0;
+      table-layout: fixed; /* Important pour gérer les largeurs */
     }
     .veille-table th, .veille-table td{
       border-color: rgba(255,255,255,.1) !important;
       padding: 12px 10px;
+      word-wrap: break-word; /* Évite que le texte ne dépasse */
     }
     .veille-table thead th{
       background: rgba(22, 91, 51, 0.3); /* Fond vert subtil pour l'entête */
@@ -268,22 +271,16 @@
     .veille-table tbody td{
         vertical-align: top;
         text-align: left;
+        font-size: 0.9rem;
     }
-    .veille-table .date-col{
-        font-weight: 600;
-        color: #ff8fab; /* Rose/Rouge pâle pour la date */
-        white-space: nowrap;
-        width: 10%;
-    }
-    .veille-table .sujet-col{
-        font-weight: 700;
-        color: #fff;
-        width: 30%;
-    }
-    .veille-table .desc-col{
-        color: var(--c-muted);
-        width: 60%;
-    }
+    /* Largeurs colonnes Tableau Historisation */
+    .veille-table .date-col{ width: 10%; color: #ff8fab; font-weight:600; }
+    .veille-table .sujet-col{ width: 15%; font-weight: 700; color: #fff; }
+    .veille-table .desc-col{ width: 25%; color: var(--c-muted); }
+    .veille-table .source-col{ width: 5%; text-align: center; }
+    .veille-table .outil-col{ width: 10%; }
+    .veille-table .cat-col{ width: 10%; }
+    .veille-table .impact-col{ width: 25%; font-style: italic; color: #d4edda; }
 
     /* --- Contact --- */
     .contact{
@@ -351,23 +348,22 @@
       .timeline-item:nth-child(even){ float:none; padding-left:48px; }
       .dropdown-menu{ margin-left:0; border-radius:12px; text-align:center; }
       .hero{ padding-top:130px; }
-      .veille-table th, .veille-table td{ padding: 8px 6px; font-size: 0.9rem; }
-      .veille-table .date-col{ width: 15%; }
+      
+      /* Veille table responsive */
+      .veille-table{ display: block; overflow-x: auto; white-space: nowrap; }
+      .veille-table th, .veille-table td{ padding: 8px 6px; font-size: 0.8rem; width: auto !important; }
     }
   </style>
 </head>
 <body>
-  <!-- Background Layers -->
   <div class="sky"></div>
   <div class="aurora"></div>
   <div class="aurora2"></div>
   
-  <!-- Snow Layer -->
   <div class="snow-container" id="snow-layer" aria-hidden="true"></div>
 
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <!-- Brand avec icône flocon -->
       <a class="navbar-brand" href="#"><i class="bi bi-snow2 me-2"></i>ALEXANDRE EWAN</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -387,7 +383,16 @@
             </ul>
           </li>
           <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
-          <li class="nav-item"><a class="nav-link" href="#veille">Veille Tech</a></li> 
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#veille" id="veilleDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Veille Tech
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="veilleDropdown">
+                  <li><a class="dropdown-item nav-link-custom" href="#tableau-historisation" data-target="historisation">Tableau d'historisation</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item nav-link-custom" href="#tableau-outils" data-target="outils">Outils de Veille</a></li>
+              </ul>
+          </li> 
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
       </div>
@@ -398,7 +403,6 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6 hero-content reveal">
-          <!-- Badge Noël -->
           <span class="hero-badge"><i class="bi bi-gift-fill me-2"></i>Édition Spéciale Noël</span>
           <h1>Portfolio SIO</h1>
           <p>Passionné par l'informatique, les langues étrangères et les sports de terrain. Mon objectif est de devenir développeur web et de voyager à travers le monde.</p>
@@ -406,7 +410,6 @@
           <a href="#" class="btn btn-outline-light" id="downloadCV">Télécharger mon CV</a>
         </div>
         <div class="col-lg-6 text-center reveal">
-          <!-- Image avec bordure sucre d'orge en CSS (voir style .hero-img) -->
           <img src="PHOTO.png" alt="Alexandre Ewan" class="hero-img mt-5 mt-lg-0">
         </div>
       </div>
@@ -529,65 +532,38 @@
       <h2 class="section-title">Veille Technologique</h2>
       <div class="title-underline"></div>
       <div class="row justify-content-center">
-        <div class="col-lg-10 reveal">
+        <div class="col-lg-12 reveal">
           <p class="text-center" style="color:var(--c-muted);">Pour rester à jour sur les nouveautés du développement web et de l'informatique, j'utilise différents outils de veille et j'organise mes trouvailles.</p>
+          
+          <h4 class="mt-5 section-title" id="tableau-historisation" style="font-size:1.5rem; color:var(--c-text); background:none; -webkit-text-fill-color:initial; text-shadow:none;">Tableau d'historisation des innovations</h4>
+          
           <div class="table-responsive">
-            <table class="table table-dark table-hover align-middle text-center veille-table">
+            <table class="table table-dark table-hover align-middle veille-table">
               <thead>
                 <tr>
                   <th scope="col" class="date-col">Date</th>
                   <th scope="col" class="sujet-col">Sujet</th>
                   <th scope="col" class="desc-col">Description</th>
+                  <th scope="col" class="source-col">Src</th>
+                  <th scope="col" class="outil-col">Outils utilisés</th>
+                  <th scope="col" class="cat-col">Catégorie</th>
+                  <th scope="col" class="impact-col">Impact potentiel / Analyse</th>
                 </tr>
               </thead>
               <tbody id="veille-tech-body">
                 </tbody>
             </table>
-            <table class="table table-dark table-hover align-middle text-center veille-table mt-4" style="display: none;">
-              <thead>
-                <tr>
-                  <th scope="col">Outil</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Type de Veille</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr onclick="window.open('https://www.google.com/alerts', '_blank');">
-                  <td><a href="https://www.google.com/alerts" target="_blank">Google Alertes <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Recevez des emails pour des sujets d'intérêts dès qu'une nouvelle publication apparaît sur le web.</td>
-                  <td>Automatisée / Suivi</td>
-                </tr>
-                <tr onclick="window.open('https://www.google.com/sheets/about/', '_blank');">
-                  <td><a href="https://www.google.com/sheets/about/" target="_blank">Google Sheets / Excel <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Organiser les informations, les sources, les dates de publication et les synthèses des articles.</td>
-                  <td>Organisation / Structuration</td>
-                </tr>
-                <tr onclick="window.open('https://news.google.com/', '_blank');">
-                  <td><a href="https://news.google.com/" target="_blank">Google News <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Algorithme personnalisé pour découvrir les dernières actualités sur des sujets technologiques spécifiques.</td>
-                  <td>Automatisée / Découverte</td>
-                </tr>
-                <tr onclick="window.open('https://x.com/', '_blank');">
-                  <td><a href="https://x.com/" target="_blank">X.com (ex-Twitter) <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Flux rapide d'actualités, d'avis d'experts et de tendances en temps réel dans le domaine tech.</td>
-                  <td>Réseaux Sociaux / Tendance</td>
-                </tr>
-                <tr onclick="window.open('https://www.youtube.com/', '_blank');">
-                  <td><a href="https://www.youtube.com/" target="_blank">YouTube <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Plateforme idéale pour les revues technologiques, tutoriels et l'actualité tech en format vidéo.</td>
-                  <td>Vidéo / Éducative</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
-          <h4 class="mt-5 text-center section-title" style="font-size:1.5rem; color:var(--c-text); background:none; -webkit-text-fill-color:initial; text-shadow:none;">Outils de Veille Utilisés</h4>
+
+          <h4 class="mt-5 text-center section-title" id="tableau-outils" style="font-size:1.5rem; color:var(--c-text); background:none; -webkit-text-fill-color:initial; text-shadow:none;">Outils de Veille Utilisés</h4>
           <div class="table-responsive">
-             <table class="table table-dark table-hover align-middle text-center veille-table">
+             <table class="table table-dark table-hover align-middle veille-table">
               <thead>
                 <tr>
-                  <th scope="col">Outil</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Type de Veille</th>
+                  <th scope="col" style="width:15%">Outil</th>
+                  <th scope="col" style="width:35%">Description</th>
+                  <th scope="col" style="width:15%">Type de Veille</th>
+                  <th scope="col" style="width:35%">Paramétrage / Configuration</th>
                 </tr>
               </thead>
               <tbody>
@@ -595,26 +571,55 @@
                   <td><a href="https://www.google.com/alerts" target="_blank" style="color:var(--c-gold);">Google Alertes <i class="bi bi-box-arrow-up-right"></i></a></td>
                   <td>Recevez des emails pour des sujets d'intérêts dès qu'une nouvelle publication apparaît sur le web.</td>
                   <td>Automatisée / Suivi</td>
+                  <td>Mots-clés : "Nvidia architecture", "Intel innovation", "AMD GPU". Fréquence : Hebdomadaire.</td>
+                </tr>
+                <tr onclick="window.open('https://feedly.com/', '_blank');">
+                  <td><a href="https://feedly.com/" target="_blank" style="color:var(--c-gold);">Feedly <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Agrégateur de flux RSS pour centraliser les actualités.</td>
+                  <td>Agrégation</td>
+                  <td>Abonnement aux blogs officiels AMD/Intel/Nvidia et sites spécialisés (AnandTech, Tom's Hardware).</td>
+                </tr>
+                 <tr onclick="window.open('https://www.talkwalker.com/alerts', '_blank');">
+                  <td><a href="https://www.talkwalker.com/alerts" target="_blank" style="color:var(--c-gold);">Talkwalker Alerts <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Alternative à Google Alertes pour des requêtes spécifiques.</td>
+                  <td>Automatisée</td>
+                  <td>Alertes précises sur "NVIDIA AI innovation" et "AMD nouvelle architecture".</td>
                 </tr>
                 <tr onclick="window.open('https://www.google.com/sheets/about/', '_blank');">
-                  <td><a href="https://www.google.com/sheets/about/" target="_blank" style="color:var(--c-gold);">Google Sheets / Excel <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td><a href="https://www.google.com/sheets/about/" target="_blank" style="color:var(--c-gold);">Google Sheets <i class="bi bi-box-arrow-up-right"></i></a></td>
                   <td>Organiser les informations, les sources, les dates de publication et les synthèses des articles.</td>
-                  <td>Organisation / Structuration</td>
+                  <td>Organisation</td>
+                  <td>Tableau avec colonnes : Date, Sujet, Source, Outil, Analyse personnelle.</td>
                 </tr>
                 <tr onclick="window.open('https://news.google.com/', '_blank');">
                   <td><a href="https://news.google.com/" target="_blank" style="color:var(--c-gold);">Google News <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Algorithme personnalisé pour découvrir les dernières actualités sur des sujets technologiques spécifiques.</td>
-                  <td>Automatisée / Découverte</td>
+                  <td>Algorithme personnalisé pour découvrir les dernières actualités.</td>
+                  <td>Découverte</td>
+                  <td>Favoris sur les thèmes "Hardware", "Processeurs", "Cartes Graphiques".</td>
                 </tr>
                 <tr onclick="window.open('https://x.com/', '_blank');">
-                  <td><a href="https://x.com/" target="_blank" style="color:var(--c-gold);">X.com (ex-Twitter) <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Flux rapide d'actualités, d'avis d'experts et de tendances en temps réel dans le domaine tech.</td>
-                  <td>Réseaux Sociaux / Tendance</td>
+                  <td><a href="https://x.com/" target="_blank" style="color:var(--c-gold);">X (Twitter) <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Flux rapide d'actualités et d'avis d'experts en temps réel.</td>
+                  <td>Réseaux Sociaux</td>
+                  <td>Suivi des comptes officiels et hashtags #Nvidia #Intel #AMD #TechNews.</td>
+                </tr>
+                <tr onclick="window.open('https://www.linkedin.com/', '_blank');">
+                  <td><a href="https://www.linkedin.com/" target="_blank" style="color:var(--c-gold);">LinkedIn <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Réseau professionnel pour les annonces corpo et stratégiques.</td>
+                  <td>Réseau Pro</td>
+                  <td>Suivi des pages entreprises et des CTO/Ingénieurs clés.</td>
+                </tr>
+                <tr onclick="window.open('https://www.reddit.com/', '_blank');">
+                  <td><a href="https://www.reddit.com/" target="_blank" style="color:var(--c-gold);">Reddit / Discord <i class="bi bi-box-arrow-up-right"></i></a></td>
+                  <td>Communautés spécialisées pour les discussions techniques.</td>
+                  <td>Communautaire</td>
+                  <td>Subreddits r/AMD, r/nvidia, r/hardware et serveurs Discord Hardware.</td>
                 </tr>
                 <tr onclick="window.open('https://www.youtube.com/', '_blank');">
                   <td><a href="https://www.youtube.com/" target="_blank" style="color:var(--c-gold);">YouTube <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Plateforme idéale pour les revues technologiques, tutoriels et l'actualité tech en format vidéo.</td>
+                  <td>Revues technologiques, tutoriels et actualité tech en vidéo.</td>
                   <td>Vidéo / Éducative</td>
+                  <td>Abonnements aux chaînes Tech (LTT, GamerNexus, Hardware Unboxed).</td>
                 </tr>
               </tbody>
             </table>
@@ -657,7 +662,7 @@
 
   <footer class="text-center">
     <div class="container">
-      <p>&copy; 2023 Alexandre Ewan. Tous droits réservés.</p>
+      <p>© 2023 Alexandre Ewan. Tous droits réservés.</p>
     </div>
   </footer>
 
@@ -667,20 +672,59 @@
 
   <script>
     /* ==============================================================
-       DONNÉES DE VEILLE TECHNOLOGIQUE (FACILE À MODIFIER) 🚀
-       Ajoutez une nouvelle ligne dans le tableau ci-dessous
+       DONNÉES DE VEILLE TECHNOLOGIQUE (MISE À JOUR) 🚀
+       Nouvelle structure avec Source, Outil, Catégorie, Analyse
        ============================================================== */
     const veilleEntries = [
-      { date: "19/11/2025", sujet: "Annonce de FSR Redstone par AMD", description: "Le FSR Redstone est la nouvelle technologie d'upscaling (mise à l'échelle) d'AMD basée sur l'intelligence artificielle (IA) pour rivaliser avec la qualité du DLSS de NVIDIA, et qui est exclusivement réservée aux futures cartes graphiques Radeon RX 9000.", link: "https://www.tweaktown.com/news/108950/amds-big-fsr-redstone-update-for-radeon-gpus-is-set-to-arrive-on-december-10/index.html" },
-      { date: "10/11/2025", sujet: "Acquisition des puces MK1 par AMD", description: "AMD a acheté la startup MK1 le 10 novembre pour améliorer l'efficacité de ses logiciels d'IA (inférence). L'objectif est de rendre ses puces IA plus compétitives face à l'écosystème logiciel de NVIDIA.", link: "https://www.amd.com/en/blogs/2025/amd-acquires-mk1-to-advance-ai-inference-performance.html" },
-      { date: "28/10/2025", sujet: "Nouvelle technologie NVQLink de Nvidia", description: "Le NVQLink est une nouvelle technologie logicielle de NVIDIA, annoncée le 28 octobre 2025, qui sert de pont entre l'IA (GPU Blackwell) et les calculateurs quantiques.", link: "https://nvidianews.nvidia.com/news/nvidia-nvqlink-quantum-gpu-computing" },
-      { date: "09/10/2025", sujet: "Révélation de l'Architecture Panther Lake par Intel", description: "Panther Lake est la prochaine génération de processeurs PC d'Intel. Son importance réside dans le fait que ce sera le premier processeur grand public fabriqué sur le procédé avancé Intel 18A.", link: "https://newsroom.intel.com/client-computing/intel-unveils-panther-lake-architecture-first-ai-pc-platform-built-on-18a" },
-      // Ajoutez de nouvelles lignes ici :
-      // { date: "JOUR/MOIS/ANNÉE", sujet: "Le Sujet de votre Veille", description: "Votre description ou résumé de l'article/vidéo", link: "URL_DE_LA_SOURCE" },
-    ].sort((a,b)=> new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-'))); // Tri par date descendante
+	{ 
+        date: "06/12/2025", 
+        sujet: "Nvidia CUDA Tiles", 
+        description: "C'est un nouveau modèle de programmation qui permet au GPU de stocker temporairement de petits blocs de données dans sa mémoire rapide pour les calculs d'IA, assurant ainsi une exécution plus rapide et efficace.", 
+        link: "https://developer.nvidia.com/blog/nvidia-cuda-13-1-powers-next-gen-gpu-programming-with-nvidia-cuda-tile-and-performance-gains/",
+        outil: "Google News",
+        categorie: "Software / GPU",
+        impact: "L'introduction de CUDA Tile renforce la domination logicielle de NVIDIA sur l'IA en simplifiant la gestion de la mémoire rapide du GPU. Cette innovation consolide l'écosystème CUDA, rendant les Tensor Cores plus efficaces et augmentant la barrière technique pour les concurrents comme AMD. Elle positionne ainsi NVIDIA non seulement comme leader de l'IA, mais aussi comme architecte essentiel de l'infrastructure de calcul du futur."
+      },
+      { 
+        date: "19/11/2025", 
+        sujet: "Annonce de FSR Redstone par AMD", 
+        description: "Nouvelle technologie d'upscaling IA d'AMD pour rivaliser avec le DLSS de NVIDIA, réservée aux Radeon RX 9000.", 
+        link: "https://www.tweaktown.com/news/108950/amds-big-fsr-redstone-update-for-radeon-gpus-is-set-to-arrive-on-december-10/index.html",
+        outil: "Google News",
+        categorie: "Software / GPU",
+        impact: "Pourrait enfin combler le retard d'AMD sur l'IA grand public et rendre les futures cartes RX 9000 beaucoup plus attractives face aux RTX."
+      },
+      { 
+        date: "10/11/2025", 
+        sujet: "Acquisition des puces MK1 par AMD", 
+        description: "Rachat de la startup MK1 pour optimiser les logiciels d'IA (inférence) et l'efficacité des puces.", 
+        link: "https://www.amd.com/en/blogs/2025/amd-acquires-mk1-to-advance-ai-inference-performance.html",
+        outil: "Google News",
+        categorie: "Business / IA",
+        impact: "Renforce l'écosystème logiciel d'AMD (ROCm), point faible historique face à CUDA de Nvidia. Stratégique pour le marché pro."
+      },
+      { 
+        date: "28/10/2025", 
+        sujet: "Nouvelle technologie NVQLink de Nvidia", 
+        description: "Pont logiciel entre les GPU Blackwell (IA) et les calculateurs quantiques.", 
+        link: "https://nvidianews.nvidia.com/news/nvidia-nvqlink-quantum-gpu-computing",
+        outil: "X (Twitter)",
+        categorie: "Quantique / IA",
+        impact: "Positionne Nvidia comme leader non seulement en IA mais aussi sur l'infrastructure du futur (hybride quantique-classique)."
+      },
+      { 
+        date: "09/10/2025", 
+        sujet: "Révélation de l'Architecture Panther Lake par Intel", 
+        description: "Prochains processeurs PC grand public fabriqués sur le procédé avancé Intel 18A.", 
+        link: "https://newsroom.intel.com/client-computing/intel-unveils-panther-lake-architecture-first-ai-pc-platform-built-on-18a",
+        outil: "Google Alertes",
+        categorie: "Architecture CPU",
+        impact: "Test crucial pour la fonderie Intel. Si le 18A réussit, Intel peut revenir dans la course face à TSMC et AMD."
+      }
+    ].sort((a,b)=> new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-')));
     
     /* ============
-       Projets (inchangés dans le fond, juste animés)
+       Projets (inchangés)
        ============ */
     const projects = {
       bloc1: [
@@ -811,7 +855,7 @@
 
     /**
      * @function loadVeilleTable
-     * Génère dynamiquement les lignes du tableau de veille à partir de l'objet veilleEntries.
+     * Génère dynamiquement les lignes du tableau de veille
      */
     function loadVeilleTable(){
         const tbody = document.getElementById('veille-tech-body');
@@ -827,10 +871,15 @@
                 tr.style.cursor = 'pointer';
             }
             
+            // Construction des nouvelles colonnes
             tr.innerHTML = `
                 <td class="date-col">${entry.date}</td>
-                <td class="sujet-col">${entry.link ? `<a href="${entry.link}" target="_blank" style="color:inherit; text-decoration:none;">${entry.sujet} <i class="bi bi-box-arrow-up-right small"></i></a>` : entry.sujet}</td>
+                <td class="sujet-col">${entry.sujet}</td>
                 <td class="desc-col">${entry.description}</td>
+                <td class="source-col">${entry.link ? `<a href="${entry.link}" target="_blank" style="color:var(--c-gold);"><i class="bi bi-link-45deg fs-5"></i></a>` : '-'}</td>
+                <td class="outil-col">${entry.outil || '-'}</td>
+                <td class="cat-col"><span class="badge bg-secondary">${entry.categorie || 'General'}</span></td>
+                <td class="impact-col">${entry.impact || ''}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -880,6 +929,31 @@
     });
     document.querySelectorAll('.folder-section').forEach(s=>s.style.display='none');
     document.getElementById('folder-bloc1').style.display='block';
+    
+    // CORRECTION DU SCROLL POUR LA VEILLE TECHNIQUE
+    document.querySelectorAll('.nav-link-custom').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                // Calculer la position de défilement en tenant compte de la hauteur de la barre de navigation fixe
+                const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                // Soustraire la hauteur de la navbar + une petite marge (20px)
+                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navbarHeight - 20; 
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+
+            // Ferme le dropdown après le clic
+            const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('veilleDropdown'));
+            if (dropdown) dropdown.hide();
+        });
+    });
 
     // Chargement initial
     document.addEventListener('DOMContentLoaded', function(){
