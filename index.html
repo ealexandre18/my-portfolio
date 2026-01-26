@@ -378,7 +378,7 @@
               <li><a class="dropdown-item" href="#projets">Tous les projets</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#" data-folder="bloc1">BLOC 1</a></li>
-              <li><a class="dropdown-item" href="#" data-folder="pro">ATELIER DE PROFESSIONALISATION</a></li>
+              <li><a class="dropdown-item" href="#" data-folder="bloc2">BLOC 2</a></li> <li><a class="dropdown-item" href="#" data-folder="pro">ATELIER DE PROFESSIONALISATION</a></li>
               <li><a class="dropdown-item" href="#" data-folder="bloc3">BLOC 3</a></li>
             </ul>
           </li>
@@ -461,12 +461,16 @@
 
       <div class="folder-selector">
         <button class="btn btn-primary folder-btn" data-folder="bloc1">BLOC 1</button>
-        <button class="btn btn-outline-primary folder-btn" data-folder="pro">ATELIER DE PROFESSIONALISATION</button>
+        <button class="btn btn-outline-primary folder-btn" data-folder="bloc2">BLOC 2</button> <button class="btn btn-outline-primary folder-btn" data-folder="pro">ATELIER DE PROFESSIONALISATION</button>
         <button class="btn btn-outline-primary folder-btn" data-folder="bloc3">BLOC 3</button>
       </div>
 
       <div id="folder-bloc1" class="folder-section active">
         <div class="row" id="projects-bloc1"></div>
+      </div>
+
+      <div id="folder-bloc2" class="folder-section">
+        <div class="row" id="projects-bloc2"></div>
       </div>
 
       <div id="folder-pro" class="folder-section">
@@ -724,7 +728,7 @@
     ].sort((a,b)=> new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-')));
     
     /* ============
-       Projets (inchangés)
+       Projets
        ============ */
     const projects = {
       bloc1: [
@@ -750,6 +754,10 @@
           { name:"TP14 - BEAUVALLET", description:"Livre JAVAFX", image:"https://upload.wikimedia.org/wikipedia/en/c/cc/JavaFX_Logo.png", file:"TP14_BEAUVALLET.pdf", type:"pdf" },
 		  { name:"TP15 - BEAUVALLET", description:"Requêtes SQL LECLERC", image:"https://bairesdev.mo.cloudinary.net/blog/2023/10/What-is-SQL-Server.jpg?tx=w_1920,q_auto", file:"TD3_B1_BEAUVALLET.pdf", type:"pdf" },
 	  ],
+      // NOUVEAU BLOC 2 : Ajoutez vos TPs ici
+      bloc2: [
+        /* Exemple : { name:"TP01 - BLOC 2", description:"Description", image:"LienImage", file:"NomFichier.pdf", type:"pdf" }, */
+      ],
       pro: [
         { name:"TP01 - ATELIER", description:"Portfolio", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSprJmp8vZLTaprWtfns0cn4iQtPgJDsnN5lA&s", file:"TP01_ATELIER.pdf", type:"pdf" },
         { name:"TD01 - ATELIER", description:"HTML", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8tGtuLs5kBlKBkl1vhb6EDqXQLgwfv2xH7g&s", file:"TP02_ATELIER.pdf", type:"pdf" },
@@ -761,8 +769,6 @@
 		  { name:"TP09 - ATELIER", description:"Cahier des charges et livrables", image:"https://lh3.googleusercontent.com/proxy/uY7zLYTkGHpkrezTjw1hOVHGFL0NsSg8tzdnzU-o8jrkyasgpUpYc59wOm3hdOh6I1ws_66aBl-DxejjJAqzuw5FNZDvm0K06y51fGy7ZeaDtU6KpkZ1lY_Ame22wVLRC0XpBcYo8aJX-o6yA6tGnkoXAd5GQqyxT7s", file:"TP09_ATELIER.pdf", type:"pdf" },
 		  { name:"TP10 - ATELIER", description:"Sécurité Informatique : Clés USB Personnelles", image:"https://dxbyzx5id4chj.cloudfront.net/pub/media/catalog/product/7/9/4/3/1/3/P_79431304_1.jpg", file:"TP10_ATELIER.pdf", type:"pdf" },
 		  { name:"TP11 - ATELIER", description:"JavaScript", image:"https://logos-world.net/wp-content/uploads/2023/02/JavaScript-Symbol.png", file:"TP11_ATELIER.pdf", type:"pdf" },
-		 
-		 
       ],
       bloc3: [
         { name:"TP01 - BLOC 3 SOTOCA", description:"Logiciels de capture d'écran", image:"https://th.bing.com/th/id/OIP.J5lfXNq9M83qmVJuLYk-VAHaEK?w=286&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3", file:"TP01_BLOC_3_SOTOCA.pdf", type:"pdf" },
@@ -789,6 +795,7 @@
 
     function loadProjects(folder){
       const container = document.getElementById(`projects-${folder}`);
+      if(!container) return;
       container.innerHTML = '';
       if(!projects[folder] || projects[folder].length===0){
         container.innerHTML = `
@@ -817,7 +824,7 @@
         container.appendChild(col);
       });
       attachProjectModalEvents();
-      revealScan(); // applique l'effet d'apparition
+      revealScan();
     }
 
     function showProjectModal(folder,index){
@@ -847,7 +854,9 @@
 
     function switchFolder(folder){
       document.querySelectorAll('.folder-section').forEach(s=>s.style.display = 'none');
-      document.getElementById(`folder-${folder}`).style.display = 'block';
+      const target = document.getElementById(`folder-${folder}`);
+      if(target) target.style.display = 'block';
+      
       document.querySelectorAll('.folder-btn').forEach(b=>{
         if(b.getAttribute('data-folder')===folder){ 
           b.classList.remove('btn-outline-primary'); 
@@ -860,10 +869,6 @@
       loadProjects(folder);
     }
 
-    /**
-     * @function loadVeilleTable
-     * Génère dynamiquement les lignes du tableau de veille
-     */
     function loadVeilleTable(){
         const tbody = document.getElementById('veille-tech-body');
         tbody.innerHTML = ''; 
@@ -872,13 +877,11 @@
 
         veilleEntries.forEach(entry => {
             const tr = document.createElement('tr');
-            // Ajout d'un événement de clic sur la ligne pour ouvrir le lien s'il existe
             if(entry.link) {
                 tr.onclick = () => window.open(entry.link, '_blank');
                 tr.style.cursor = 'pointer';
             }
             
-            // Construction des nouvelles colonnes
             tr.innerHTML = `
                 <td class="date-col">${entry.date}</td>
                 <td class="sujet-col">${entry.sujet}</td>
@@ -890,24 +893,19 @@
             `;
             tbody.appendChild(tr);
         });
-        revealScan(); // Applique l'effet d'apparition après le chargement
+        revealScan();
     }
 
-
-    // Back to top
     const backToTopButton = document.querySelector('.back-to-top');
     window.addEventListener('scroll', ()=>{
       if(window.pageYOffset>300) backToTopButton.classList.add('active');
       else backToTopButton.classList.remove('active');
       const navbar = document.querySelector('.navbar');
       if(window.scrollY>50) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
-      
-      // Animations scroll
       revealScan();
     });
     backToTopButton.addEventListener('click',(e)=>{ e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}) });
 
-    // CV Download
     document.getElementById('downloadCV').addEventListener('click', function(e){
       e.preventDefault();
       const link = document.createElement('a');
@@ -916,14 +914,12 @@
       document.body.appendChild(link); link.click(); document.body.removeChild(link);
     });
 
-    // Form submit
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
       alert('Merci pour votre message ! Je vous répondrai dès que possible.');
       this.reset();
     });
 
-    // Dropdown de projets -> change de dossier + scroll
     document.querySelectorAll('.dropdown-item[data-folder]').forEach(item=>{
       item.addEventListener('click', function(e){
         e.preventDefault();
@@ -934,48 +930,35 @@
         setTimeout(()=>switchFolder(folder), 400);
       });
     });
-    document.querySelectorAll('.folder-section').forEach(s=>s.style.display='none');
-    document.getElementById('folder-bloc1').style.display='block';
-    
-    // CORRECTION DU SCROLL POUR LA VEILLE TECHNIQUE
+
     document.querySelectorAll('.nav-link-custom').forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-            
             if (targetElement) {
-                // Calculer la position de défilement en tenant compte de la hauteur de la barre de navigation fixe
                 const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                // Soustraire la hauteur de la navbar + une petite marge (20px)
                 const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navbarHeight - 20; 
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
             }
-
-            // Ferme le dropdown après le clic
             const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('veilleDropdown'));
             if (dropdown) dropdown.hide();
         });
     });
 
-    // Chargement initial
     document.addEventListener('DOMContentLoaded', function(){
       loadProjects('bloc1');
-      loadVeilleTable(); // Chargement des données de veille
+      loadVeilleTable();
       document.querySelectorAll('.folder-btn').forEach(btn=>{
         btn.addEventListener('click',()=> switchFolder(btn.getAttribute('data-folder')));
       });
-      spawnSnow();    // Neige !
-      revealScan();   // animations d’apparition
+      spawnSnow();
+      revealScan();
+      // On cache toutes les sections sauf bloc1 au départ
+      document.querySelectorAll('.folder-section').forEach(s=>s.style.display='none');
+      document.getElementById('folder-bloc1').style.display='block';
     });
 
-    /* ============
-       Animations scroll (IntersectionObserver)
-       ============ */
     function revealScan(){
       const els = document.querySelectorAll('.reveal');
       const obs = new IntersectionObserver(entries=>{
@@ -986,31 +969,20 @@
       els.forEach(el=>obs.observe(el));
     }
 
-    /* ============
-       Neige animée (NOUVEAU)
-       ============ */
     function spawnSnow(){
       const layer = document.getElementById('snow-layer');
-      const count = 50; // Nombre de flocons
-      const chars = ['❄', '❅', '❆', '•']; // Différents types de flocons
-
+      const count = 50;
+      const chars = ['❄', '❅', '❆', '•'];
       for(let i=0; i<count; i++){
         const s = document.createElement('div');
         s.className = 'snowflake';
         s.textContent = chars[Math.floor(Math.random() * chars.length)];
-        
-        // Position et taille aléatoires
         s.style.left = Math.random() * 100 + 'vw';
         s.style.opacity = Math.random();
         s.style.fontSize = (Math.random() * 10 + 10) + 'px';
-        
-        // Durée de chute variable
-        const duration = Math.random() * 5 + 5; // Entre 5 et 10 secondes
+        const duration = Math.random() * 5 + 5;
         s.style.animationDuration = duration + 's';
-        
-        // Délai aléatoire
         s.style.animationDelay = '-' + (Math.random() * 5) + 's';
-        
         layer.appendChild(s);
       }
     }
