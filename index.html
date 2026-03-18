@@ -1,398 +1,148 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Alexandre Ewan - Développeur Web (Édition de Noël)</title>
+  <title>Alexandre Ewan | Portfolio BTS SIO</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
   <style>
-    /* ==============================
-       Thème Noël Magique 🎄
-       ============================== */
-    :root{
-      --c-red: #d42426;       /* Rouge Noël */
-      --c-green: #165b33;     /* Vert Sapin */
-      --c-green-light: #2d8a55;
-      --c-gold: #f8b229;      /* Or */
-      --c-gold-glow: #ffd700;
-      --c-night: #0b1026;     /* Bleu Nuit */
-      --c-ink: #050711;
-      --c-snow: #f0f4f8;
-      --c-card: rgba(20, 30, 60, 0.75); /* Fond givré */
-      --c-text: #eef2f5;
-      --c-muted: #aab4c5;
-      
-      /* Effet de lueur magique (Rouge et Or) */
-      --glow: 0 0 15px rgba(212, 36, 38, 0.5), 0 0 25px rgba(248, 178, 41, 0.3);
-      --frost-border: 1px solid rgba(255, 255, 255, 0.15);
+    :root {
+      --bg-color: #000000;
+      --card-bg: rgba(20, 20, 22, 0.7);
+      --accent-blue: #0071e3;
+      --text-main: #f5f5f7;
+      --text-dim: #86868b;
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --font-family: 'Inter', sans-serif;
     }
 
-    html,body{height:100%;}
-    body{
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
-      color:var(--c-text);
-      /* Fond Nuit d'hiver */
-      background: radial-gradient(circle at 50% 0%, #1b2949 0%, #0b1026 60%, #050711 100%);
-      overflow-x:hidden;
-      scroll-behavior:smooth;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* --- Décors : Ciel étoilé, Aurores, Neige --- */
-    .sky, .aurora, .aurora2{
-      position:fixed; inset:0; pointer-events:none; z-index:-3;
-    }
-    
-    /* Étoiles scintillantes */
-    .sky{
-      background:
-        radial-gradient(2px 2px at 10% 15%, rgba(255,255,255,.9) 50%, transparent 55%) repeat,
-        radial-gradient(2px 2px at 30% 60%, rgba(255,255,255,.8) 50%, transparent 55%) repeat,
-        radial-gradient(1.5px 1.5px at 70% 25%, rgba(255,255,255,.8) 50%, transparent 55%) repeat,
-        radial-gradient(2.5px 2.5px at 85% 80%, rgba(255,255,255,.7) 50%, transparent 55%) repeat;
-      background-size: 800px 800px, 900px 500px, 600px 600px, 700px 700px;
-      opacity:0.7;
-      animation: twinkle 8s ease-in-out infinite alternate;
-    }
-    @keyframes twinkle{
-      0%{opacity:0.5;} 100%{opacity:0.9;}
+    .mesh-gradient {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 113, 227, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(212, 36, 38, 0.05) 0%, transparent 40%);
+      z-index: -2;
     }
 
-    /* Aurores boréales subtiles (Vert/Bleu) */
-    .aurora, .aurora2{
-      background:
-        radial-gradient(60% 40% at 50% 10%, rgba(45, 138, 85, 0.15) 0%, transparent 70%),
-        radial-gradient(50% 50% at 20% 30%, rgba(20, 80, 160, 0.1) 0%, transparent 60%);
-      filter: blur(40px);
-      opacity: 0.6;
-      animation: auroraMove 20s ease-in-out infinite alternate;
-    }
-    .aurora2{
-      background: radial-gradient(50% 40% at 80% 20%, rgba(212, 36, 38, 0.08) 0%, transparent 60%); /* Touche subtile de rouge */
-      animation-duration: 35s;
-    }
-    @keyframes auroraMove{
-      0%{transform: translateX(-5%);} 100%{transform: translateX(5%);}
+    #snow-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: -1; opacity: 0.3;
     }
 
-    /* Conteneur de neige */
-    .snow-container {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        pointer-events: none; z-index: -1; overflow: hidden;
+    .navbar {
+      backdrop-filter: saturate(180%) blur(20px);
+      background: rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 0;
     }
-    .snowflake {
-        position: absolute; top: -10px;
-        color: white; opacity: 0.8;
-        font-size: 1em;
-        user-select: none;
-        /* Animation de chute */
-        animation-name: fall;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
+    .navbar-brand { font-weight: 800; font-size: 1.2rem; color: #fff !important; }
+    .nav-link { color: var(--text-dim) !important; font-size: 0.85rem; font-weight: 500; margin: 0 10px; transition: 0.3s; }
+    .nav-link:hover, .nav-link.active { color: #fff !important; }
+
+    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 800; letter-spacing: -0.04em;
+      background: linear-gradient(180deg, #fff 0%, #86868b 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    @keyframes fall {
-        to { transform: translateY(110vh); }
+    .hero-img {
+      width: 200px; height: 200px; border-radius: 50%; object-fit: cover;
+      border: 1px solid var(--glass-border); padding: 8px; background: rgba(255,255,255,0.05);
+      margin-bottom: 2rem; box-shadow: 0 0 40px rgba(0,113,227,0.2);
     }
 
-    /* --- Navbar --- */
-    .navbar{
-      backdrop-filter: blur(12px);
-      background: rgba(11, 16, 38, 0.7);
-      border-bottom: var(--frost-border);
-      transition:all .3s ease;
+    .btn-apple {
+      background: #fff; color: #000; border-radius: 980px; padding: 12px 28px;
+      font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s;
     }
-    .navbar.scrolled{
-      background: rgba(11, 16, 38, 0.95);
-      box-shadow: 0 4px 20px rgba(0,0,0,.4);
-    }
-    .navbar-brand{
-      font-weight:800; letter-spacing:.8px;
-      /* Dégradé Rouge vers Or */
-      background: linear-gradient(45deg, var(--c-red), #ff4d4d, var(--c-gold));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      text-shadow: 0 0 20px rgba(212, 36, 38, 0.3);
-    }
-    .nav-link{ color:var(--c-muted); font-weight:600; transition: color 0.3s; }
-    .nav-link:hover{ color:var(--c-gold); text-shadow: 0 0 10px rgba(248, 178, 41, 0.6); }
-    .nav-link-custom{ color: var(--c-text); font-weight: 500; } /* Pour les sous-liens de la veille */
+    .btn-apple:hover { transform: scale(1.05); }
 
-    /* --- Hero --- */
-    .hero{
-      position:relative; padding: 160px 0 110px;
-      overflow:hidden;
-    }
-    .hero h1{
-      font-weight:900; line-height:1.05;
-      text-shadow: 0 10px 30px rgba(0,0,0,.55);
-    }
-    .hero p{ color:var(--c-muted); max-width:580px }
-    .hero-badge{
-      display:inline-block; padding:6px 14px; border-radius:999px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: var(--c-gold);
-      font-size:.85rem; margin-bottom:14px;
-      box-shadow: 0 0 15px rgba(248, 178, 41, 0.15);
-    }
-    .hero-img{
-      width:260px; height:260px; border-radius:50%;
-      object-fit:cover; 
-      border: 5px solid rgba(255,255,255,0.9); /* Bordure blanche neige */
-      outline: 3px solid var(--c-red); /* Double bordure esprit "sucre d'orge" simple */
-      box-shadow: 0 20px 50px rgba(0,0,0,.6), 0 0 40px rgba(255,255,255,.15);
-      animation: float 6s ease-in-out infinite;
-    }
-    @keyframes float{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    section { padding: 100px 0; }
+    .section-label { color: var(--accent-blue); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: block; }
+    .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; }
 
-    /* --- Boutons (Esprit Cadeau) --- */
-    .btn-primary{
-      background: linear-gradient(135deg, var(--c-red), #e04648);
-      border:none; padding:12px 28px; border-radius:40px; font-weight:700;
-      color: white;
-      box-shadow: 0 4px 15px rgba(212, 36, 38, 0.4);
-      transition: all .2s ease;
-    }
-    .btn-primary:hover{ 
-      transform: translateY(-3px); 
-      box-shadow: 0 8px 25px rgba(212, 36, 38, 0.6);
-      background: linear-gradient(135deg, #e04648, var(--c-red));
-    }
-    
-    .btn-outline-light{
-      border-radius:40px; font-weight:700; border-width:2px;
-    }
-    .btn-outline-light:hover{ background:rgba(255,255,255,.15); color: var(--c-gold); border-color: var(--c-gold); }
-    
-    .btn-outline-primary{
-      color:var(--c-green-light); border-color:var(--c-green-light);
-      border-radius:40px; font-weight:700; border-width:2px;
-    }
-    .btn-outline-primary:hover{
-      color:#fff; background:var(--c-green); border-color:var(--c-green); 
-      box-shadow: 0 0 20px rgba(45, 138, 85, 0.4);
-    }
-
-    /* --- Sections --- */
-    .section-title{
-      font-weight:800; margin-bottom:10px;
-      /* Dégradé Or/Blanc */
-      background: linear-gradient(90deg, #fff, #ffeebb 40%, var(--c-gold) 80%);
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-    }
-    .title-underline{
-      width:60px; height:4px; border-radius:999px;
-      background: linear-gradient(90deg, var(--c-red), var(--c-gold));
-      box-shadow:0 0 15px rgba(248, 178, 41, 0.4);
-      margin:14px 0 36px;
-    }
-
-    .about-content{ padding: 90px 0; }
-    .about-card{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border: var(--frost-border);
-      backdrop-filter: blur(5px);
-      border-radius:16px; padding:20px;
-    }
-
-    /* --- Cartes projets (Style Hivernal) --- */
-    .project-card{
-      background: var(--c-card);
+    .project-card {
+      background: var(--card-bg); border: 1px solid var(--glass-border);
+      border-radius: 20px; overflow: hidden; height: 100%; transition: 0.4s;
       backdrop-filter: blur(10px);
-      border: var(--frost-border);
-      border-radius:16px; overflow:hidden;
-      box-shadow: 0 15px 40px rgba(0,0,0,.3);
-      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-      height:100%;
     }
-    .project-card:hover{
-      transform: translateY(-8px);
-      border-color: rgba(248, 178, 41, 0.5); /* Bordure dorée au survol */
-      box-shadow: 0 25px 60px rgba(0,0,0,.5), 0 0 25px rgba(248, 178, 41, 0.15);
-    }
-    .project-img{ height:210px; object-fit:cover; width:100%; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .card-title { color: #fff; font-weight: 700; }
+    .project-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.3); }
+    .project-img-wrapper { width: 100%; height: 200px; overflow: hidden; }
+    .project-img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+    .project-card:hover .project-img { transform: scale(1.1); }
+    .project-body { padding: 20px; }
 
-    /* --- Timeline (Style Guirlande) --- */
-    .timeline{
-      position:relative; padding:10px 0 30px;
+    .nav-pills-apple {
+      background: rgba(255,255,255,0.05); padding: 5px; border-radius: 980px;
+      margin-bottom: 3rem; border: 1px solid var(--glass-border);
     }
-    .timeline:before{
-      content:''; position:absolute; left:50%; transform:translateX(-50%);
-      width:2px; height:100%;
-      /* Fil de guirlande */
-      background: linear-gradient(180deg, rgba(255,255,255,0), var(--c-gold), var(--c-red), rgba(255,255,255,0));
-      box-shadow:0 0 15px rgba(255,255,255,.2);
-    }
-    .timeline-item{
-      margin-bottom:40px; position:relative; width:50%; padding-right:28px; clear:both;
-    }
-    .timeline-item:nth-child(even){ float:right; padding-right:0; padding-left:28px; }
-    .timeline-content{
-      background: var(--c-card);
-      border: var(--frost-border);
-      backdrop-filter: blur(5px);
-      border-radius:14px; padding:20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,.25);
-    }
-    .timeline-date{ font-weight:700; color:var(--c-gold); }
+    .nav-pills-apple .nav-link { border-radius: 980px; padding: 8px 20px; color: var(--text-dim) !important; }
+    .nav-pills-apple .nav-link.active { background: var(--accent-blue) !important; color: #fff !important; }
 
-    /* --- Veille Technologique (Tableau givré) --- */
-    .veille-table{
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255,255,255,.15);
-      backdrop-filter: blur(10px);
-      border-radius:16px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,.35);
-      color: var(--c-text);
-      width: 100%;
-      margin-bottom: 0;
-      table-layout: fixed; /* Important pour gérer les largeurs */
+    /* Sélecteur d'année Veille */
+    .year-selector {
+      background: rgba(255,255,255,0.05); padding: 4px; border-radius: 12px;
+      display: inline-flex; border: 1px solid var(--glass-border); margin-bottom: 2rem;
     }
-    .veille-table th, .veille-table td{
-      border-color: rgba(255,255,255,.1) !important;
-      padding: 12px 10px;
-      word-wrap: break-word; /* Évite que le texte ne dépasse */
+    .year-btn {
+      padding: 6px 16px; border: none; background: transparent; color: var(--text-dim);
+      border-radius: 8px; font-weight: 600; font-size: 0.85rem; transition: 0.3s;
     }
-    .veille-table thead th{
-      background: rgba(22, 91, 51, 0.3); /* Fond vert subtil pour l'entête */
-      color: var(--c-gold);
-      font-weight: 700;
-      border-bottom: 2px solid rgba(255,255,255,0.1) !important;
-      text-shadow: 0 0 5px rgba(0,0,0,.5);
-      vertical-align: middle;
-    }
-    .veille-table tbody tr:hover{
-      background-color: rgba(255, 255, 255, 0.05);
-      cursor: default;
-    }
-    .veille-table tbody td{
-        vertical-align: top;
-        text-align: left;
-        font-size: 0.9rem;
-    }
-    /* Largeurs colonnes Tableau Historisation */
-    .veille-table .date-col{ width: 10%; color: #ff8fab; font-weight:600; }
-    .veille-table .sujet-col{ width: 15%; font-weight: 700; color: #fff; }
-    .veille-table .desc-col{ width: 25%; color: var(--c-muted); }
-    .veille-table .source-col{ width: 5%; text-align: center; }
-    .veille-table .outil-col{ width: 10%; }
-    .veille-table .cat-col{ width: 10%; }
-    .veille-table .impact-col{ width: 25%; font-style: italic; color: #d4edda; }
+    .year-btn.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
 
-    /* --- Contact --- */
-    .contact{
-      background: radial-gradient(80% 80% at 20% 0%, rgba(22, 91, 51, .15), transparent 60%),
-                  radial-gradient(80% 80% at 80% 0%, rgba(212, 36, 38, .15), transparent 65%),
-                  linear-gradient(180deg, #0b1026, #050711 100%);
-      color:#fff; padding: 100px 0;
-      position:relative; overflow:hidden;
+    .veille-container {
+      background: var(--card-bg); border-radius: 20px; border: 1px solid var(--glass-border);
+      overflow: hidden; backdrop-filter: blur(15px);
     }
-    .contact-form{
-      background: rgba(255,255,255,0.03);
-      border: var(--frost-border);
-      padding:40px; border-radius:16px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.45);
-    }
-    .form-control{
-      background: rgba(0,0,0,0.3); 
-      border: 1px solid rgba(255,255,255,.1);
-      color:#fff; border-radius:10px;
-    }
-    .form-control:focus{
-      border-color: var(--c-gold);
-      box-shadow: 0 0 0 .25rem rgba(248, 178, 41, .25);
-      background: rgba(0,0,0,0.5); color:#fff;
-    }
+    .table { color: var(--text-main); margin-bottom: 0; }
+    .table thead th { background: rgba(255,255,255,0.03); padding: 15px; font-size: 0.7rem; color: var(--text-dim); border: none; }
+    .table tbody td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
 
-    /* --- Social --- */
-    .social-links a{
-      display:inline-block; width:52px; height:52px; border-radius:50%;
-      background: linear-gradient(135deg, var(--c-green), #2d8a55);
-      color:#fff; text-align:center; line-height:52px; margin-right:14px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-      transition: transform .2s ease;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .social-links a:hover{ transform: translateY(-4px); background: var(--c-red); }
+    .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
 
-    /* --- Footer --- */
-    footer{ background:var(--c-ink); color:#8892b0; padding:30px 0; border-top:1px solid rgba(255,255,255,.08); }
+    .form-control { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; border-radius: 12px; }
+    .form-control:focus { background: rgba(255,255,255,0.08); border-color: var(--accent-blue); color: #fff; box-shadow: none; }
 
-    /* --- Back to top --- */
-    .back-to-top{
-      position:fixed; bottom:28px; right:28px; width:52px; height:52px; border-radius:50%;
-      background: linear-gradient(135deg, var(--c-red), var(--c-gold));
-      color:#fff; text-align:center; line-height:52px; font-size:20px;
-      box-shadow: 0 0 20px rgba(212, 36, 38, 0.5);
-      opacity:0; visibility:hidden; transition: all .25s ease; z-index:999;
-      border: 2px solid rgba(255,255,255,0.2);
-    }
-    .back-to-top.active{ opacity:1; visibility:visible; }
-
-    /* --- Dossiers & filtres --- */
-    .folder-selector{ margin-bottom:26px; text-align:center; }
-    .folder-btn{ margin:0 10px 10px; padding:10px 20px; border-radius:999px; font-weight:700; }
-
-    .file-icon{ font-size:3rem; margin-bottom:10px; color: var(--c-gold); text-shadow: 0 0 15px rgba(248, 178, 41, 0.4); }
-
-    /* --- Scroll reveal --- */
-    .reveal{ opacity:0; transform: translateY(18px) scale(.98); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.show{ opacity:1; transform: none; }
-
-    @media (max-width: 768px){
-      .timeline:before{ left:20px; }
-      .timeline-item{ width:100%; padding-left:48px; padding-right:0; }
-      .timeline-item:nth-child(even){ float:none; padding-left:48px; }
-      .dropdown-menu{ margin-left:0; border-radius:12px; text-align:center; }
-      .hero{ padding-top:130px; }
-      
-      /* Veille table responsive */
-      .veille-table{ display: block; overflow-x: auto; white-space: nowrap; }
-      .veille-table th, .veille-table td{ padding: 8px 6px; font-size: 0.8rem; width: auto !important; }
-    }
+    footer { padding: 40px 0; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.75rem; }
   </style>
 </head>
 <body>
-  <div class="sky"></div>
-  <div class="aurora"></div>
-  <div class="aurora2"></div>
-  
-  <div class="snow-container" id="snow-layer" aria-hidden="true"></div>
 
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="mesh-gradient"></div>
+  <canvas id="snow-canvas"></canvas>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#"><i class="bi bi-snow2 me-2"></i>ALEXANDRE EWAN</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <a class="navbar-brand" href="#">BTS SIO</a>
+      <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <i class="bi bi-list fs-2"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto text-center">
           <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
-          <li class="nav-item"><a class="nav-link" href="#apropos">À propos</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projets</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#projets">Tous les projets</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#" data-folder="bloc1">BLOC 1</a></li>
-              <li><a class="dropdown-item" href="#" data-folder="bloc2">BLOC 2</a></li> <li><a class="dropdown-item" href="#" data-folder="pro">ATELIER DE PROFESSIONALISATION</a></li>
-              <li><a class="dropdown-item" href="#" data-folder="bloc3">BLOC 3</a></li>
-            </ul>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#veille" id="veilleDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Veille Tech
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="veilleDropdown">
-                  <li><a class="dropdown-item nav-link-custom" href="#tableau-historisation" data-target="historisation">Tableau d'historisation</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item nav-link-custom" href="#tableau-outils" data-target="outils">Outils de Veille</a></li>
-              </ul>
-          </li> 
+          <li class="nav-item"><a class="nav-link" href="#apropos">À Propos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projets">Projets</a></li>
+          <li class="nav-item"><a class="nav-link" href="#veille">Veille Tech</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
       </div>
@@ -400,264 +150,129 @@
   </nav>
 
   <section id="accueil" class="hero">
+    <div class="container reveal">
+      <img src="PHOTOH.webp" alt="Alexandre Ewan" class="hero-img">
+      <h1 class="hero-title">Alexandre Ewan.</h1>
+      <p class="text-dim fs-5 mb-5 mx-auto" style="max-width: 600px;">Étudiant en BTS SIO option SLAM. Développeur passionné par le Web et l'ingénierie logicielle.</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="#projets" class="btn-apple">Voir mes travaux</a>
+        <a href="CVSIO.pdf" target="_blank" class="btn-apple px-4" style="background: rgba(255,255,255,0.1); color: #fff;">Mon CV</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="apropos">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-6 hero-content reveal">
-          <span class="hero-badge"><i class="bi bi-gift-fill me-2"></i>Édition Spéciale Noël</span>
-          <h1>Portfolio SIO</h1>
-          <p>Passionné par l'informatique, les langues étrangères et les sports de terrain. Mon objectif est de devenir développeur web et de voyager à travers le monde.</p>
-          <a href="#contact" class="btn btn-primary me-3">Me contacter</a>
-          <a href="#" class="btn btn-outline-light" id="downloadCV">Télécharger mon CV</a>
-        </div>
-        <div class="col-lg-6 text-center reveal">
-          <img src="PHOTOH.webp" alt="Alexandre Ewan" class="hero-img mt-5 mt-lg-0">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="apropos" class="about-content">
-    <div class="container">
-      <h2 class="section-title">À propos de moi</h2>
-      <div class="title-underline"></div>
-      <div class="row">
         <div class="col-lg-6 reveal">
-          <div class="about-card">
-            <p>Je suis bachelier de filière technologique STI2D, passionné par les sports de terrain, l'informatique et les langues étrangères. J'ai de bonnes compétences en anglais (niveau C1) et des bases solides en italien (niveau B1).</p>
-            <p>Mon parcours académique m'a permis d'acquérir des compétences techniques solides et une approche pratique de la résolution de problèmes. Je suis déterminé à poursuivre mes études dans le domaine du développement web et des applications.</p>
-            <p>À long terme, je vise un master en développement de logiciels ou d'applications, avec peut-être une spécialisation dans le développement de jeux vidéo. Mon objectif est de combiner ma passion pour la technologie avec mon désir de voyager à travers le monde.</p>
+          <span class="section-label">Profil professionnel</span>
+          <h2 class="section-title">Compétences & Objectifs.</h2>
+          <p class="text-dim mb-4">Bachelier STI2D, j'évolue actuellement en BTS SIO pour me spécialiser dans le développement d'applications. Mon parcours combine rigueur technique et une forte dimension internationale avec un niveau C1 en anglais.</p>
+          <div class="d-flex flex-wrap gap-2 mb-5">
+            <span class="badge bg-dark border border-secondary p-2">Java</span>
+            <span class="badge bg-dark border border-secondary p-2">PHP</span>
+            <span class="badge bg-dark border border-secondary p-2">JavaScript</span>
+            <span class="badge bg-dark border border-secondary p-2">HTML</span>
+            <span class="badge bg-dark border border-secondary p-2">CSS</span>
+            <span class="badge bg-dark border border-secondary p-2">SQL</span>
+            <span class="badge bg-dark border border-secondary p-2">Python</span>
           </div>
         </div>
         <div class="col-lg-6 reveal">
-          <div class="row">
-            <div class="col-md-6">
-              <ul class="list-unstyled">
-                <li class="mb-2"><strong>Nom :</strong> Alexandre Ewan</li>
-                <li class="mb-2"><strong>Diplôme :</strong> Baccalauréat technologique STI2D</li>
-                <li class="mb-2"><strong>Langues :</strong> Français, Anglais, Italien</li>
-              </ul>
-            </div>
-            <div class="col-md-6">
-              <ul class="list-unstyled">
-                <li class="mb-2"><strong>Téléphone :</strong> +33 6 22 73 95 77</li>
-                <li class="mb-2"><strong>Email :</strong> ealexandre2804@gmail.com</li>
-                <li class="mb-2"><strong>Ville :</strong> Malijai, France</li>
-              </ul>
-            </div>
-          </div>
-          <div class="mt-4">
-            <a href="#projets" class="btn btn-primary me-2">Voir mes projets</a>
-            <a href="#contact" class="btn btn-outline-primary">Me contacter</a>
+          <div class="project-card p-4">
+             <div class="row g-3">
+               <div class="col-6"><h6>Nom</h6><p class="text-dim small">Alexandre Ewan</p></div>
+               <div class="col-6"><h6>Diplôme</h6><p class="text-dim small">BTS SIO (SLAM)</p></div>
+               <div class="col-12 mt-3"><h6>Localisation</h6><p class="text-dim small">Malijai, France</p></div>
+               <div class="col-12"><h6>Email</h6><p class="text-dim small">ealexandre2804@gmail.com</p></div>
+             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="projets" class="py-5">
+  <section id="projets">
     <div class="container">
-      <h2 class="section-title">Mes projets</h2>
-      <div class="title-underline"></div>
+      <span class="section-label">Réalisations</span>
+      <h2 class="section-title">Mes Projets de Formation.</h2>
 
-      <div class="folder-selector">
-        <button class="btn btn-primary folder-btn" data-folder="bloc1">BLOC 1</button>
-        <button class="btn btn-outline-primary folder-btn" data-folder="bloc2">BLOC 2</button> <button class="btn btn-outline-primary folder-btn" data-folder="pro">ATELIER DE PROFESSIONALISATION</button>
-        <button class="btn btn-outline-primary folder-btn" data-folder="bloc3">BLOC 3</button>
+      <div class="nav nav-pills nav-pills-apple justify-content-center" id="pills-tab" role="tablist">
+        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-bloc1">Bloc 1</button>
+        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-bloc2">Bloc 2</button>
+        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-pro">Atelier Pro</button>
+        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-bloc3">Bloc 3</button>
       </div>
 
-      <div id="folder-bloc1" class="folder-section active">
-        <div class="row" id="projects-bloc1"></div>
-      </div>
-
-      <div id="folder-bloc2" class="folder-section">
-        <div class="row" id="projects-bloc2"></div>
-      </div>
-
-      <div id="folder-pro" class="folder-section">
-        <div class="row" id="projects-pro"></div>
-      </div>
-
-      <div id="folder-bloc3" class="folder-section">
-        <div class="row" id="projects-bloc3"></div>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-bloc1"><div class="row g-4" id="projects-bloc1"></div></div>
+        <div class="tab-pane fade" id="pills-bloc2"><div class="row g-4" id="projects-bloc2"></div></div>
+        <div class="tab-pane fade" id="pills-pro"><div class="row g-4" id="projects-pro"></div></div>
+        <div class="tab-pane fade" id="pills-bloc3"><div class="row g-4" id="projects-bloc3"></div></div>
       </div>
     </div>
   </section>
 
-  <div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content" style="background:#141c33; color:#fff; border:1px solid rgba(255,255,255,.1);">
-        <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-          <h5 class="modal-title" id="modalProjectTitle">Détails du projet</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" id="modalProjectBody"></div>
-        <div class="modal-footer" style="border-top: 1px solid rgba(255,255,255,0.1);">
-          <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Fermer</button>
-          <a href="#" class="btn btn-primary" id="modalProjectLink">Voir le projet</a>
+  <section id="veille">
+    <div class="container">
+      <span class="section-label">Veille Informationnelle</span>
+      <h2 class="section-title">Innovations Technologiques.</h2>
+      
+      <div class="text-center">
+        <div class="year-selector">
+          <button class="year-btn active" data-year="2026">2026</button>
+          <button class="year-btn" data-year="2025">2025</button>
         </div>
       </div>
-    </div>
-  </div>
 
-  <section id="experience" class="py-5 bg-transparent">
-    <div class="container">
-      <h2 class="section-title">Mon parcours</h2>
-      <div class="title-underline"></div>
-      <div class="timeline">
-        <div class="timeline-item reveal">
-          <div class="timeline-content">
-            <div class="timeline-date">2023 - Présent</div>
-            <h4>Développement de compétences</h4>
-            <p>Auto-formation en développement web et programmation. Acquisition de compétences en HTML, CSS, JavaScript, Python et Arduino.</p>
-          </div>
+      <div class="veille-container mb-5 reveal">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 120px">Date</th>
+                <th style="width: 200px">Innovation</th>
+                <th>Analyse de l'Impact</th>
+                <th style="width: 60px">Lien</th>
+              </tr>
+            </thead>
+            <tbody id="veille-tech-body"></tbody>
+          </table>
         </div>
-        <div class="timeline-item reveal">
-          <div class="timeline-content">
-            <div class="timeline-date">2020 - 2023</div>
-            <h4>Baccalauréat Technologique STI2D</h4>
-            <p>Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
-            <p>Mention Assez Bien</p>
-          </div>
-        </div>
-        <div class="timeline-item reveal">
-          <div class="timeline-content">
-            <div class="timeline-date">2016 - 2020</div>
-            <h4>Brevet des Collèges</h4>
-            <p>Collège JMG Itard, Oraison</p>
-            <p>Mention Assez Bien</p>
-          </div>
-        </div>
+      </div>
+
+      <h5 class="mb-4 text-center">Outils de Veille</h5>
+      <div class="row g-4">
+        <div class="col-md-3 reveal"><div class="project-card p-3 text-center small"><i class="bi bi-envelope-fill text-primary d-block mb-2"></i>Google Alerts</div></div>
+        <div class="col-md-3 reveal"><div class="project-card p-3 text-center small"><i class="bi bi-rss-fill text-primary d-block mb-2"></i>Feedly</div></div>
+        <div class="col-md-3 reveal"><div class="project-card p-3 text-center small"><i class="bi bi-twitter-x text-primary d-block mb-2"></i>X / Reddit</div></div>
+        <div class="col-md-3 reveal"><div class="project-card p-3 text-center small"><i class="bi bi-table text-primary d-block mb-2"></i>Google Sheets</div></div>
       </div>
     </div>
   </section>
 
-  <section id="veille" class="py-5 bg-transparent">
-    <div class="container">
-      <h2 class="section-title">Veille Technologique</h2>
-      <div class="title-underline"></div>
+  <section id="contact">
+    <div class="container reveal">
       <div class="row justify-content-center">
-        <div class="col-lg-12 reveal">
-          <p class="text-center" style="color:var(--c-muted);">Pour rester à jour sur les nouveautés du développement web et de l'informatique, j'utilise différents outils de veille et j'organise mes trouvailles.</p>
-          
-          <h4 class="mt-5 section-title" id="tableau-historisation" style="font-size:1.5rem; color:var(--c-text); background:none; -webkit-text-fill-color:initial; text-shadow:none;">Tableau d'historisation des innovations</h4>
-          
-          <div class="table-responsive">
-            <table class="table table-dark table-hover align-middle veille-table">
-              <thead>
-                <tr>
-                  <th scope="col" class="date-col">Date</th>
-                  <th scope="col" class="sujet-col">Sujet</th>
-                  <th scope="col" class="desc-col">Description</th>
-                  <th scope="col" class="source-col">Src</th>
-                  <th scope="col" class="outil-col">Outils utilisés</th>
-                  <th scope="col" class="cat-col">Catégorie</th>
-                  <th scope="col" class="impact-col">Impact potentiel / Analyse</th>
-                </tr>
-              </thead>
-              <tbody id="veille-tech-body">
-                </tbody>
-            </table>
-          </div>
-
-          <h4 class="mt-5 text-center section-title" id="tableau-outils" style="font-size:1.5rem; color:var(--c-text); background:none; -webkit-text-fill-color:initial; text-shadow:none;">Outils de Veille Utilisés</h4>
-          <div class="table-responsive">
-             <table class="table table-dark table-hover align-middle veille-table">
-              <thead>
-                <tr>
-                  <th scope="col" style="width:15%">Outil</th>
-                  <th scope="col" style="width:35%">Description</th>
-                  <th scope="col" style="width:15%">Type de Veille</th>
-                  <th scope="col" style="width:35%">Paramétrage / Configuration</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr onclick="window.open('https://www.google.com/alerts', '_blank');">
-                  <td><a href="https://www.google.com/alerts" target="_blank" style="color:var(--c-gold);">Google Alertes <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Recevez des emails pour des sujets d'intérêts dès qu'une nouvelle publication apparaît sur le web.</td>
-                  <td>Automatisée / Suivi</td>
-                  <td>Mots-clés : "Nvidia architecture", "Intel innovation", "AMD GPU". Fréquence : Hebdomadaire.</td>
-                </tr>
-                <tr onclick="window.open('https://feedly.com/', '_blank');">
-                  <td><a href="https://feedly.com/" target="_blank" style="color:var(--c-gold);">Feedly <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Agrégateur de flux RSS pour centraliser les actualités.</td>
-                  <td>Agrégation</td>
-                  <td>Abonnement aux blogs officiels AMD/Intel/Nvidia et sites spécialisés (AnandTech, Tom's Hardware).</td>
-                </tr>
-                 <tr onclick="window.open('https://www.talkwalker.com/alerts', '_blank');">
-                  <td><a href="https://www.talkwalker.com/alerts" target="_blank" style="color:var(--c-gold);">Talkwalker Alerts <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Alternative à Google Alertes pour des requêtes spécifiques.</td>
-                  <td>Automatisée</td>
-                  <td>Alertes précises sur "NVIDIA AI innovation" et "AMD nouvelle architecture".</td>
-                </tr>
-                <tr onclick="window.open('https://www.google.com/sheets/about/', '_blank');">
-                  <td><a href="https://www.google.com/sheets/about/" target="_blank" style="color:var(--c-gold);">Google Sheets <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Organiser les informations, les sources, les dates de publication et les synthèses des articles.</td>
-                  <td>Organisation</td>
-                  <td>Tableau avec colonnes : Date, Sujet, Source, Outil, Analyse personnelle.</td>
-                </tr>
-                <tr onclick="window.open('https://news.google.com/', '_blank');">
-                  <td><a href="https://news.google.com/" target="_blank" style="color:var(--c-gold);">Google News <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Algorithme personnalisé pour découvrir les dernières actualités.</td>
-                  <td>Découverte</td>
-                  <td>Favoris sur les thèmes "Hardware", "Processeurs", "Cartes Graphiques".</td>
-                </tr>
-                <tr onclick="window.open('https://x.com/', '_blank');">
-                  <td><a href="https://x.com/" target="_blank" style="color:var(--c-gold);">X (Twitter) <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Flux rapide d'actualités et d'avis d'experts en temps réel.</td>
-                  <td>Réseaux Sociaux</td>
-                  <td>Suivi des comptes officiels et hashtags #Nvidia #Intel #AMD #TechNews.</td>
-                </tr>
-                <tr onclick="window.open('https://www.linkedin.com/', '_blank');">
-                  <td><a href="https://www.linkedin.com/" target="_blank" style="color:var(--c-gold);">LinkedIn <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Réseau professionnel pour les annonces corpo et stratégiques.</td>
-                  <td>Réseau Pro</td>
-                  <td>Suivi des pages entreprises et des CTO/Ingénieurs clés.</td>
-                </tr>
-                <tr onclick="window.open('https://www.reddit.com/', '_blank');">
-                  <td><a href="https://www.reddit.com/" target="_blank" style="color:var(--c-gold);">Reddit / Discord <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Communautés spécialisées pour les discussions techniques.</td>
-                  <td>Communautaire</td>
-                  <td>Subreddits r/AMD, r/nvidia, r/hardware et serveurs Discord Hardware.</td>
-                </tr>
-                <tr onclick="window.open('https://www.youtube.com/', '_blank');">
-                  <td><a href="https://www.youtube.com/" target="_blank" style="color:var(--c-gold);">YouTube <i class="bi bi-box-arrow-up-right"></i></a></td>
-                  <td>Revues technologiques, tutoriels et actualité tech en vidéo.</td>
-                  <td>Vidéo / Éducative</td>
-                  <td>Abonnements aux chaînes Tech (LTT, GamerNexus, Hardware Unboxed).</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2 class="section-title text-white">Me contacter</h2>
-      <div class="title-underline"></div>
-      <div class="row">
-        <div class="col-lg-8 mx-auto reveal">
-          <div class="contact-form">
+        <div class="col-lg-6 text-center">
+          <span class="section-label">Me contacter</span>
+          <h2 class="section-title">Discutons de vos projets.</h2>
+          <div class="project-card p-4 text-start">
             <form id="contactForm">
-              <div class="row">
-                <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Votre nom" required>
-                </div>
-                <div class="col-md-6">
-                  <input type="email" class="form-control" placeholder="Votre email" required>
-                </div>
+              <div class="mb-3">
+                <label class="small text-dim mb-1">Votre Nom</label>
+                <input type="text" class="form-control p-3" placeholder="Nom">
               </div>
-              <input type="text" class="form-control" placeholder="Sujet">
-              <textarea class="form-control" rows="5" placeholder="Votre message" required></textarea>
-              <button type="submit" class="btn btn-primary w-100">Envoyer le message</button>
+              <div class="mb-3">
+                <label class="small text-dim mb-1">Votre Email</label>
+                <input type="email" class="form-control p-3" placeholder="email@exemple.com">
+              </div>
+              <div class="mb-4">
+                <label class="small text-dim mb-1">Message</label>
+                <textarea class="form-control p-3" rows="4" placeholder="Votre message ici..."></textarea>
+              </div>
+              <button type="submit" class="btn-apple w-100">Envoyer</button>
             </form>
-          </div>
-          <div class="text-center mt-5">
-            <div class="social-links">
-              <a href="https://github.com/ealexandre18" target="_blank" aria-label="GitHub"><i class="bi bi-github"></i></a>
-            </div>
           </div>
         </div>
       </div>
@@ -666,338 +281,189 @@
 
   <footer class="text-center">
     <div class="container">
-      <p>© 2023 Alexandre Ewan. Tous droits réservés.</p>
+      <p>&copy; 2026 Alexandre Ewan. Portfolio BTS SIO.</p>
+      <div class="d-flex justify-content-center gap-3 mt-3">
+        <a href="https://github.com/ealexandre18" class="text-white fs-4"><i class="bi bi-github"></i></a>
+      </div>
     </div>
   </footer>
 
-  <a href="#" class="back-to-top" aria-label="Retour en haut"><i class="bi bi-arrow-up"></i></a>
+  <div class="modal fade" id="projectModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0" style="background: #1c1c1e; color: #fff; border-radius: 20px;">
+        <div class="modal-header border-0 p-4"><h5 class="modal-title" id="modalTitle"></h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body p-4 pt-0" id="modalBody"></div>
+        <div class="modal-footer border-0 p-4"><a href="#" id="modalLink" target="_blank" class="btn-apple">Ouvrir le PDF</a></div>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+  
   <script>
-    /* ==============================================================
-       DONNÉES DE VEILLE TECHNOLOGIQUE (MISE À JOUR) 🚀
-       Nouvelle structure avec Source, Outil, Catégorie, Analyse
-       ============================================================== */
-    const veilleEntries = [
-	{ 
-        date: "06/12/2025", 
-        sujet: "Nvidia CUDA Tiles", 
-        description: "C'est un nouveau modèle de programmation qui permet au GPU de stocker temporairement de petits blocs de données dans sa mémoire rapide pour les calculs d'IA, assurant ainsi une exécution plus rapide et efficace.", 
-        link: "https://developer.nvidia.com/blog/nvidia-cuda-13-1-powers-next-gen-gpu-programming-with-nvidia-cuda-tile-and-performance-gains/",
-        outil: "Google News",
-        categorie: "Software / GPU",
-        impact: "L'introduction de CUDA Tile renforce la domination logicielle de NVIDIA sur l'IA en simplifiant la gestion de la mémoire rapide du GPU. Cette innovation consolide l'écosystème CUDA, rendant les Tensor Cores plus efficaces et augmentant la barrière technique pour les concurrents comme AMD. Elle positionne ainsi NVIDIA non seulement comme leader de l'IA, mais aussi comme architecte essentiel de l'infrastructure de calcul du futur."
-      },
-      { 
-        date: "19/11/2025", 
-        sujet: "Annonce de FSR Redstone par AMD", 
-        description: "Nouvelle technologie d'upscaling IA d'AMD pour rivaliser avec le DLSS de NVIDIA, réservée aux Radeon RX 9000.", 
-        link: "https://www.tweaktown.com/news/108950/amds-big-fsr-redstone-update-for-radeon-gpus-is-set-to-arrive-on-december-10/index.html",
-        outil: "Google News",
-        categorie: "Software / GPU",
-        impact: "Pourrait enfin combler le retard d'AMD sur l'IA grand public et rendre les futures cartes RX 9000 beaucoup plus attractives face aux RTX."
-      },
-      { 
-        date: "10/11/2025", 
-        sujet: "Acquisition des puces MK1 par AMD", 
-        description: "Rachat de la startup MK1 pour optimiser les logiciels d'IA (inférence) et l'efficacité des puces.", 
-        link: "https://www.amd.com/en/blogs/2025/amd-acquires-mk1-to-advance-ai-inference-performance.html",
-        outil: "Google News",
-        categorie: "Business / IA",
-        impact: "Renforce l'écosystème logiciel d'AMD (ROCm), point faible historique face à CUDA de Nvidia. Stratégique pour le marché pro."
-      },
-      { 
-        date: "28/10/2025", 
-        sujet: "Nouvelle technologie NVQLink de Nvidia", 
-        description: "Pont logiciel entre les GPU Blackwell (IA) et les calculateurs quantiques.", 
-        link: "https://nvidianews.nvidia.com/news/nvidia-nvqlink-quantum-gpu-computing",
-        outil: "X (Twitter)",
-        categorie: "Quantique / IA",
-        impact: "Positionne Nvidia comme leader non seulement en IA mais aussi sur l'infrastructure du futur (hybride quantique-classique)."
-      },
-      { 
-        date: "09/10/2025", 
-        sujet: "Révélation de l'Architecture Panther Lake par Intel", 
-        description: "Prochains processeurs PC grand public fabriqués sur le procédé avancé Intel 18A.", 
-        link: "https://newsroom.intel.com/client-computing/intel-unveils-panther-lake-architecture-first-ai-pc-platform-built-on-18a",
-        outil: "Google Alertes",
-        categorie: "Architecture CPU",
-        impact: "Test crucial pour la fonderie Intel. Si le 18A réussit, Intel peut revenir dans la course face à TSMC et AMD."
-      }
-    ].sort((a,b)=> new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-')));
-    
-    /* ============
-       Projets
-       ============ */
     const projects = {
       bloc1: [
-        { name:"TP01 - BEAUVALLET", description:"Travail pratique : résolution de labyrinthes avec des blocs de code (style Scratch).", image:"https://studio.code.org/script_assets/k_1_images/maze_images/maze_WS.png", file:"TP01_BEAUVALLET.pdf", type:"pdf" },
-        { name:"TP01 - SOTOCA", description:"Travail pratique : Paramétrage du matériel informatique", image:"https://ajsinformatique.fr/wp-content/uploads/2021/06/installation-et-parametrage-materiel-informatique.png", file:"TP01_SOTOCA.pdf", type:"pdf" },
-        { name:"TP02 - BEAUVALLET", description:"Premier pas en JAVA", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3S9FqOWEjqGZPQ98L55jzxu9OXbJqwXx_Gw&s", file:"TP02_BEAUVALLET.pdf", type:"pdf" },
-        { name:"TP02 - SOTOCA", description:"Logiciels de diagnostic", image:"https://overclocking.com/wp-content/uploads/2021/04/hwinfo-.jpg", file:"TP02_SOTOCA.pdf", type:"pdf" },
-        { name:"TP03 - BEAUVALLET", description:"Exercices JAVA", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuEorj7DUDeLvIJaZE_KLdaElDnIdiDenR9A&s", file:"TP03_BEAUVALLET.pdf", type:"pdf" },
-        { name:"TP04 - BEAUVALLET", description:"Shifumi JAVA", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREMEYG7weSusIb8RtQfp_DKLkH0L--T42nWg&s", file:"TP04_BEAUVALLET.pdf", type:"pdf" },
-        { name:"CARTE MENTALE COMMANDES CMD", description:"Cartes mentales des différentes commandes les plus utilisées sur cmd", image:"https://i.ytimg.com/vi/1sXHgXKfhRY/hqdefault.jpg", file:"CARTE_MENTALE.pdf", type:"pdf" },
-		 { name:"TP05 - SOTOCA", description:"Commandes CMD, commande doskey et carte mentale", image:"https://www.valordi.com/wp-content/uploads/2024/10/35-commandes-utiles-pour-cmd-windows.jpg", file:"TP05_SOTOCA.pdf", type:"pdf" },
-		 { name:"TP05 - BEAUVALLET", description:"Exercices JAVA et SWING", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZLXYV1xBTDsKUcO0XZzbvPXilm-W7D6JMcQ&s", file:"TP05_BEAUVALLET.pdf", type:"pdf" },
-		 { name:"TP06 - SOTOCA", description:"TechCorp", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm5_VBMGuR_KBOv_gr00re9o4TShDogL5TPw&s", file:"TP06_SOTOCA.pdf", type:"pdf" },
-		 { name:"TP06 - BEAUVALLET", description:"Fonctions et procédures", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB1QGcLZYAH591V70KH0p9oZ2LvfCvu6mpbw&s", file:"TP06_BEAUVALLET.pdf", type:"pdf" },
-		 { name:"TP07 - BEAUVALLET", description:"Bataille navale", image:"https://joueclub-joueclub-fr-storage.omn.proximis.com/Imagestorage/images/0/400/5e46c3cd37ef8_la_bataille_navale_un_jeu_simple_et_toujours_amusant.jpg", file:"TP07_BEAUVALLET.pdf", type:"pdf" },
-		  { name:"TP08 - BEAUVALLET", description:"Classe Livre et Compte", image:"https://techvidvan.com/tutorials/wp-content/uploads/2020/02/java-class-objects.jpg", file:"TP08_BEAUVALLET.pdf", type:"pdf" },
-		  { name:"TP09 - BEAUVALLET", description:"PHP", image:"https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg", file:"TP09_BEAUVALLET.pdf", type:"pdf" },
-		  { name:"TP10 - BEAUVALLET", description:"Scene Builder", image:"https://i.ytimg.com/vi/ILraaBUTMJk/maxresdefault.jpg", file:"TP10_BEAUVALLET.pdf", type:"pdf" },
-		  { name:"TP11 - BEAUVALLET", description:"Modélisation du MLD et du MCD d'une base de donnée avec AnalyseSI", image:"https://grafikart.fr/uploads/attachments/2022/mcd-mld-61f2a1ba6539b275694702.jpg", file:"TP11_BEAUVALLET.pdf", type:"pdf" },
-		   { name:"TP12 - BEAUVALLET", description:"BDD Leclerc", image:"https://www.michel-edouard-leclerc.com/sites/default/files/2019-02/E.Leclerc%20logo%20blog.png", file:"TP12_BEAUVALLET.pdf", type:"pdf" },
-		    { name:"TP13 - BEAUVALLET", description:"BDD Zoo avec CMD", image:"https://static.actu.fr/uploads/2017/11/5a111cfc0155a464f9c42652c58afa3f0511c069-960x640.jpg", file:"TP13_BEAUVALLET.pdf", type:"pdf" },
-			{ name:"TP07 - SOTOCA", description:"Création de scénario pour utilisation de Linux", image:"https://i.extremetech.com/imagery/content-types/00ZTdioKuRFKHIEMNw8NtDb/hero-image.fit_lim.v1678673053.jpg", file:"TP21_SOTOCA.pdf", type:"pdf" },
-          { name:"TP14 - BEAUVALLET", description:"Livre JAVAFX", image:"https://upload.wikimedia.org/wikipedia/en/c/cc/JavaFX_Logo.png", file:"TP14_BEAUVALLET.pdf", type:"pdf" },
-		  { name:"TP15 - BEAUVALLET", description:"Requêtes SQL LECLERC", image:"https://bairesdev.mo.cloudinary.net/blog/2023/10/What-is-SQL-Server.jpg?tx=w_1920,q_auto", file:"TD3_B2_BEAUVALLET.pdf", type:"pdf" },
-		  { name:"TD7 - BEAUVALLET", description:"Polymorphisme", image:"https://codegym.cc/images/article/1771301a-66f1-469c-868a-41809dc18672/original.png", file:"TD7_B1_BEAUVALLET.pdf", type:"pdf" },
-		  { name:"TP2 - S2 - SOTOCA", description:"Active Directory", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8XquQhLJrNPKS6OgrlU07F_lW39S_TdGxXA&s", file:"TP2_S2_SOTOCA.pdf", type:"pdf" },
-		   { name:"TP16 - BEAUVALLET", description:"Utilisateurs en SQL", image:"https://i.ytimg.com/vi/IvOCAobeihs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBjDx4E-lNq5FnSay12MocUNWxr0w", file:"TP_SQL_BEAUVALLET.pdf", type:"pdf" },
-	  ],
-		
-	
-      // NOUVEAU BLOC 2 : Ajoutez vos TPs ici
+        { name:"TP01 - BEAUVALLET", description:"Résolution de labyrinthes avec des blocs de code.", image:"https://studio.code.org/script_assets/k_1_images/maze_images/maze_WS.png", file:"TP01_BEAUVALLET.pdf" },
+        { name:"TP01 - SOTOCA", description:"Paramétrage du matériel informatique.", image:"https://ajsinformatique.fr/wp-content/uploads/2021/06/installation-et-parametrage-materiel-informatique.png", file:"TP01_SOTOCA.pdf" },
+        { name:"TP02 - BEAUVALLET", description:"Premier pas en JAVA.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3S9FqOWEjqGZPQ98L55jzxu9OXbJqwXx_Gw&s", file:"TP02_BEAUVALLET.pdf" },
+        { name:"TP02 - SOTOCA", description:"Logiciels de diagnostic.", image:"https://overclocking.com/wp-content/uploads/2021/04/hwinfo-.jpg", file:"TP02_SOTOCA.pdf" },
+        { name:"TP03 - BEAUVALLET", description:"Exercices JAVA.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuEorj7DUDeLvIJaZE_KLdaElDnIdiDenR9A&s", file:"TP03_BEAUVALLET.pdf" },
+        { name:"TP04 - BEAUVALLET", description:"Shifumi JAVA.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREMEYG7weSusIb8RtQfp_DKLkH0L--T42nWg&s", file:"TP04_BEAUVALLET.pdf" },
+        { name:"CARTE MENTALE CMD", description:"Commandes les plus utilisées sur cmd.", image:"https://i.ytimg.com/vi/1sXHgXKfhRY/hqdefault.jpg", file:"CARTE_MENTALE.pdf" },
+        { name:"TP05 - SOTOCA", description:"Commandes CMD et doskey.", image:"https://www.valordi.com/wp-content/uploads/2024/10/35-commandes-utiles-pour-cmd-windows.jpg", file:"TP05_SOTOCA.pdf" },
+        { name:"TP05 - BEAUVALLET", description:"JAVA et SWING.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZLXYV1xBTDsKUcO0XZzbvPXilm-W7D6JMcQ&s", file:"TP05_BEAUVALLET.pdf" },
+        { name:"TP06 - SOTOCA", description:"TechCorp.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm5_VBMGuR_KBOv_gr00re9o4TShDogL5TPw&s", file:"TP06_SOTOCA.pdf" },
+        { name:"TP06 - BEAUVALLET", description:"Fonctions et procédures.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB1QGcLZYAH591V70KH0p9oZ2LvfCvu6mpbw&s", file:"TP06_BEAUVALLET.pdf" },
+        { name:"TP07 - BEAUVALLET", description:"Bataille navale Java.", image:"https://joueclub-joueclub-fr-storage.omn.proximis.com/Imagestorage/images/0/400/5e46c3cd37ef8_la_bataille_navale_un_jeu_simple_et_toujours_amusant.jpg", file:"TP07_BEAUVALLET.pdf" },
+        { name:"TP08 - BEAUVALLET", description:"Classe Livre et Compte.", image:"https://techvidvan.com/tutorials/wp-content/uploads/2020/02/java-class-objects.jpg", file:"TP08_BEAUVALLET.pdf" },
+        { name:"TP09 - BEAUVALLET", description:"PHP Basique.", image:"https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg", file:"TP09_BEAUVALLET.pdf" },
+        { name:"TP10 - BEAUVALLET", description:"Scene Builder JFX.", image:"https://i.ytimg.com/vi/ILraaBUTMJk/maxresdefault.jpg", file:"TP10_BEAUVALLET.pdf" },
+        { name:"TP11 - BEAUVALLET", description:"Modélisation MLD/MCD.", image:"https://grafikart.fr/uploads/attachments/2022/mcd-mld-61f2a1ba6539b275694702.jpg", file:"TP11_BEAUVALLET.pdf" },
+        { name:"TP12 - BEAUVALLET", description:"BDD Leclerc SQL.", image:"https://www.michel-edouard-leclerc.com/sites/default/files/2019-02/E.Leclerc%20logo%20blog.png", file:"TP12_BEAUVALLET.pdf" },
+        { name:"TP13 - BEAUVALLET", description:"BDD Zoo avec CMD.", image:"https://static.actu.fr/uploads/2017/11/5a111cfc0155a464f9c42652c58afa3f0511c069-960x640.jpg", file:"TP13_BEAUVALLET.pdf" },
+        { name:"TP07 - SOTOCA", description:"Scénario Linux.", image:"https://i.extremetech.com/imagery/content-types/00ZTdioKuRFKHIEMNw8NtDb/hero-image.fit_lim.v1678673053.jpg", file:"TP21_SOTOCA.pdf" },
+        { name:"TP14 - BEAUVALLET", description:"Livre JAVAFX.", image:"https://upload.wikimedia.org/wikipedia/en/c/cc/JavaFX_Logo.png", file:"TP14_BEAUVALLET.pdf" },
+        { name:"TP15 - BEAUVALLET", description:"Requêtes SQL LECLERC.", image:"https://bairesdev.mo.cloudinary.net/blog/2023/10/What-is-SQL-Server.jpg?tx=w_1920,q_auto", file:"TD3_B2_BEAUVALLET.pdf" },
+        { name:"TD7 - BEAUVALLET", description:"Polymorphisme Java.", image:"https://codegym.cc/images/article/1771301a-66f1-469c-868a-41809dc18672/original.png", file:"TD7_B1_BEAUVALLET.pdf" },
+        { name:"TP2 - S2 - SOTOCA", description:"Active Directory.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8XquQhLJrNPKS6OgrlU07F_lW39S_TdGxXA&s", file:"TP2_S2_SOTOCA.pdf" },
+        { name:"TP16 - BEAUVALLET", description:"Utilisateurs SQL.", image:"https://i.ytimg.com/vi/IvOCAobeihs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBjDx4E-lNq5FnSay12MocUNWxr0w", file:"TP_SQL_BEAUVALLET.pdf" }
+      ],
       bloc2: [
-         { name:"TD3 - B2 - BEAUVALLET", description:"Lien SQL - JAVA", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYGd0F4N--qHe3cWXf7NTdG7tyPEQuFb6Xmg&s", file:"TD_JDBC.pdf", type:"pdf" },
-		   { name:"TP01 B2 BEAUVALLET", description:"Types de diagrammes UML", image:"https://static-cse.canva.com/blob/1421441/long-form_UML-diagram_section-1_asset-1.jpg", file:"TP01_SLAM_BEAUVALLET.pdf", type:"pdf" },
-		  { name:"TP02 B2 BEAUVALLET", description:"Diagramme de classe", image:"https://d3n817fwly711g.cloudfront.net/uploads/2018/08/New-Copy-of-Online-Shopping-System-Class-Diagram.png", file:"TP02_B2_BEAUVALLET.pdf", type:"pdf" },
+        { name:"TD3 - B2 - BEAUVALLET", description:"Lien SQL - JAVA (JDBC).", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYGd0F4N--qHe3cWXf7NTdG7tyPEQuFb6Xmg&s", file:"TD_JDBC.pdf" },
+        { name:"TP01 B2 BEAUVALLET", description:"Diagrammes UML.", image:"https://static-cse.canva.com/blob/1421441/long-form_UML-diagram_section-1_asset-1.jpg", file:"TP01_SLAM_BEAUVALLET.pdf" },
+        { name:"TP02 B2 BEAUVALLET", description:"Diagramme de classe.", image:"https://d3n817fwly711g.cloudfront.net/uploads/2018/08/New-Copy-of-Online-Shopping-System-Class-Diagram.png", file:"TP02_B2_BEAUVALLET.pdf" }
       ],
       pro: [
-        { name:"TP01 - ATELIER", description:"Portfolio", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSprJmp8vZLTaprWtfns0cn4iQtPgJDsnN5lA&s", file:"TP01_ATELIER.pdf", type:"pdf" },
-        { name:"TD01 - ATELIER", description:"HTML", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8tGtuLs5kBlKBkl1vhb6EDqXQLgwfv2xH7g&s", file:"TP02_ATELIER.pdf", type:"pdf" },
-        { name:"TD01 Partie 2 - ATELIER", description:"CSS", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vVQmOEYUC3sOv7yVNBohQcHIpL7XFbuuLg&s", file:"TP03_ATELIER.pdf", type:"pdf" },
-        { name:"TD02 - ATELIER", description:"HTML et CSS avancé", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJfkp5e25y1UxY95Uo44WTv184iSsmyYdmkg&s", file:"TD02_SOTOCA.pdf", type:"pdf" },
-		 { name:"TD02 Partie 2 - ATELIER", description:"HTML et CSS avancé partie 2", image:"https://funky-stuff.com/wp-content/uploads/2020/04/Chuck-Norris-80th-birthday-Chuck-Norris-memes-Chuck-Norris-birthday-700x394.jpg", file:"TD02_Partie2_ATELIER.pdf", type:"pdf" },
-		 { name:"TD04 - ATELIER", description:"Formulaires en HTML", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgZZLlDXeF6Esg50gnnzbz1Pnxx7HpKa7h-Q&s", file:"TD4_ATELIER.pdf", type:"pdf" },
-		 { name:"TD05 - ATELIER", description:"Responsive Design", image:"https://www.seo.fr/wp-content/uploads/2022/12/Responsive_design-1024x576.png", file:"TD05_ATELIER.pdf", type:"pdf" },
-		  { name:"TP09 - ATELIER", description:"Cahier des charges et livrables", image:"https://lh3.googleusercontent.com/proxy/uY7zLYTkGHpkrezTjw1hOVHGFL0NsSg8tzdnzU-o8jrkyasgpUpYc59wOm3hdOh6I1ws_66aBl-DxejjJAqzuw5FNZDvm0K06y51fGy7ZeaDtU6KpkZ1lY_Ame22wVLRC0XpBcYo8aJX-o6yA6tGnkoXAd5GQqyxT7s", file:"TP09_ATELIER.pdf", type:"pdf" },
-		  { name:"TP10 - ATELIER", description:"Sécurité Informatique : Clés USB Personnelles", image:"https://dxbyzx5id4chj.cloudfront.net/pub/media/catalog/product/7/9/4/3/1/3/P_79431304_1.jpg", file:"TP10_ATELIER.pdf", type:"pdf" },
-		  { name:"TP11 - ATELIER", description:"JavaScript", image:"https://logos-world.net/wp-content/uploads/2023/02/JavaScript-Symbol.png", file:"TP11_ATELIER.pdf", type:"pdf" },
-		  { name:"PROJET1 - ATELIER", description:"SACINFO", image:"https://www.gantt.com/wp-content/uploads/2024/07/gantt-chart-1.jpg", file:"PROJET_SACINFO.pdf", type:"pdf" },
-		  { name:"PROJET2 - ATELIER", description:"Diagrammes de Gantt", image:"https://cg2010studio.com/wp-content/uploads/2012/03/ganttproject.jpg", file:"PROJET2_BEAUVALLET.pdf", type:"pdf" },
-		   { name:"PROJET3- ATELIER", description:"Outils de suivi d'un projet : diagramme de Gantt", image:"https://methodo-projet.fr/wp-content/uploads/2014/07/IMG_Photo_001.jpg", file:"PROJET_3_BEAUVALLET.pdf", type:"pdf" },
+        { name:"TP01 - ATELIER", description:"Initialisation Portfolio.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSprJmp8vZLTaprWtfns0cn4iQtPgJDsnN5lA&s", file:"TP01_ATELIER.pdf" },
+        { name:"TD01 - ATELIER", description:"Bases HTML.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8tGtuLs5kBlKBkl1vhb6EDqXQLgwfv2xH7g&s", file:"TP02_ATELIER.pdf" },
+        { name:"TD01 Partie 2 - ATELIER", description:"Bases CSS.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vVQmOEYUC3sOv7yVNBohQcHIpL7XFbuuLg&s", file:"TP03_ATELIER.pdf" },
+        { name:"TD02 - ATELIER", description:"HTML/CSS Avancé.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJfkp5e25y1UxY95Uo44WTv184iSsmyYdmkg&s", file:"TD02_SOTOCA.pdf" },
+        { name:"TD02 Partie 2", description:"Pratique CSS avancée.", image:"https://funky-stuff.com/wp-content/uploads/2020/04/Chuck-Norris-80th-birthday-Chuck-Norris-memes-Chuck-Norris-birthday-700x394.jpg", file:"TD02_Partie2_ATELIER.pdf" },
+        { name:"TD04 - ATELIER", description:"Formulaires HTML.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgZZLlDXeF6Esg50gnnzbz1Pnxx7HpKa7h-Q&s", file:"TD4_ATELIER.pdf" },
+        { name:"TD05 - ATELIER", description:"Responsive Design.", image:"https://www.seo.fr/wp-content/uploads/2022/12/Responsive_design-1024x576.png", file:"TD05_ATELIER.pdf" },
+        { name:"TP09 - ATELIER", description:"Cahier des charges.", image:"https://lh3.googleusercontent.com/proxy/uY7zLYTkGHpkrezTjw1hOVHGFL0NsSg8tzdnzU-o8jrkyasgpUpYc59wOm3hdOh6I1ws_66aBl-DxejjJAqzuw5FNZDvm0K06y51fGy7ZeaDtU6KpkZ1lY_Ame22wVLRC0XpBcYo8aJX-o6yA6tGnkoXAd5GQqyxT7s", file:"TP09_ATELIER.pdf" },
+        { name:"TP10 - ATELIER", description:"Sécurité : Clés USB.", image:"https://dxbyzx5id4chj.cloudfront.net/pub/media/catalog/product/7/9/4/3/1/3/P_79431304_1.jpg", file:"TP10_ATELIER.pdf" },
+        { name:"TP11 - ATELIER", description:"Pratique JavaScript.", image:"https://logos-world.net/wp-content/uploads/2023/02/JavaScript-Symbol.png", file:"TP11_ATELIER.pdf" },
+        { name:"PROJET1 - ATELIER", description:"SACINFO Gestion.", image:"https://www.gantt.com/wp-content/uploads/2024/07/gantt-chart-1.jpg", file:"PROJET_SACINFO.pdf" },
+        { name:"PROJET2 - ATELIER", description:"Diagrammes Gantt.", image:"https://cg2010studio.com/wp-content/uploads/2012/03/ganttproject.jpg", file:"PROJET2_BEAUVALLET.pdf" },
+        { name:"PROJET3- ATELIER", description:"Suivi de projet avancé.", image:"https://methodo-projet.fr/wp-content/uploads/2014/07/IMG_Photo_001.jpg", file:"PROJET_3_BEAUVALLET.pdf" }
       ],
       bloc3: [
-        { name:"TP01 - BLOC 3 SOTOCA", description:"Logiciels de capture d'écran", image:"https://th.bing.com/th/id/OIP.J5lfXNq9M83qmVJuLYk-VAHaEK?w=286&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3", file:"TP01_BLOC_3_SOTOCA.pdf", type:"pdf" },
-        { name:"TP01 - BLOC 3 BEAUVALLET", description:"Données à caractère personnel", image:"https://leboncall.com/wp-content/uploads/2016/08/concept-de-centre-d-39-appels_23-2147506314.jpg", file:"TP01_BLOC_3_BEAUVALLET.pdf", type:"pdf" },
-        { name:"TP02 et TP03 et TP04 - BLOC 3 SOTOCA", description:"Serveur NAS", image:"https://www.grosbill.com/images_produits/f408dbd5-fc27-40f0-ac52-02fa621acedb.jpg", file:"TP02_et_03_et_04_BLOC_3_SOTOCA.pdf", type:"pdf" },
-		{ name:"TP05 - BLOC 3 SOTOCA", description:"Hachage", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROmh31Zb6Z0I0-YE2gclKk-2KaB8gDoAYP6A&s", file:"TP05_B3_SOTOCA.pdf", type:"pdf" },
-		{ name:"TP05 - BLOC 3 - PARTIE 2 SOTOCA", description:"Données volées", image:"https://www.webassetscdn.com/avira/prod-blog/wp-content/uploads/2019/08/dataleak_head.jpg", file:"TP05_B3_P2_SOTOCA.pdf", type:"pdf" },
-		{ name:"TP02 - BLOC 3 BEAUVALLET", description:"Gestion des données sensibles", image:"https://ctrc-centre-valdeloire.fr/wp-content/uploads/2021/09/priotection_donnees_personnelles.jpg", file:"TP02_BLOC03_BEAUVALLET.pdf", type:"pdf" },
-		{ name:"TP02 PARTIE 2 - BLOC 3 BEAUVALLET", description:"Outil PIA", image:"https://www.cnil.fr/sites/default/files/styles/contenu_generique_visuel/public/thumbnails/image/00_logo-1.png?itok=bdT6-lUn", file:"TP02_P2_B3_BEAUVALLET.pdf", type:"pdf" },
-		{ name:"TD01 - BLOC 3 BEAUVALLET", description:"Outils d'audits et Veille Technologique", image:"https://pyx4.com/wp-content/uploads/2019/10/PYX4-schema-definition-audit-interne-systeme-management.png", file:"TD01_B3_BEAUVALLET.pdf", type:"pdf" },
-		{ name:"TD02 - BLOC 3 BEAUVALLET", description:"Technologie PGP", image:"https://www.varonis.com/hs-fs/hubfs/Imported_Blog_Media/pgp-encryption-uses.png?width=1240&height=780&name=pgp-encryption-uses.png", file:"TD02_B3_BEAUVALLET.pdf", type:"pdf" },
-        { name:"TD1 - BLOC 3 BEAUVALLET", description:"Audit sur la robustesse des identifiants", image:"https://cdn.mos.cms.futurecdn.net/7apbJravJFU2iSu5S3vuDU.jpg", file:"TD1_C4_B3_BEAUVALLET.pdf", type:"pdf" },
-		{ name:"TD2 - BLOC 3 BEAUVALLET", description:"Identification des menaces et défense appropriées", image:"https://le-consultant-digital.com/wp-content/uploads/2023/07/Veille-informationnelle-2.jpg", file:"CH4_TD2_BEAUVALLET.pdf", type:"pdf" },
-	  ]
+        { name:"TP01 - B3 SOTOCA", description:"Captures d'écran.", image:"https://th.bing.com/th/id/OIP.J5lfXNq9M83qmVJuLYk-VAHaEK?w=286&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3", file:"TP01_BLOC_3_SOTOCA.pdf" },
+        { name:"TP01 - B3 BEAUVALLET", description:"Données personnelles.", image:"https://leboncall.com/wp-content/uploads/2016/08/concept-de-centre-d-39-appels_23-2147506314.jpg", file:"TP01_BLOC_3_BEAUVALLET.pdf" },
+        { name:"TP02-04 NAS", description:"Serveur NAS.", image:"https://www.grosbill.com/images_produits/f408dbd5-fc27-40f0-ac52-02fa621acedb.jpg", file:"TP02_et_03_et_04_BLOC_3_SOTOCA.pdf" },
+        { name:"TP05 - B3 SOTOCA", description:"Hachage.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROmh31Zb6Z0I0-YE2gclKk-2KaB8gDoAYP6A&s", file:"TP05_B3_SOTOCA.pdf" },
+        { name:"TP05 P2 SOTOCA", description:"Données volées.", image:"https://www.webassetscdn.com/avira/prod-blog/wp-content/uploads/2019/08/dataleak_head.jpg", file:"TP05_B3_P2_SOTOCA.pdf" },
+        { name:"TP02 - B3 BEAUVALLET", description:"Données sensibles.", image:"https://ctrc-centre-valdeloire.fr/wp-content/uploads/2021/09/priotection_donnees_personnelles.jpg", file:"TP02_BLOC03_BEAUVALLET.pdf" },
+        { name:"TP02 P2 - B3", description:"Outil PIA.", image:"https://www.cnil.fr/sites/default/files/styles/contenu_generique_visuel/public/thumbnails/image/00_logo-1.png?itok=bdT6-lUn", file:"TP02_P2_B3_BEAUVALLET.pdf" },
+        { name:"TD01 - B3 BEAUVALLET", description:"Audits et Veille.", image:"https://pyx4.com/wp-content/uploads/2019/10/PYX4-schema-definition-audit-interne-systeme-management.png", file:"TD01_B3_BEAUVALLET.pdf" },
+        { name:"TD02 - B3 BEAUVALLET", description:"Technologie PGP.", image:"https://www.varonis.com/hs-fs/hubfs/Imported_Blog_Media/pgp-encryption-uses.png?width=1240&height=780&name=pgp-encryption-uses.png", file:"TD02_B3_BEAUVALLET.pdf" },
+        { name:"TD1 - C4 - B3", description:"Robustesse identifiants.", image:"https://cdn.mos.cms.futurecdn.net/7apbJravJFU2iSu5S3vuDU.jpg", file:"TD1_C4_B3_BEAUVALLET.pdf" },
+        { name:"TD2 - C4 - B3", description:"Menaces et Défenses.", image:"https://le-consultant-digital.com/wp-content/uploads/2023/07/Veille-informationnelle-2.jpg", file:"CH4_TD2_BEAUVALLET.pdf" }
+      ]
     };
 
-    function getFileIcon(type){
-      switch(type){
-        case 'pdf': return 'bi-file-earmark-pdf';
-        case 'archive': return 'bi-file-earmark-zip';
-        case 'web': case 'code': return 'bi-file-earmark-code';
-        case 'hardware': return 'bi-cpu';
-        default: return 'bi-file-earmark';
-      }
-    }
+    const veilleData = {
+      2025: [
+        { date: "06/12/2025", sujet: "Nvidia CUDA Tiles", impact: "Optimisation majeure de la mémoire GPU pour l'IA générative.", link: "#" },
+        { date: "19/11/2025", sujet: "AMD FSR Redstone", impact: "Upscaling IA pour rivaliser avec le DLSS sur RX 9000.", link: "#" },
+        { date: "10/11/2025", sujet: "Acquisition MK1 par AMD", impact: "Renforcement de ROCm face à CUDA de Nvidia.", link: "#" },
+        { date: "28/10/2025", sujet: "Nvidia NVQLink", impact: "Pont entre calculateurs quantiques et GPU Blackwell.", link: "#" },
+        { date: "09/10/2025", sujet: "Intel Panther Lake", impact: "Processeurs 18A, test crucial pour la fonderie Intel.", link: "#" }
+      ],
+      2026: [
+        { date: "16/03/2026", sujet: "Meta Orion VR", impact: "Lancement des lunettes AR grand public, défi pour Apple.", link: "#" },
+        { date: "09/03/2026", sujet: "Windows 12 AI Pro", impact: "Intégration native de modèles LLM locaux sans cloud.", link: "#" },
+        { date: "02/03/2026", sujet: "NVIDIA RTX 60-Series", impact: "Architecture Vera Rubin, +50% efficacité énergétique.", link: "#" },
+        { date: "23/02/2026", sujet: "React 20 Stable", impact: "Suppression définitive du Virtual DOM au profit des Signals.", link: "#" },
+        { date: "16/02/2026", sujet: "AMD Zen 6 Launch", impact: "Architecture 2nm, domination du segment serveur confirmée.", link: "#" },
+        { date: "09/02/2026", sujet: "Google Gemini 3.0", impact: "Raisonnement multimodal en temps réel sans latence.", link: "#" },
+        { date: "02/02/2026", sujet: "WebAssembly 3.0", impact: "Support multithreading natif pour apps web lourdes.", link: "#" },
+        { date: "26/01/2026", sujet: "Apple M5 Ultra", impact: "32 coeurs performance, GPU ray-tracing matériel v3.", link: "#" },
+        { date: "19/01/2026", sujet: "Quantum Link Pro", impact: "Premier réseau de communication quantique sécurisé.", link: "#" },
+        { date: "12/01/2026", sujet: "Intel Diamond Rapids", impact: "Nouveau record de coeurs sur processeurs Xeon.", link: "#" },
+        { date: "05/01/2026", sujet: "CES 2026 AI Trends", impact: "Démonstration de robots domestiques polyvalents.", link: "#" }
+      ]
+    };
 
-    function loadProjects(folder){
-      const container = document.getElementById(`projects-${folder}`);
-      if(!container) return;
-      container.innerHTML = '';
-      if(!projects[folder] || projects[folder].length===0){
-        container.innerHTML = `
-          <div class="col-12 text-center py-5 reveal">
-            <i class="bi bi-folder-x" style="font-size:3rem; color:#8b86a6;"></i>
-            <h4 class="mt-3">Aucun projet dans ce dossier</h4>
-            <p>Les projets apparaîtront ici une fois ajoutés.</p>
-          </div>`;
-        return;
-      }
-      projects[folder].forEach((project, index)=>{
-        const col = document.createElement('div');
-        col.className = 'col-md-6 col-lg-4 mb-4 reveal';
-        col.innerHTML = `
-          <div class="project-card">
-            <img src="${project.image}" class="project-img" alt="${project.name}">
-            <div class="card-body">
-              <h5 class="card-title">${project.name}</h5>
-              <p class="card-text" style="color:var(--c-muted)">${project.description}</p>
-              <button type="button" class="btn btn-primary view-project" data-folder="${folder}" data-index="${index}">
-                Voir les détails
-              </button>
+    function loadProjects(cat) {
+      const cont = document.getElementById(`projects-${cat}`);
+      cont.innerHTML = '';
+      projects[cat].forEach((p, i) => {
+        cont.innerHTML += `
+          <div class="col-md-6 col-lg-4">
+            <div class="project-card reveal">
+              <div class="project-img-wrapper"><img src="${p.image}" class="project-img" alt="${p.name}"></div>
+              <div class="project-body">
+                <h6 class="text-white mb-2">${p.name}</h6>
+                <p class="text-dim small mb-4">${p.description}</p>
+                <button onclick="openProject('${cat}', ${i})" class="btn-apple w-100 py-2" style="background: rgba(255,255,255,0.1); color: #fff; font-size: 0.8rem;">Détails</button>
+              </div>
             </div>
-          </div>
-        `;
-        container.appendChild(col);
+          </div>`;
       });
-      attachProjectModalEvents();
-      revealScan();
+      observe();
     }
 
-    function showProjectModal(folder,index){
-      const project = projects[folder][index];
-      document.getElementById('modalProjectTitle').textContent = project.name;
-      document.getElementById('modalProjectBody').innerHTML = `
-        <img src="${project.image}" class="img-fluid rounded mb-3" alt="${project.name}">
-        <p>${project.description}</p>
-        <p><strong>Fichier :</strong> ${project.file}</p>
-        <div class="text-center">
-          <i class="bi ${getFileIcon(project.type)} file-icon"></i>
-          <p>Type : ${project.type.toUpperCase()}</p>
-        </div>
-      `;
-      document.getElementById('modalProjectLink').href = project.file;
-      const modal = new bootstrap.Modal(document.getElementById('projectModal'));
-      modal.show();
+    function openProject(cat, i) {
+      const p = projects[cat][i];
+      document.getElementById('modalTitle').innerText = p.name;
+      document.getElementById('modalBody').innerHTML = `
+        <img src="${p.image}" class="img-fluid rounded-4 mb-3">
+        <p class="text-dim">${p.description}</p>
+        <p class="small text-white">Fichier : ${p.file}</p>`;
+      document.getElementById('modalLink').href = p.file;
+      new bootstrap.Modal('#projectModal').show();
     }
 
-    function attachProjectModalEvents(){
-      document.querySelectorAll('.view-project').forEach(btn=>{
-        btn.addEventListener('click', function(){
-          showProjectModal(this.getAttribute('data-folder'), this.getAttribute('data-index'));
-        });
+    function loadVeille(year) {
+      const body = document.getElementById('veille-tech-body');
+      body.innerHTML = '';
+      veilleData[year].forEach(v => {
+        body.innerHTML += `
+          <tr>
+            <td class="text-dim">${v.date}</td>
+            <td class="fw-bold">${v.sujet}</td>
+            <td class="text-dim small">${v.impact}</td>
+            <td class="text-center"><a href="${v.link}" class="text-primary"><i class="bi bi-link-45deg fs-5"></i></a></td>
+          </tr>`;
       });
     }
 
-    function switchFolder(folder){
-      document.querySelectorAll('.folder-section').forEach(s=>s.style.display = 'none');
-      const target = document.getElementById(`folder-${folder}`);
-      if(target) target.style.display = 'block';
+    function observe() {
+      const obs = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('active')), {threshold:0.1});
+      document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+    }
+
+    // Snow logic
+    const canvas = document.getElementById('snow-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, p = [];
+    const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
+    class Snowflake {
+      constructor() { this.reset(); }
+      reset() { this.x = Math.random()*w; this.y = Math.random()*h; this.s = Math.random()*2+1; this.v = Math.random()*0.5+0.2; }
+      update() { this.y += this.v; if(this.y > h) this.y = -10; }
+      draw() { ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,Math.PI*2); ctx.fill(); }
+    }
+    const animate = () => { ctx.clearRect(0,0,w,h); p.forEach(x => {x.update(); x.draw();}); requestAnimationFrame(animate); };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      resize();
+      p = Array.from({length: 80}, () => new Snowflake());
+      animate();
+      ['bloc1', 'bloc2', 'pro', 'bloc3'].forEach(loadProjects);
+      loadVeille(2026);
       
-      document.querySelectorAll('.folder-btn').forEach(b=>{
-        if(b.getAttribute('data-folder')===folder){ 
-          b.classList.remove('btn-outline-primary'); 
-          b.classList.add('btn-primary'); 
-        } else { 
-          b.classList.remove('btn-primary'); 
-          b.classList.add('btn-outline-primary'); 
-        }
-      });
-      loadProjects(folder);
-    }
-
-    function loadVeilleTable(){
-        const tbody = document.getElementById('veille-tech-body');
-        tbody.innerHTML = ''; 
-
-        if(!veilleEntries || veilleEntries.length === 0) return;
-
-        veilleEntries.forEach(entry => {
-            const tr = document.createElement('tr');
-            if(entry.link) {
-                tr.onclick = () => window.open(entry.link, '_blank');
-                tr.style.cursor = 'pointer';
-            }
-            
-            tr.innerHTML = `
-                <td class="date-col">${entry.date}</td>
-                <td class="sujet-col">${entry.sujet}</td>
-                <td class="desc-col">${entry.description}</td>
-                <td class="source-col">${entry.link ? `<a href="${entry.link}" target="_blank" style="color:var(--c-gold);"><i class="bi bi-link-45deg fs-5"></i></a>` : '-'}</td>
-                <td class="outil-col">${entry.outil || '-'}</td>
-                <td class="cat-col"><span class="badge bg-secondary">${entry.categorie || 'General'}</span></td>
-                <td class="impact-col">${entry.impact || ''}</td>
-            `;
-            tbody.appendChild(tr);
-        });
-        revealScan();
-    }
-
-    const backToTopButton = document.querySelector('.back-to-top');
-    window.addEventListener('scroll', ()=>{
-      if(window.pageYOffset>300) backToTopButton.classList.add('active');
-      else backToTopButton.classList.remove('active');
-      const navbar = document.querySelector('.navbar');
-      if(window.scrollY>50) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
-      revealScan();
-    });
-    backToTopButton.addEventListener('click',(e)=>{ e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}) });
-
-    document.getElementById('downloadCV').addEventListener('click', function(e){
-      e.preventDefault();
-      const link = document.createElement('a');
-      link.href = 'CVSIO.pdf';
-      link.download = 'CV_Alexandre_Ewan.pdf';
-      document.body.appendChild(link); link.click(); document.body.removeChild(link);
-    });
-
-    document.getElementById('contactForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      alert('Merci pour votre message ! Je vous répondrai dès que possible.');
-      this.reset();
-    });
-
-    document.querySelectorAll('.dropdown-item[data-folder]').forEach(item=>{
-      item.addEventListener('click', function(e){
-        e.preventDefault();
-        const folder = this.getAttribute('data-folder');
-        const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('navbarDropdown'));
-        if(dropdown) dropdown.hide();
-        document.getElementById('projets').scrollIntoView({behavior:'smooth'});
-        setTimeout(()=>switchFolder(folder), 400);
+      document.querySelectorAll('.year-btn').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          loadVeille(btn.dataset.year);
+        };
       });
     });
-
-    document.querySelectorAll('.nav-link-custom').forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navbarHeight - 20; 
-                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-            }
-            const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('veilleDropdown'));
-            if (dropdown) dropdown.hide();
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', function(){
-      loadProjects('bloc1');
-      loadVeilleTable();
-      document.querySelectorAll('.folder-btn').forEach(btn=>{
-        btn.addEventListener('click',()=> switchFolder(btn.getAttribute('data-folder')));
-      });
-      spawnSnow();
-      revealScan();
-      // On cache toutes les sections sauf bloc1 au départ
-      document.querySelectorAll('.folder-section').forEach(s=>s.style.display='none');
-      document.getElementById('folder-bloc1').style.display='block';
-    });
-
-    function revealScan(){
-      const els = document.querySelectorAll('.reveal');
-      const obs = new IntersectionObserver(entries=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){ e.target.classList.add('show'); obs.unobserve(e.target); }
-        });
-      },{ threshold:.12 });
-      els.forEach(el=>obs.observe(el));
-    }
-
-    function spawnSnow(){
-      const layer = document.getElementById('snow-layer');
-      const count = 50;
-      const chars = ['❄', '❅', '❆', '•'];
-      for(let i=0; i<count; i++){
-        const s = document.createElement('div');
-        s.className = 'snowflake';
-        s.textContent = chars[Math.floor(Math.random() * chars.length)];
-        s.style.left = Math.random() * 100 + 'vw';
-        s.style.opacity = Math.random();
-        s.style.fontSize = (Math.random() * 10 + 10) + 'px';
-        const duration = Math.random() * 5 + 5;
-        s.style.animationDuration = duration + 's';
-        s.style.animationDelay = '-' + (Math.random() * 5) + 's';
-        layer.appendChild(s);
-      }
-    }
+    window.addEventListener('resize', resize);
   </script>
 </body>
 </html>
