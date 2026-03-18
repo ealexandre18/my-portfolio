@@ -16,11 +16,11 @@
   <style>
     :root {
       --bg-color: #000000;
-      --card-bg: rgba(20, 20, 22, 0.7);
+      --card-bg: rgba(20, 20, 22, 0.6);
       --accent-blue: #0071e3;
       --text-main: #f5f5f7;
       --text-dim: #86868b;
-      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.08);
       --font-family: 'Inter', sans-serif;
     }
 
@@ -35,27 +35,26 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Arrière-plan optimisé (fixe et sans calculs lourds) */
     .mesh-gradient {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: 
-        radial-gradient(circle at 20% 30%, rgba(0, 113, 227, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(212, 36, 38, 0.05) 0%, transparent 40%);
+        radial-gradient(circle at 15% 20%, rgba(0, 113, 227, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(212, 36, 38, 0.04) 0%, transparent 45%);
       z-index: -2;
+      pointer-events: none;
     }
 
-    #snow-canvas {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: -1; opacity: 0.3;
-    }
-
+    /* Navbar simplifiée pour la performance */
     .navbar {
-      backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(10px);
       background: rgba(0, 0, 0, 0.7);
       border-bottom: 1px solid var(--glass-border);
-      padding: 1rem 0;
+      padding: 0.8rem 0;
+      transition: background 0.3s;
     }
     .navbar-brand { font-weight: 800; font-size: 1.2rem; color: #fff !important; }
-    .nav-link { color: var(--text-dim) !important; font-size: 0.85rem; font-weight: 500; margin: 0 10px; transition: 0.3s; }
+    .nav-link { color: var(--text-dim) !important; font-size: 0.85rem; font-weight: 500; margin: 0 10px; transition: 0.2s; }
     .nav-link:hover, .nav-link.active { color: #fff !important; }
 
     .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
@@ -63,37 +62,40 @@
       font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 800; letter-spacing: -0.04em;
       background: linear-gradient(180deg, #fff 0%, #86868b 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      will-change: transform;
     }
 
     .btn-apple {
       background: #fff; color: #000; border-radius: 980px; padding: 12px 28px;
-      font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s;
+      font-weight: 600; text-decoration: none; display: inline-block; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .btn-apple:hover { transform: scale(1.05); }
+    .btn-apple:hover { transform: scale(1.03); }
 
     section { padding: 100px 0; }
     .section-label { color: var(--accent-blue); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: block; }
     .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; }
 
+    /* Cartes optimisées : réduction des ombres et du flou */
     .project-card {
       background: var(--card-bg); border: 1px solid var(--glass-border);
-      border-radius: 20px; overflow: hidden; height: 100%; transition: 0.4s;
-      backdrop-filter: blur(10px);
+      border-radius: 20px; overflow: hidden; height: 100%; 
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(5px);
+      will-change: transform;
     }
-    .project-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.3); }
-    .project-img-wrapper { width: 100%; height: 200px; overflow: hidden; }
-    .project-img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
-    .project-card:hover .project-img { transform: scale(1.1); }
+    .project-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+    .project-img-wrapper { width: 100%; height: 200px; overflow: hidden; background: #111; }
+    .project-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .project-card:hover .project-img { transform: scale(1.05); }
     .project-body { padding: 20px; }
 
     .nav-pills-apple {
-      background: rgba(255,255,255,0.05); padding: 5px; border-radius: 980px;
+      background: rgba(255,255,255,0.03); padding: 5px; border-radius: 980px;
       margin-bottom: 3rem; border: 1px solid var(--glass-border);
     }
-    .nav-pills-apple .nav-link { border-radius: 980px; padding: 8px 20px; color: var(--text-dim) !important; }
+    .nav-pills-apple .nav-link { border-radius: 980px; padding: 8px 20px; color: var(--text-dim) !important; transition: 0.2s; }
     .nav-pills-apple .nav-link.active { background: var(--accent-blue) !important; color: #fff !important; }
 
-    /* Timeline */
     .exp-item {
       position: relative; padding-left: 35px; border-left: 1px solid var(--glass-border);
       padding-bottom: 40px;
@@ -101,29 +103,30 @@
     .exp-item::before {
       content: ''; position: absolute; left: -5px; top: 5px;
       width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent-blue); box-shadow: 0 0 10px var(--accent-blue);
+      background: var(--accent-blue);
     }
     .exp-date { color: var(--accent-blue); font-weight: 600; font-size: 0.85rem; margin-bottom: 5px; display: block; }
 
     .year-selector {
-      background: rgba(255,255,255,0.05); padding: 4px; border-radius: 12px;
+      background: rgba(255,255,255,0.03); padding: 4px; border-radius: 12px;
       display: inline-flex; border: 1px solid var(--glass-border); margin-bottom: 2rem;
     }
     .year-btn {
       padding: 6px 16px; border: none; background: transparent; color: var(--text-dim);
-      border-radius: 8px; font-weight: 600; font-size: 0.85rem; transition: 0.3s;
+      border-radius: 8px; font-weight: 600; font-size: 0.85rem; transition: 0.2s;
     }
-    .year-btn.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .year-btn.active { background: rgba(255,255,255,0.08); color: #fff; }
 
     .veille-container {
       background: var(--card-bg); border-radius: 20px; border: 1px solid var(--glass-border);
-      overflow: hidden; backdrop-filter: blur(15px);
+      overflow: hidden; backdrop-filter: blur(8px);
     }
     .table { color: var(--text-main); margin-bottom: 0; }
-    .table thead th { background: rgba(255,255,255,0.03); padding: 15px; font-size: 0.7rem; color: var(--text-dim); border: none; }
+    .table thead th { background: rgba(255,255,255,0.02); padding: 15px; font-size: 0.7rem; color: var(--text-dim); border: none; }
     .table tbody td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
 
-    .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
+    /* Reveal allégé pour éviter le lag au scroll */
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; will-change: opacity, transform; }
     .reveal.active { opacity: 1; transform: translateY(0); }
 
     footer { padding: 40px 0; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.75rem; }
@@ -132,7 +135,6 @@
 <body>
 
   <div class="mesh-gradient"></div>
-  <canvas id="snow-canvas"></canvas>
 
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
@@ -407,26 +409,18 @@
     }
 
     function observe() {
-      const obs = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('active')), {threshold:0.1});
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            obs.unobserve(entry.target); // Performance : on n'observe plus une fois révélé
+          }
+        });
+      }, { threshold: 0.1 });
       document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
     }
 
-    const canvas = document.getElementById('snow-canvas');
-    const ctx = canvas.getContext('2d');
-    let w, h, p = [];
-    const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
-    class Snowflake {
-      constructor() { this.reset(); }
-      reset() { this.x = Math.random()*w; this.y = Math.random()*h; this.s = Math.random()*2+1; this.v = Math.random()*0.5+0.2; }
-      update() { this.y += this.v; if(this.y > h) this.y = -10; }
-      draw() { ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,Math.PI*2); ctx.fill(); }
-    }
-    const animate = () => { ctx.clearRect(0,0,w,h); p.forEach(x => {x.update(); x.draw();}); requestAnimationFrame(animate); };
-
     window.addEventListener('DOMContentLoaded', () => {
-      resize();
-      p = Array.from({length: 80}, () => new Snowflake());
-      animate();
       ['bloc1', 'bloc2', 'bloc3', 'pro'].forEach(loadProjects);
       loadVeille(2026);
       
@@ -438,7 +432,6 @@
         };
       });
     });
-    window.addEventListener('resize', resize);
   </script>
 </body>
 </html>
