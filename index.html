@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -16,15 +16,15 @@
   <style>
     :root {
       --bg-color: #000000;
-      --card-bg: rgba(20, 20, 22, 0.6);
+      --card-bg: #161617; /* Fond solide pour éviter les calculs de transparence */
       --accent-blue: #0071e3;
       --text-main: #f5f5f7;
       --text-dim: #86868b;
-      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border: #2c2c2e;
       --font-family: 'Inter', sans-serif;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; transition: none !important; } /* Suppression globale des transitions */
 
     body {
       background-color: var(--bg-color);
@@ -35,106 +35,87 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Arrière-plan optimisé (fixe et sans calculs lourds) */
-    .mesh-gradient {
+    /* Background fixe simple */
+    .static-bg {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: 
-        radial-gradient(circle at 15% 20%, rgba(0, 113, 227, 0.06) 0%, transparent 45%),
-        radial-gradient(circle at 85% 80%, rgba(212, 36, 38, 0.04) 0%, transparent 45%);
+      background: linear-gradient(135deg, #000000 0%, #0a0a0b 100%);
       z-index: -2;
-      pointer-events: none;
     }
 
-    /* Navbar simplifiée pour la performance */
     .navbar {
-      backdrop-filter: saturate(180%) blur(10px);
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.95); /* Pas de blur (flou) */
       border-bottom: 1px solid var(--glass-border);
       padding: 0.8rem 0;
-      transition: background 0.3s;
     }
     .navbar-brand { font-weight: 800; font-size: 1.2rem; color: #fff !important; }
-    .nav-link { color: var(--text-dim) !important; font-size: 0.85rem; font-weight: 500; margin: 0 10px; transition: 0.2s; }
+    .nav-link { color: var(--text-dim) !important; font-size: 0.85rem; font-weight: 500; margin: 0 10px; }
     .nav-link:hover, .nav-link.active { color: #fff !important; }
 
-    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .hero { height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; }
     .hero-title {
       font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 800; letter-spacing: -0.04em;
-      background: linear-gradient(180deg, #fff 0%, #86868b 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      will-change: transform;
+      color: #ffffff;
     }
 
     .btn-apple {
       background: #fff; color: #000; border-radius: 980px; padding: 12px 28px;
-      font-weight: 600; text-decoration: none; display: inline-block; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 600; text-decoration: none; display: inline-block;
     }
-    .btn-apple:hover { transform: scale(1.03); }
 
-    section { padding: 100px 0; }
+    section { padding: 80px 0; }
     .section-label { color: var(--accent-blue); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: block; }
     .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; }
 
-    /* Cartes optimisées : réduction des ombres et du flou */
     .project-card {
       background: var(--card-bg); border: 1px solid var(--glass-border);
-      border-radius: 20px; overflow: hidden; height: 100%; 
-      transition: transform 0.3s ease, border-color 0.3s ease;
-      backdrop-filter: blur(5px);
-      will-change: transform;
+      border-radius: 12px; overflow: hidden; height: 100%; 
     }
-    .project-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
     .project-img-wrapper { width: 100%; height: 200px; overflow: hidden; background: #111; }
-    .project-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .project-card:hover .project-img { transform: scale(1.05); }
+    .project-img { width: 100%; height: 100%; object-fit: cover; }
     .project-body { padding: 20px; }
 
     .nav-pills-apple {
-      background: rgba(255,255,255,0.03); padding: 5px; border-radius: 980px;
+      background: #1c1c1e; padding: 5px; border-radius: 8px;
       margin-bottom: 3rem; border: 1px solid var(--glass-border);
     }
-    .nav-pills-apple .nav-link { border-radius: 980px; padding: 8px 20px; color: var(--text-dim) !important; transition: 0.2s; }
+    .nav-pills-apple .nav-link { border-radius: 6px; padding: 8px 20px; color: var(--text-dim) !important; }
     .nav-pills-apple .nav-link.active { background: var(--accent-blue) !important; color: #fff !important; }
 
     .exp-item {
-      position: relative; padding-left: 35px; border-left: 1px solid var(--glass-border);
+      position: relative; padding-left: 35px; border-left: 2px solid var(--glass-border);
       padding-bottom: 40px;
     }
     .exp-item::before {
-      content: ''; position: absolute; left: -5px; top: 5px;
-      width: 10px; height: 10px; border-radius: 50%;
+      content: ''; position: absolute; left: -7px; top: 5px;
+      width: 12px; height: 12px; border-radius: 50%;
       background: var(--accent-blue);
     }
     .exp-date { color: var(--accent-blue); font-weight: 600; font-size: 0.85rem; margin-bottom: 5px; display: block; }
 
     .year-selector {
-      background: rgba(255,255,255,0.03); padding: 4px; border-radius: 12px;
+      background: #1c1c1e; padding: 4px; border-radius: 8px;
       display: inline-flex; border: 1px solid var(--glass-border); margin-bottom: 2rem;
     }
-    .year-btn {
-      padding: 6px 16px; border: none; background: transparent; color: var(--text-dim);
-      border-radius: 8px; font-weight: 600; font-size: 0.85rem; transition: 0.2s;
-    }
-    .year-btn.active { background: rgba(255,255,255,0.08); color: #fff; }
+    .year-btn { padding: 6px 16px; border: none; background: transparent; color: var(--text-dim); border-radius: 4px; font-weight: 600; font-size: 0.85rem; }
+    .year-btn.active { background: #2c2c2e; color: #fff; }
 
     .veille-container {
-      background: var(--card-bg); border-radius: 20px; border: 1px solid var(--glass-border);
-      overflow: hidden; backdrop-filter: blur(8px);
+      background: var(--card-bg); border-radius: 12px; border: 1px solid var(--glass-border);
+      overflow: hidden;
     }
     .table { color: var(--text-main); margin-bottom: 0; }
-    .table thead th { background: rgba(255,255,255,0.02); padding: 15px; font-size: 0.7rem; color: var(--text-dim); border: none; }
-    .table tbody td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
-
-    /* Reveal allégé pour éviter le lag au scroll */
-    .reveal { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; will-change: opacity, transform; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
+    .table thead th { background: #1c1c1e; padding: 15px; font-size: 0.7rem; color: var(--text-dim); border: none; }
+    .table tbody td { padding: 15px; border-bottom: 1px solid #2c2c2e; font-size: 0.85rem; }
 
     footer { padding: 40px 0; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.75rem; }
+
+    /* Tout est visible immédiatement */
+    .reveal { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
 
-  <div class="mesh-gradient"></div>
+  <div class="static-bg"></div>
 
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
@@ -156,12 +137,12 @@
   </nav>
 
   <section id="accueil" class="hero">
-    <div class="container reveal">
+    <div class="container">
       <h1 class="hero-title">Alexandre Ewan.</h1>
       <p class="text-dim fs-5 mb-5 mx-auto" style="max-width: 600px;">Étudiant en BTS SIO (1ère année). Développeur passionné par l'architecture NVIDIA, AMD et Intel.</p>
       <div class="d-flex justify-content-center gap-3">
         <a href="#projets" class="btn-apple">Accéder aux projets</a>
-        <a href="CVSIO.pdf" target="_blank" class="btn-apple px-4" style="background: rgba(255,255,255,0.1); color: #fff;">Mon CV</a>
+        <a href="CVSIO.pdf" target="_blank" class="btn-apple" style="background: #2c2c2e; color: #fff;">Mon CV</a>
       </div>
     </div>
   </section>
@@ -169,10 +150,10 @@
   <section id="apropos">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-6 reveal">
+        <div class="col-lg-6">
           <span class="section-label">Profil</span>
           <h2 class="section-title">Compétences & Stack.</h2>
-          <p class="text-dim mb-4">Actuellement en 1ère année de BTS SIO spécialité SLAM, je me concentre sur le développement d'applications performantes. Passionné par le hardware, je suis de très près les innovations de NVIDIA et AMD.</p>
+          <p class="text-dim mb-4">Actuellement en 1ère année de BTS SIO spécialité SLAM au Lycée Pierre-Gilles de Gennes, je me concentre sur le développement d'applications. Je suis passionné par l'évolution du hardware chez NVIDIA, Intel et AMD.</p>
           <div class="d-flex flex-wrap gap-2 mb-5">
             <span class="badge bg-dark border border-secondary p-2">Java</span>
             <span class="badge bg-dark border border-secondary p-2">PHP</span>
@@ -183,12 +164,12 @@
             <span class="badge bg-dark border border-secondary p-2">Python</span>
           </div>
         </div>
-        <div class="col-lg-6 reveal">
+        <div class="col-lg-6">
           <div class="project-card p-4">
              <div class="row g-3">
                <div class="col-6"><h6>Nom</h6><p class="text-dim small">Alexandre Ewan</p></div>
                <div class="col-6"><h6>Âge</h6><p class="text-dim small">18 ans</p></div>
-               <div class="col-12 mt-3"><h6>Formation</h6><p class="text-dim small">BTS SIO (SLAM) - 1ère année (25-26)</p></div>
+               <div class="col-12 mt-3"><h6>Formation</h6><p class="text-dim small">BTS SIO (SLAM) - 1ère année (2025-2026)</p></div>
                <div class="col-12"><h6>Email</h6><p class="text-dim small">ealexandre2804@gmail.com</p></div>
              </div>
           </div>
@@ -224,19 +205,19 @@
       <h2 class="section-title">Éducation & Diplômes.</h2>
       
       <div class="row justify-content-center">
-        <div class="col-lg-8 reveal">
+        <div class="col-lg-8">
           <div class="exp-item">
             <span class="exp-date">2025 - 2027 (En cours)</span>
             <h4 class="text-white">BTS SIO (Option SLAM)</h4>
             <p class="text-dim small">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
-            <p class="text-dim">Actuellement en 1ère année de formation.</p>
+            <p class="text-dim">Formation actuelle en 1ère année.</p>
           </div>
           
           <div class="exp-item">
             <span class="exp-date">2022 - 2025</span>
             <h4 class="text-white">Baccalauréat Technologique STI2D</h4>
             <p class="text-dim small">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
-            <p class="text-dim">Option Système d'Information et Numérique. <strong>Mention Assez Bien.</strong></p>
+            <p class="text-dim">Spécialité Système d'Information et Numérique. <strong>Mention Assez Bien.</strong></p>
           </div>
           
           <div class="exp-item">
@@ -262,7 +243,7 @@
         </div>
       </div>
 
-      <div class="veille-container mb-5 reveal">
+      <div class="veille-container mb-5">
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -279,17 +260,20 @@
     </div>
   </section>
 
+  <section id="contact">
+    <div class="container text-center">
+      <span class="section-label">Me contacter</span>
+      <h2 class="section-title">Discutons de vos projets.</h2>
+      <a href="mailto:ealexandre2804@gmail.com" class="btn-apple">Envoyer un Email</a>
+    </div>
+  </section>
+
   <footer class="text-center">
     <div class="container">
       <p>&copy; 2026 Alexandre Ewan. Portfolio BTS SIO.</p>
-      <div class="d-flex justify-content-center gap-3 mt-3">
-        <a href="https://github.com/ealexandre18" class="text-white fs-4"><i class="bi bi-github"></i></a>
-      </div>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
   <script>
     const projects = {
       bloc1: [
@@ -382,17 +366,16 @@
       projects[cat].forEach((p) => {
         cont.innerHTML += `
           <div class="col-md-6 col-lg-4">
-            <div class="project-card reveal">
+            <div class="project-card">
               <div class="project-img-wrapper"><img src="${p.image}" class="project-img" alt="${p.name}"></div>
               <div class="project-body">
                 <h6 class="text-white mb-2">${p.name}</h6>
                 <p class="text-dim small mb-4">${p.description}</p>
-                <a href="${p.file}" target="_blank" class="btn-apple w-100 py-2 text-center" style="background: rgba(255,255,255,0.1); color: #fff; font-size: 0.8rem;">Ouvrir</a>
+                <a href="${p.file}" target="_blank" class="btn-apple w-100 py-2 text-center" style="background: #2c2c2e; color: #fff; font-size: 0.8rem;">Ouvrir</a>
               </div>
             </div>
           </div>`;
       });
-      observe();
     }
 
     function loadVeille(year) {
@@ -406,18 +389,6 @@
             <td class="text-dim small">${v.impact}</td>
           </tr>`;
       });
-    }
-
-    function observe() {
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            obs.unobserve(entry.target); // Performance : on n'observe plus une fois révélé
-          }
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
     }
 
     window.addEventListener('DOMContentLoaded', () => {
