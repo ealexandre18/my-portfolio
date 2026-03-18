@@ -98,7 +98,6 @@
     .nav-pills-apple .nav-link { border-radius: 980px; padding: 8px 20px; color: var(--text-dim) !important; }
     .nav-pills-apple .nav-link.active { background: var(--accent-blue) !important; color: #fff !important; }
 
-    /* Sélecteur d'année Veille */
     .year-selector {
       background: rgba(255,255,255,0.05); padding: 4px; border-radius: 12px;
       display: inline-flex; border: 1px solid var(--glass-border); margin-bottom: 2rem;
@@ -197,18 +196,19 @@
       <span class="section-label">Réalisations</span>
       <h2 class="section-title">Mes Projets de Formation.</h2>
 
+      <!-- Navigation réorganisée : 1, 2, 3, Pro -->
       <div class="nav nav-pills nav-pills-apple justify-content-center" id="pills-tab" role="tablist">
         <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-bloc1">Bloc 1</button>
         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-bloc2">Bloc 2</button>
-        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-pro">Atelier Pro</button>
         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-bloc3">Bloc 3</button>
+        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-pro">Atelier Pro</button>
       </div>
 
       <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-bloc1"><div class="row g-4" id="projects-bloc1"></div></div>
         <div class="tab-pane fade" id="pills-bloc2"><div class="row g-4" id="projects-bloc2"></div></div>
-        <div class="tab-pane fade" id="pills-pro"><div class="row g-4" id="projects-pro"></div></div>
         <div class="tab-pane fade" id="pills-bloc3"><div class="row g-4" id="projects-bloc3"></div></div>
+        <div class="tab-pane fade" id="pills-pro"><div class="row g-4" id="projects-pro"></div></div>
       </div>
     </div>
   </section>
@@ -288,16 +288,6 @@
     </div>
   </footer>
 
-  <div class="modal fade" id="projectModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content border-0" style="background: #1c1c1e; color: #fff; border-radius: 20px;">
-        <div class="modal-header border-0 p-4"><h5 class="modal-title" id="modalTitle"></h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-        <div class="modal-body p-4 pt-0" id="modalBody"></div>
-        <div class="modal-footer border-0 p-4"><a href="#" id="modalLink" target="_blank" class="btn-apple">Ouvrir le PDF</a></div>
-      </div>
-    </div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
@@ -333,6 +323,19 @@
         { name:"TP01 B2 BEAUVALLET", description:"Diagrammes UML.", image:"https://static-cse.canva.com/blob/1421441/long-form_UML-diagram_section-1_asset-1.jpg", file:"TP01_SLAM_BEAUVALLET.pdf" },
         { name:"TP02 B2 BEAUVALLET", description:"Diagramme de classe.", image:"https://d3n817fwly711g.cloudfront.net/uploads/2018/08/New-Copy-of-Online-Shopping-System-Class-Diagram.png", file:"TP02_B2_BEAUVALLET.pdf" }
       ],
+      bloc3: [
+        { name:"TP01 - B3 SOTOCA", description:"Captures d'écran.", image:"https://th.bing.com/th/id/OIP.J5lfXNq9M83qmVJuLYk-VAHaEK?w=286&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3", file:"TP01_BLOC_3_SOTOCA.pdf" },
+        { name:"TP01 - B3 BEAUVALLET", description:"Données personnelles.", image:"https://leboncall.com/wp-content/uploads/2016/08/concept-de-centre-d-39-appels_23-2147506314.jpg", file:"TP01_BLOC_3_BEAUVALLET.pdf" },
+        { name:"TP02-04 NAS", description:"Serveur NAS.", image:"https://www.grosbill.com/images_produits/f408dbd5-fc27-40f0-ac52-02fa621acedb.jpg", file:"TP02_et_03_et_04_BLOC_3_SOTOCA.pdf" },
+        { name:"TP05 - B3 SOTOCA", description:"Hachage.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROmh31Zb6Z0I0-YE2gclKk-2KaB8gDoAYP6A&s", file:"TP05_B3_SOTOCA.pdf" },
+        { name:"TP05 P2 SOTOCA", description:"Données volées.", image:"https://www.webassetscdn.com/avira/prod-blog/wp-content/uploads/2019/08/dataleak_head.jpg", file:"TP05_B3_P2_SOTOCA.pdf" },
+        { name:"TP02 - B3 BEAUVALLET", description:"Données sensibles.", image:"https://ctrc-centre-valdeloire.fr/wp-content/uploads/2021/09/priotection_donnees_personnelles.jpg", file:"TP02_BLOC03_BEAUVALLET.pdf" },
+        { name:"TP02 P2 - B3", description:"Outil PIA.", image:"https://www.cnil.fr/sites/default/files/styles/contenu_generique_visuel/public/thumbnails/image/00_logo-1.png?itok=bdT6-lUn", file:"TP02_P2_B3_BEAUVALLET.pdf" },
+        { name:"TD01 - B3 BEAUVALLET", description:"Audits et Veille.", image:"https://pyx4.com/wp-content/uploads/2019/10/PYX4-schema-definition-audit-interne-systeme-management.png", file:"TD01_B3_BEAUVALLET.pdf" },
+        { name:"TD02 - B3 BEAUVALLET", description:"Technologie PGP.", image:"https://www.varonis.com/hs-fs/hubfs/Imported_Blog_Media/pgp-encryption-uses.png?width=1240&height=780&name=pgp-encryption-uses.png", file:"TD02_B3_BEAUVALLET.pdf" },
+        { name:"TD1 - C4 - B3", description:"Robustesse identifiants.", image:"https://cdn.mos.cms.futurecdn.net/7apbJravJFU2iSu5S3vuDU.jpg", file:"TD1_C4_B3_BEAUVALLET.pdf" },
+        { name:"TD2 - C4 - B3", description:"Menaces et Défenses.", image:"https://le-consultant-digital.com/wp-content/uploads/2023/07/Veille-informationnelle-2.jpg", file:"CH4_TD2_BEAUVALLET.pdf" }
+      ],
       pro: [
         { name:"TP01 - ATELIER", description:"Initialisation Portfolio.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSprJmp8vZLTaprWtfns0cn4iQtPgJDsnN5lA&s", file:"TP01_ATELIER.pdf" },
         { name:"TD01 - ATELIER", description:"Bases HTML.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8tGtuLs5kBlKBkl1vhb6EDqXQLgwfv2xH7g&s", file:"TP02_ATELIER.pdf" },
@@ -347,19 +350,6 @@
         { name:"PROJET1 - ATELIER", description:"SACINFO Gestion.", image:"https://www.gantt.com/wp-content/uploads/2024/07/gantt-chart-1.jpg", file:"PROJET_SACINFO.pdf" },
         { name:"PROJET2 - ATELIER", description:"Diagrammes Gantt.", image:"https://cg2010studio.com/wp-content/uploads/2012/03/ganttproject.jpg", file:"PROJET2_BEAUVALLET.pdf" },
         { name:"PROJET3- ATELIER", description:"Suivi de projet avancé.", image:"https://methodo-projet.fr/wp-content/uploads/2014/07/IMG_Photo_001.jpg", file:"PROJET_3_BEAUVALLET.pdf" }
-      ],
-      bloc3: [
-        { name:"TP01 - B3 SOTOCA", description:"Captures d'écran.", image:"https://th.bing.com/th/id/OIP.J5lfXNq9M83qmVJuLYk-VAHaEK?w=286&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3", file:"TP01_BLOC_3_SOTOCA.pdf" },
-        { name:"TP01 - B3 BEAUVALLET", description:"Données personnelles.", image:"https://leboncall.com/wp-content/uploads/2016/08/concept-de-centre-d-39-appels_23-2147506314.jpg", file:"TP01_BLOC_3_BEAUVALLET.pdf" },
-        { name:"TP02-04 NAS", description:"Serveur NAS.", image:"https://www.grosbill.com/images_produits/f408dbd5-fc27-40f0-ac52-02fa621acedb.jpg", file:"TP02_et_03_et_04_BLOC_3_SOTOCA.pdf" },
-        { name:"TP05 - B3 SOTOCA", description:"Hachage.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROmh31Zb6Z0I0-YE2gclKk-2KaB8gDoAYP6A&s", file:"TP05_B3_SOTOCA.pdf" },
-        { name:"TP05 P2 SOTOCA", description:"Données volées.", image:"https://www.webassetscdn.com/avira/prod-blog/wp-content/uploads/2019/08/dataleak_head.jpg", file:"TP05_B3_P2_SOTOCA.pdf" },
-        { name:"TP02 - B3 BEAUVALLET", description:"Données sensibles.", image:"https://ctrc-centre-valdeloire.fr/wp-content/uploads/2021/09/priotection_donnees_personnelles.jpg", file:"TP02_BLOC03_BEAUVALLET.pdf" },
-        { name:"TP02 P2 - B3", description:"Outil PIA.", image:"https://www.cnil.fr/sites/default/files/styles/contenu_generique_visuel/public/thumbnails/image/00_logo-1.png?itok=bdT6-lUn", file:"TP02_P2_B3_BEAUVALLET.pdf" },
-        { name:"TD01 - B3 BEAUVALLET", description:"Audits et Veille.", image:"https://pyx4.com/wp-content/uploads/2019/10/PYX4-schema-definition-audit-interne-systeme-management.png", file:"TD01_B3_BEAUVALLET.pdf" },
-        { name:"TD02 - B3 BEAUVALLET", description:"Technologie PGP.", image:"https://www.varonis.com/hs-fs/hubfs/Imported_Blog_Media/pgp-encryption-uses.png?width=1240&height=780&name=pgp-encryption-uses.png", file:"TD02_B3_BEAUVALLET.pdf" },
-        { name:"TD1 - C4 - B3", description:"Robustesse identifiants.", image:"https://cdn.mos.cms.futurecdn.net/7apbJravJFU2iSu5S3vuDU.jpg", file:"TD1_C4_B3_BEAUVALLET.pdf" },
-        { name:"TD2 - C4 - B3", description:"Menaces et Défenses.", image:"https://le-consultant-digital.com/wp-content/uploads/2023/07/Veille-informationnelle-2.jpg", file:"CH4_TD2_BEAUVALLET.pdf" }
       ]
     };
 
@@ -397,23 +387,13 @@
               <div class="project-body">
                 <h6 class="text-white mb-2">${p.name}</h6>
                 <p class="text-dim small mb-4">${p.description}</p>
-                <button onclick="openProject('${cat}', ${i})" class="btn-apple w-100 py-2" style="background: rgba(255,255,255,0.1); color: #fff; font-size: 0.8rem;">Détails</button>
+                <!-- Bouton Ouvrir direct vers le PDF -->
+                <a href="${p.file}" target="_blank" class="btn-apple w-100 py-2 text-center" style="background: rgba(255,255,255,0.1); color: #fff; font-size: 0.8rem;">Ouvrir</a>
               </div>
             </div>
           </div>`;
       });
       observe();
-    }
-
-    function openProject(cat, i) {
-      const p = projects[cat][i];
-      document.getElementById('modalTitle').innerText = p.name;
-      document.getElementById('modalBody').innerHTML = `
-        <img src="${p.image}" class="img-fluid rounded-4 mb-3">
-        <p class="text-dim">${p.description}</p>
-        <p class="small text-white">Fichier : ${p.file}</p>`;
-      document.getElementById('modalLink').href = p.file;
-      new bootstrap.Modal('#projectModal').show();
     }
 
     function loadVeille(year) {
@@ -452,7 +432,8 @@
       resize();
       p = Array.from({length: 80}, () => new Snowflake());
       animate();
-      ['bloc1', 'bloc2', 'pro', 'bloc3'].forEach(loadProjects);
+      // Chargement dans l'ordre logique
+      ['bloc1', 'bloc2', 'bloc3', 'pro'].forEach(loadProjects);
       loadVeille(2026);
       
       document.querySelectorAll('.year-btn').forEach(btn => {
