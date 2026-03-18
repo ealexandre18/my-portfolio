@@ -64,11 +64,6 @@
       background: linear-gradient(180deg, #fff 0%, #86868b 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .hero-img {
-      width: 200px; height: 200px; border-radius: 50%; object-fit: cover;
-      border: 1px solid var(--glass-border); padding: 8px; background: rgba(255,255,255,0.05);
-      margin-bottom: 2rem; box-shadow: 0 0 40px rgba(0,113,227,0.2);
-    }
 
     .btn-apple {
       background: #fff; color: #000; border-radius: 980px; padding: 12px 28px;
@@ -98,6 +93,18 @@
     .nav-pills-apple .nav-link { border-radius: 980px; padding: 8px 20px; color: var(--text-dim) !important; }
     .nav-pills-apple .nav-link.active { background: var(--accent-blue) !important; color: #fff !important; }
 
+    /* Timeline */
+    .exp-item {
+      position: relative; padding-left: 35px; border-left: 1px solid var(--glass-border);
+      padding-bottom: 40px;
+    }
+    .exp-item::before {
+      content: ''; position: absolute; left: -5px; top: 5px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent-blue); box-shadow: 0 0 10px var(--accent-blue);
+    }
+    .exp-date { color: var(--accent-blue); font-weight: 600; font-size: 0.85rem; margin-bottom: 5px; display: block; }
+
     .year-selector {
       background: rgba(255,255,255,0.05); padding: 4px; border-radius: 12px;
       display: inline-flex; border: 1px solid var(--glass-border); margin-bottom: 2rem;
@@ -119,9 +126,6 @@
     .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
     .reveal.active { opacity: 1; transform: translateY(0); }
 
-    .form-control { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; border-radius: 12px; }
-    .form-control:focus { background: rgba(255,255,255,0.08); border-color: var(--accent-blue); color: #fff; box-shadow: none; }
-
     footer { padding: 40px 0; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.75rem; }
   </style>
 </head>
@@ -141,6 +145,7 @@
           <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
           <li class="nav-item"><a class="nav-link" href="#apropos">À Propos</a></li>
           <li class="nav-item"><a class="nav-link" href="#projets">Projets</a></li>
+          <li class="nav-item"><a class="nav-link" href="#parcours">Parcours</a></li>
           <li class="nav-item"><a class="nav-link" href="#veille">Veille Tech</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
@@ -151,9 +156,9 @@
   <section id="accueil" class="hero">
     <div class="container reveal">
       <h1 class="hero-title">Alexandre Ewan.</h1>
-      <p class="text-dim fs-5 mb-5 mx-auto" style="max-width: 600px;">Étudiant en BTS SIO option SLAM. Développeur passionné par le Web et l'ingénierie logicielle.</p>
+      <p class="text-dim fs-5 mb-5 mx-auto" style="max-width: 600px;">Étudiant en BTS SIO (1ère année). Développeur passionné par l'architecture NVIDIA, AMD et Intel.</p>
       <div class="d-flex justify-content-center gap-3">
-        <a href="#projets" class="btn-apple">Voir mes travaux</a>
+        <a href="#projets" class="btn-apple">Accéder aux projets</a>
         <a href="CVSIO.pdf" target="_blank" class="btn-apple px-4" style="background: rgba(255,255,255,0.1); color: #fff;">Mon CV</a>
       </div>
     </div>
@@ -163,9 +168,9 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6 reveal">
-          <span class="section-label">Profil professionnel</span>
-          <h2 class="section-title">Compétences & Objectifs.</h2>
-          <p class="text-dim mb-4">Bachelier STI2D, j'évolue actuellement en BTS SIO pour me spécialiser dans le développement d'applications. Mon parcours combine rigueur technique et une forte dimension internationale avec un niveau C1 en anglais.</p>
+          <span class="section-label">Profil</span>
+          <h2 class="section-title">Compétences & Stack.</h2>
+          <p class="text-dim mb-4">Actuellement en 1ère année de BTS SIO spécialité SLAM, je me concentre sur le développement d'applications performantes. Passionné par le hardware, je suis de très près les innovations de NVIDIA et AMD.</p>
           <div class="d-flex flex-wrap gap-2 mb-5">
             <span class="badge bg-dark border border-secondary p-2">Java</span>
             <span class="badge bg-dark border border-secondary p-2">PHP</span>
@@ -180,8 +185,8 @@
           <div class="project-card p-4">
              <div class="row g-3">
                <div class="col-6"><h6>Nom</h6><p class="text-dim small">Alexandre Ewan</p></div>
-               <div class="col-6"><h6>Diplôme</h6><p class="text-dim small">BTS SIO (SLAM)</p></div>
-               <div class="col-12 mt-3"><h6>Localisation</h6><p class="text-dim small">Malijai, France</p></div>
+               <div class="col-6"><h6>Âge</h6><p class="text-dim small">18 ans</p></div>
+               <div class="col-12 mt-3"><h6>Formation</h6><p class="text-dim small">BTS SIO (SLAM) - 1ère année (25-26)</p></div>
                <div class="col-12"><h6>Email</h6><p class="text-dim small">ealexandre2804@gmail.com</p></div>
              </div>
           </div>
@@ -193,9 +198,8 @@
   <section id="projets">
     <div class="container">
       <span class="section-label">Réalisations</span>
-      <h2 class="section-title">Mes Projets de Formation.</h2>
+      <h2 class="section-title">Travaux Académiques.</h2>
 
-      <!-- Navigation réorganisée : 1, 2, 3, Pro -->
       <div class="nav nav-pills nav-pills-apple justify-content-center" id="pills-tab" role="tablist">
         <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-bloc1">Bloc 1</button>
         <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-bloc2">Bloc 2</button>
@@ -212,10 +216,42 @@
     </div>
   </section>
 
+  <section id="parcours" class="bg-black">
+    <div class="container">
+      <span class="section-label">Parcours</span>
+      <h2 class="section-title">Éducation & Diplômes.</h2>
+      
+      <div class="row justify-content-center">
+        <div class="col-lg-8 reveal">
+          <div class="exp-item">
+            <span class="exp-date">2025 - 2027 (En cours)</span>
+            <h4 class="text-white">BTS SIO (Option SLAM)</h4>
+            <p class="text-dim small">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
+            <p class="text-dim">Actuellement en 1ère année de formation.</p>
+          </div>
+          
+          <div class="exp-item">
+            <span class="exp-date">2022 - 2025</span>
+            <h4 class="text-white">Baccalauréat Technologique STI2D</h4>
+            <p class="text-dim small">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
+            <p class="text-dim">Option Système d'Information et Numérique. <strong>Mention Assez Bien.</strong></p>
+          </div>
+          
+          <div class="exp-item">
+            <span class="exp-date">2018 - 2022</span>
+            <h4 class="text-white">Brevet des Collèges</h4>
+            <p class="text-dim small">Collège JMG Itard, Oraison</p>
+            <p class="text-dim"><strong>Mention Assez Bien.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="veille">
     <div class="container">
-      <span class="section-label">Veille Informationnelle</span>
-      <h2 class="section-title">Innovations Technologiques.</h2>
+      <span class="section-label">Veille NVIDIA, AMD, Intel</span>
+      <h2 class="section-title">Innovations Hardware.</h2>
       
       <div class="text-center">
         <div class="year-selector">
@@ -230,49 +266,12 @@
             <thead>
               <tr>
                 <th style="width: 120px">Date</th>
-                <th style="width: 200px">Innovation</th>
-                <th>Analyse de l'Impact</th>
-                <th style="width: 60px">Lien</th>
+                <th style="width: 200px">Sujet / Marque</th>
+                <th>Analyse & Innovation</th>
               </tr>
             </thead>
             <tbody id="veille-tech-body"></tbody>
           </table>
-        </div>
-      </div>
-
-      <h5 class="mb-4 text-center">Outils de Veille</h5>
-      <div class="row g-4">
-        <div class="col-md-3 reveal"><div class="project-card p-3 text-center small"><i class="bi bi-envelope-fill text-primary d-block mb-2"></i>Google Alerts</div></div>
-        <div class="col-md-3 reveal"><div class="project-card p-3 text-center small"><i class="bi bi-rss-fill text-primary d-block mb-2"></i>Feedly</div></div>
-        <div class="col-md-3 reveal"><div class="project-card p-3 text-center small"><i class="bi bi-twitter-x text-primary d-block mb-2"></i>X / Reddit</div></div>
-        <div class="col-md-3 reveal"><div class="project-card p-3 text-center small"><i class="bi bi-table text-primary d-block mb-2"></i>Google Sheets</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="container reveal">
-      <div class="row justify-content-center">
-        <div class="col-lg-6 text-center">
-          <span class="section-label">Me contacter</span>
-          <h2 class="section-title">Discutons de vos projets.</h2>
-          <div class="project-card p-4 text-start">
-            <form id="contactForm">
-              <div class="mb-3">
-                <label class="small text-dim mb-1">Votre Nom</label>
-                <input type="text" class="form-control p-3" placeholder="Nom">
-              </div>
-              <div class="mb-3">
-                <label class="small text-dim mb-1">Votre Email</label>
-                <input type="email" class="form-control p-3" placeholder="email@exemple.com">
-              </div>
-              <div class="mb-4">
-                <label class="small text-dim mb-1">Message</label>
-                <textarea class="form-control p-3" rows="4" placeholder="Votre message ici..."></textarea>
-              </div>
-              <button type="submit" class="btn-apple w-100">Envoyer</button>
-            </form>
-          </div>
         </div>
       </div>
     </div>
@@ -354,31 +353,31 @@
 
     const veilleData = {
       2025: [
-        { date: "06/12/2025", sujet: "Nvidia CUDA Tiles", impact: "Optimisation majeure de la mémoire GPU pour l'IA générative.", link: "#" },
-        { date: "19/11/2025", sujet: "AMD FSR Redstone", impact: "Upscaling IA pour rivaliser avec le DLSS sur RX 9000.", link: "#" },
-        { date: "10/11/2025", sujet: "Acquisition MK1 par AMD", impact: "Renforcement de ROCm face à CUDA de Nvidia.", link: "#" },
-        { date: "28/10/2025", sujet: "Nvidia NVQLink", impact: "Pont entre calculateurs quantiques et GPU Blackwell.", link: "#" },
-        { date: "09/10/2025", sujet: "Intel Panther Lake", impact: "Processeurs 18A, test crucial pour la fonderie Intel.", link: "#" }
+        { date: "06/12/2025", sujet: "NVIDIA CUDA 13.1", impact: "Introduction des CUDA Tiles pour optimiser le calcul matriciel sur Blackwell." },
+        { date: "19/11/2025", sujet: "AMD FSR Redstone", impact: "Mise à jour majeure de l'upscaling open-source avec support IA matériel." },
+        { date: "10/11/2025", sujet: "Intel Panther Lake", impact: "Sortie des processeurs Core Ultra série 300 sur le noeud 18A." },
+        { date: "28/10/2025", sujet: "NVIDIA RTX 5080", impact: "Lancement de l'architecture Blackwell grand public avec GDDR7." },
+        { date: "09/10/2025", sujet: "AMD Ryzen 9000X3D", impact: "Domination confirmée du segment gaming avec le V-Cache 3D." }
       ],
       2026: [
-        { date: "16/03/2026", sujet: "Meta Orion VR", impact: "Lancement des lunettes AR grand public, défi pour Apple.", link: "#" },
-        { date: "09/03/2026", sujet: "Windows 12 AI Pro", impact: "Intégration native de modèles LLM locaux sans cloud.", link: "#" },
-        { date: "02/03/2026", sujet: "NVIDIA RTX 60-Series", impact: "Architecture Vera Rubin, +50% efficacité énergétique.", link: "#" },
-        { date: "23/02/2026", sujet: "React 20 Stable", impact: "Suppression définitive du Virtual DOM au profit des Signals.", link: "#" },
-        { date: "16/02/2026", sujet: "AMD Zen 6 Launch", impact: "Architecture 2nm, domination du segment serveur confirmée.", link: "#" },
-        { date: "09/02/2026", sujet: "Google Gemini 3.0", impact: "Raisonnement multimodal en temps réel sans latence.", link: "#" },
-        { date: "02/02/2026", sujet: "WebAssembly 3.0", impact: "Support multithreading natif pour apps web lourdes.", link: "#" },
-        { date: "26/01/2026", sujet: "Apple M5 Ultra", impact: "32 coeurs performance, GPU ray-tracing matériel v3.", link: "#" },
-        { date: "19/01/2026", sujet: "Quantum Link Pro", impact: "Premier réseau de communication quantique sécurisé.", link: "#" },
-        { date: "12/01/2026", sujet: "Intel Diamond Rapids", impact: "Nouveau record de coeurs sur processeurs Xeon.", link: "#" },
-        { date: "05/01/2026", sujet: "CES 2026 AI Trends", impact: "Démonstration de robots domestiques polyvalents.", link: "#" }
+        { date: "16/03/2026", sujet: "AMD RDNA 4 Refresh", impact: "Nouvelle révision des GPU Radeon optimisant le ray tracing matériel." },
+        { date: "09/03/2026", sujet: "Intel Nova Lake", impact: "Annonce officielle de l'architecture succédant à Panther Lake." },
+        { date: "02/03/2026", sujet: "NVIDIA RTX 5090 Ti", impact: "Version 'Titan' de Blackwell poussant les limites de la VR 8K." },
+        { date: "23/02/2026", sujet: "AMD Zen 6 leaks", impact: "Premières données sur l'architecture 2nm de chez TSMC." },
+        { date: "16/02/2026", sujet: "Intel 18A Node", impact: "Passage à la production de masse pour les clients externes." },
+        { date: "09/02/2026", sujet: "NVIDIA Blackwell Ultra", impact: "Nouvelle architecture serveur pour l'entraînement des LLM." },
+        { date: "02/02/2026", sujet: "AMD Instinct MI400", impact: "Accélérateur IA rivalisant avec le H100 de NVIDIA." },
+        { date: "26/01/2026", sujet: "Intel Battlemage", impact: "Nouveaux GPU Arc série B pour le segment milieu de gamme." },
+        { date: "19/01/2026", sujet: "NVIDIA DLSS 4.5", impact: "Amélioration spectaculaire de la reconstruction par IA." },
+        { date: "12/01/2026", sujet: "AMD Strix Halo", impact: "Sortie des APU ultra-puissants pour laptops gaming." },
+        { date: "05/01/2026", sujet: "CES 2026 Keynotes", impact: "Annonces groupées NVIDIA/AMD/Intel sur le PC AI mobile." }
       ]
     };
 
     function loadProjects(cat) {
       const cont = document.getElementById(`projects-${cat}`);
       cont.innerHTML = '';
-      projects[cat].forEach((p, i) => {
+      projects[cat].forEach((p) => {
         cont.innerHTML += `
           <div class="col-md-6 col-lg-4">
             <div class="project-card reveal">
@@ -386,7 +385,6 @@
               <div class="project-body">
                 <h6 class="text-white mb-2">${p.name}</h6>
                 <p class="text-dim small mb-4">${p.description}</p>
-                <!-- Bouton Ouvrir direct vers le PDF -->
                 <a href="${p.file}" target="_blank" class="btn-apple w-100 py-2 text-center" style="background: rgba(255,255,255,0.1); color: #fff; font-size: 0.8rem;">Ouvrir</a>
               </div>
             </div>
@@ -404,7 +402,6 @@
             <td class="text-dim">${v.date}</td>
             <td class="fw-bold">${v.sujet}</td>
             <td class="text-dim small">${v.impact}</td>
-            <td class="text-center"><a href="${v.link}" class="text-primary"><i class="bi bi-link-45deg fs-5"></i></a></td>
           </tr>`;
       });
     }
@@ -414,7 +411,6 @@
       document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
     }
 
-    // Snow logic
     const canvas = document.getElementById('snow-canvas');
     const ctx = canvas.getContext('2d');
     let w, h, p = [];
@@ -431,7 +427,6 @@
       resize();
       p = Array.from({length: 80}, () => new Snowflake());
       animate();
-      // Chargement dans l'ordre logique
       ['bloc1', 'bloc2', 'bloc3', 'pro'].forEach(loadProjects);
       loadVeille(2026);
       
