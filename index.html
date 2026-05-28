@@ -225,25 +225,15 @@
       <div class="mb-5">
         <h4 class="text-white mb-4"><i class="bi bi-box-seam me-2 text-primary"></i>Livrables</h4>
         <div class="row g-4" id="stage-livrables">
-          <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="project-card reveal">
-              <div class="project-img-wrapper">
-                <img src="https://ajsinformatique.fr/wp-content/uploads/2021/06/installation-et-parametrage-materiel-informatique.png" class="project-img" alt="Proxmox" loading="lazy">
-              </div>
-              <div class="project-body">
-                <h6 class="text-white mb-2" style="font-size:0.9rem">STAGE_PROXMOX</h6>
-                <p class="text-dim small mb-4">Documentation et réalisation sur l'environnement Proxmox.</p>
-                <a href="STAGE_PROXMOX.pdf" target="_blank" class="btn-apple w-100 py-2 text-center" style="background: rgba(255,255,255,0.05); color: #fff; font-size: 0.75rem; border: 1px solid var(--glass-border);">Ouvrir</a>
-              </div>
-            </div>
-          </div>
-          </div>
+          <!-- Chargement dynamique via JS -->
+        </div>
       </div>
 
       <div>
         <h4 class="text-white mb-4"><i class="bi bi-folder me-2 text-primary"></i>Documents importants</h4>
         <div class="row g-4" id="stage-documents">
-          </div>
+          <!-- Emplacement libre pour tes futurs documents fixes si nécessaire -->
+        </div>
       </div>
     </div>
   </section>
@@ -391,6 +381,10 @@
         { name:"PROJET1 - SACINFO", description:"Gestion projet informatique.", image:"https://www.gantt.com/wp-content/uploads/2024/07/gantt-chart-1.jpg", file:"PROJET_SACINFO.pdf" },
         { name:"PROJET2 - Gantt", description:"Planification Gantt Project.", image:"https://cg2010studio.com/wp-content/uploads/2012/03/ganttproject.jpg", file:"PROJET2_BEAUVALLET.pdf" },
         { name:"PROJET3 - Suivi", description:"Suivi de projet avancé.", image:"https://methodo-projet.fr/wp-content/uploads/2014/07/IMG_Photo_001.jpg", file:"PROJET_3_BEAUVALLET.pdf" }
+      ],
+      stage1: [
+        { name:"STAGE_PROXMOX", description:"Documentation et réalisation sur l'environnement Proxmox.", image:"https://ajsinformatique.fr/wp-content/uploads/2021/06/installation-et-parametrage-materiel-informatique.png", file:"STAGE_PROXMOX.pdf" },
+        { name:"STAGE_SQL", description:"Documentation et requêtes SQL liées aux tâches de stage.", image:"https://bairesdev.mo.cloudinary.net/blog/2023/10/What-is-SQL-Server.jpg?tx=w_1920,q_auto", file:"STAGE_SQL.pdf" }
       ]
     };
 
@@ -417,27 +411,43 @@
       ]
     };
 
+    function generateCardHTML(p) {
+      return `
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="project-card reveal">
+            <div class="project-img-wrapper"><img src="${p.image}" class="project-img" alt="${p.name}" loading="lazy"></div>
+            <div class="project-body">
+              <h6 class="text-white mb-2" style="font-size:0.9rem">${p.name}</h6>
+              <p class="text-dim small mb-4">${p.description}</p>
+              <a href="${p.file}" target="_blank" class="btn-apple w-100 py-2 text-center" style="background: rgba(255,255,255,0.05); color: #fff; font-size: 0.75rem; border: 1px solid var(--glass-border);">Ouvrir</a>
+            </div>
+          </div>
+        </div>`;
+    }
+
     function loadProjects(cat) {
       const cont = document.getElementById(`projects-${cat}`);
+      if (!cont) return;
       cont.innerHTML = '';
       projects[cat].forEach((p) => {
-        cont.innerHTML += `
-          <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="project-card reveal">
-              <div class="project-img-wrapper"><img src="${p.image}" class="project-img" alt="${p.name}" loading="lazy"></div>
-              <div class="project-body">
-                <h6 class="text-white mb-2" style="font-size:0.9rem">${p.name}</h6>
-                <p class="text-dim small mb-4">${p.description}</p>
-                <a href="${p.file}" target="_blank" class="btn-apple w-100 py-2 text-center" style="background: rgba(255,255,255,0.05); color: #fff; font-size: 0.75rem; border: 1px solid var(--glass-border);">Ouvrir</a>
-              </div>
-            </div>
-          </div>`;
+        cont.innerHTML += generateCardHTML(p);
+      });
+      refreshReveal();
+    }
+
+    function loadStageLivrables() {
+      const cont = document.getElementById('stage-livrables');
+      if (!cont || !projects.stage1) return;
+      cont.innerHTML = '';
+      projects.stage1.forEach((p) => {
+        cont.innerHTML += generateCardHTML(p);
       });
       refreshReveal();
     }
 
     function loadVeille(year) {
       const body = document.getElementById('veille-tech-body');
+      if (!body) return;
       body.innerHTML = '';
       veilleData[year].forEach(v => {
         body.innerHTML += `
@@ -464,6 +474,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       ['bloc1', 'bloc2', 'bloc3', 'pro'].forEach(loadProjects);
+      loadStageLivrables();
       loadVeille(2026);
       
       document.querySelectorAll('.year-btn').forEach(btn => {
