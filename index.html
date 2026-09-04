@@ -5,494 +5,1298 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Alexandre Ewan | Portfolio BTS SIO</title>
 
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Bootstrap 5 & Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <style>
+    /* =========================================
+       THÈME FRUTIGER AERO CLAIR (LIGHT AERO)
+       ========================================= */
     :root {
-      --bg-color: #000000;
-      --card-bg: #161617;
-      --accent-blue: #0071e3;
-      --text-main: #f5f5f7;
-      --text-dim: #86868b;
-      --glass-border: #2c2c2e;
-      --font-family: 'Inter', -apple-system, sans-serif;
+      --bg-sky-top: #b9e3fd;
+      --bg-sky-mid: #e0f2fe;
+      --bg-sky-bottom: #f8fafc;
+      
+      --aero-blue: #0284c7;
+      --aero-cyan: #00b4d8;
+      --aero-light-cyan: #38bdf8;
+      --aero-green: #10b981;
+      
+      --glass-card-bg: rgba(255, 255, 255, 0.75);
+      --glass-card-hover: rgba(255, 255, 255, 0.92);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-shadow: 0 10px 30px rgba(2, 132, 199, 0.12);
+      --glass-shadow-hover: 0 16px 36px rgba(2, 132, 199, 0.25);
+
+      /* Typographie à très fort contraste pour lecture parfaite */
+      --text-main: #0f172a;
+      --text-sub: #1e293b;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background-color: var(--bg-color);
+      background: linear-gradient(180deg, var(--bg-sky-top) 0%, var(--bg-sky-mid) 28%, #ecfeff 65%, var(--bg-sky-bottom) 100%);
+      background-attachment: fixed;
       color: var(--text-main);
-      font-family: var(--font-family);
-      line-height: 1.5;
+      font-family: var(--font-body);
+      line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    .static-bg {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 10% 10%, rgba(0, 113, 227, 0.03) 0%, transparent 40%),
-                  radial-gradient(circle at 90% 90%, rgba(212, 36, 38, 0.02) 0%, transparent 40%);
-      z-index: -2;
+    /* Reflet supérieur Frutiger Aero */
+    .aero-gloss-sky {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 280px;
+      background: radial-gradient(ellipse at 50% -30%, rgba(255, 255, 255, 0.9) 0%, rgba(186, 230, 253, 0.4) 60%, transparent 85%);
       pointer-events: none;
+      z-index: -1;
     }
 
-    .navbar {
-      background: rgba(0, 0, 0, 0.9);
-      border-bottom: 1px solid var(--glass-border);
-      padding: 0.8rem 0;
-      transition: background 0.3s;
-    }
-    .navbar-brand { font-weight: 800; font-size: 1.2rem; color: #fff !important; }
-    .nav-link { color: var(--text-dim) !important; font-size: 0.85rem; font-weight: 500; margin: 0 10px; transition: color 0.2s; }
-    .nav-link:hover, .nav-link.active { color: #fff !important; }
-
-    .hero { height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center; }
-    .hero-title {
-      font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 800; letter-spacing: -0.04em;
-      background: linear-gradient(180deg, #fff 40%, #86868b 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-
-    .btn-apple {
-      background: #fff; color: #000; border-radius: 980px; padding: 12px 28px;
-      font-weight: 600; text-decoration: none; display: inline-block;
-      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .btn-apple:hover { transform: scale(1.03); }
-
-    section { padding: 80px 0; }
-    .section-label { color: var(--accent-blue); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: block; }
-    .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; }
-
-    .project-card {
-      background: var(--card-bg); border: 1px solid var(--glass-border);
-      border-radius: 18px; overflow: hidden; height: 100%; 
-      transition: border-color 0.3s ease;
-      will-change: transform;
-    }
-    .project-card:hover { border-color: rgba(255,255,255,0.25); }
-    .project-img-wrapper { width: 100%; height: 180px; overflow: hidden; background: #000; }
-    .project-img { width: 100%; height: 100%; object-fit: cover; }
-    .project-body { padding: 20px; }
-
-    .nav-pills-apple {
-      background: #1c1c1e; padding: 5px; border-radius: 980px;
-      margin-bottom: 3rem; border: 1px solid var(--glass-border);
-      display: inline-flex;
-    }
-    .nav-pills-apple .nav-link { border-radius: 980px; padding: 8px 20px; color: var(--text-dim) !important; transition: 0.2s; }
-    .nav-pills-apple .nav-link.active { background: var(--accent-blue) !important; color: #fff !important; }
-
-    .exp-item {
-      position: relative; padding-left: 35px; border-left: 2px solid var(--glass-border);
-      padding-bottom: 40px;
-    }
-    .exp-item::before {
-      content: ''; position: absolute; left: -7px; top: 5px;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--accent-blue);
-    }
-    .exp-date { color: var(--accent-blue); font-weight: 600; font-size: 0.85rem; margin-bottom: 5px; display: block; }
-
-    .year-selector {
-      background: #1c1c1e; padding: 4px; border-radius: 10px;
-      display: inline-flex; border: 1px solid var(--glass-border); margin-bottom: 2rem;
-    }
-    .year-btn { padding: 6px 16px; border: none; background: transparent; color: var(--text-dim); border-radius: 6px; font-weight: 600; font-size: 0.85rem; transition: 0.2s; }
-    .year-btn.active { background: #2c2c2e; color: #fff; }
-
-    .veille-container {
-      background: var(--card-bg); border-radius: 18px; border: 1px solid var(--glass-border);
+    /* =========================================
+       Glass Panels & Cards (Clair & Brillant)
+       ========================================= */
+    .glass-card {
+      background: var(--glass-card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      box-shadow: var(--glass-shadow), inset 0 1px 2px rgba(255, 255, 255, 1);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
       overflow: hidden;
     }
-    .table { color: var(--text-main); margin-bottom: 0; }
-    .table thead th { background: rgba(255,255,255,0.03); padding: 15px; font-size: 0.7rem; color: var(--text-dim); border: none; text-transform: uppercase; }
-    .table tbody td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
-
-    /* Animations GPU Optimized */
-    .reveal { 
-      opacity: 0; 
-      transform: translate3d(0, 20px, 0); 
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-      will-change: opacity, transform;
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      pointer-events: none;
+      z-index: 1;
     }
-    .reveal.active { opacity: 1; transform: translate3d(0, 0, 0); }
+    .glass-card:hover {
+      background: var(--glass-card-hover);
+      border-color: rgba(2, 132, 199, 0.45);
+      transform: translateY(-5px);
+      box-shadow: var(--glass-shadow-hover), inset 0 1px 2px #ffffff;
+    }
 
-    footer { padding: 40px 0; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.75rem; }
-    
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      box-shadow: 0 12px 35px rgba(2, 132, 199, 0.12), inset 0 1px 2px #ffffff;
+      position: relative;
+    }
+
+    /* =========================================
+       Navbar (Centrée, Thème Clair)
+       ========================================= */
+    .navbar-container {
+      position: fixed;
+      top: 16px;
+      left: 0;
+      width: 100%;
+      z-index: 1050;
+      display: flex;
+      justify-content: center;
+      padding: 0 15px;
+    }
+    .navbar-pill {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 980px;
+      box-shadow: 0 8px 30px rgba(2, 132, 199, 0.16), inset 0 1px 1px #ffffff;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .nav-item-aero {
+      color: #034b7f;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 980px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-item-aero:hover, .nav-item-aero.active {
+      color: #ffffff;
+      background: linear-gradient(135deg, #0284c7 0%, #00b4d8 100%);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+
+    /* =========================================
+       Hero Section
+       ========================================= */
+    .hero {
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 120px;
+      padding-bottom: 50px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(2, 132, 199, 0.35);
+      color: #0284c7;
+      padding: 7px 20px;
+      border-radius: 980px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.15);
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.3rem;
+      color: #0c4a6e;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+    }
+    .hero-subtitle {
+      color: #334155;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      max-width: 680px;
+      margin: 0 auto 2.5rem auto;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* Buttons Glossy */
+    .btn-aero-primary {
+      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 50%, #0369a1 100%);
+      color: #fff;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 980px;
+      padding: 12px 28px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35), inset 0 1px 2px #ffffff;
+      transition: all 0.25s ease;
+    }
+    .btn-aero-primary:hover {
+      background: linear-gradient(180deg, #7dd3fc 0%, #0ea5e9 50%, #0284c7 100%);
+      transform: translateY(-2px);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(2, 132, 199, 0.45);
+    }
+    .btn-aero-secondary {
+      background: rgba(255, 255, 255, 0.85);
+      color: #0c4a6e;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 980px;
+      padding: 12px 28px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08), inset 0 1px 2px #ffffff;
+      transition: all 0.25s ease;
+    }
+    .btn-aero-secondary:hover {
+      background: #ffffff;
+      color: #0284c7;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.2);
+    }
+
+    /* Badges */
+    .badge-aero {
+      background: rgba(2, 132, 199, 0.1);
+      color: #0369a1;
+      border: 1px solid rgba(2, 132, 199, 0.25);
+      border-radius: 8px;
+      font-weight: 700;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .badge-intel {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #7dd3fc;
+      font-weight: 700;
+    }
+    .badge-nvidia {
+      background: #ecfccb;
+      color: #3f6212;
+      border: 1px solid #a3e635;
+      font-weight: 700;
+    }
+    .badge-amd {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+      font-weight: 700;
+    }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-label {
+      color: #0284c7;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.6rem;
+      display: inline-block;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      font-weight: 800;
+      color: #0c4a6e;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+    .content-text {
+      color: #334155;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    /* Switcher Années & Filtres Blocs */
+    .year-switch-bar {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 980px;
+      padding: 6px;
+      display: inline-flex;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.12), inset 0 1px 2px #fff;
+      margin-bottom: 2rem;
+    }
+    .year-btn {
+      background: transparent;
+      border: none;
+      color: #034b7f;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 980px;
+      transition: all 0.22s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .year-btn:hover { color: #0284c7; }
+    .year-btn.active {
+      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35), inset 0 1px 2px #ffffff;
+    }
+
+    .block-filter-bar {
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      padding: 6px;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.08);
+    }
+    .block-btn {
+      background: transparent;
+      border: none;
+      color: #034b7f;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .block-btn:hover {
+      color: #0284c7;
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .block-btn.active {
+      background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35), inset 0 1px 1px #fff;
+    }
+
+    .search-wrapper {
+      max-width: 380px;
+      margin: 0 auto 2.8rem auto;
+      position: relative;
+    }
+    .search-box {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      border-radius: 980px;
+      padding: 10px 18px 10px 45px;
+      color: #0f172a;
+      font-size: 0.92rem;
+      backdrop-filter: blur(14px);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
+    }
+    .search-box:focus {
+      outline: none;
+      border-color: #0284c7;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
+    }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #0284c7;
+      font-size: 1.05rem;
+    }
+
+    /* =========================================
+       Cartes TP & Documents (Images Préservées)
+       ========================================= */
+    .tp-img-wrapper {
+      width: 100%;
+      height: 165px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    }
+    .tp-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .glass-card:hover .tp-img {
+      transform: scale(1.05);
+    }
+    .tp-body {
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      position: relative;
+      z-index: 2;
+    }
+    .tp-title {
+      color: #0f172a;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .tp-desc {
+      color: #475569;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+    }
+    .btn-tp-open {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      color: #0369a1;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid rgba(2, 132, 199, 0.25);
+      border-radius: 12px;
+      padding: 9px 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.1);
+    }
+    .btn-tp-open:hover {
+      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+      border-color: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+
+    /* =========================================
+       Outils de Veille (4 Outils Ciblés)
+       ========================================= */
+    .veille-tool-card {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 1.6rem;
+      height: 100%;
+      box-shadow: 0 8px 25px rgba(2, 132, 199, 0.1), inset 0 1px 2px #fff;
+      transition: all 0.25s ease;
+    }
+    .veille-tool-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(2, 132, 199, 0.4);
+      box-shadow: 0 14px 32px rgba(2, 132, 199, 0.2);
+    }
+    .veille-tool-icon {
+      font-size: 2.3rem;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+    }
+
+    /* =========================================
+       Tableau de Veille (Drop-Down & Contraste)
+       ========================================= */
+    .veille-panel-light {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(2, 132, 199, 0.12), inset 0 1px 2px #ffffff;
+    }
+    .table-veille-aero {
+      color: #0f172a !important;
+      margin-bottom: 0;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .table-veille-aero thead th {
+      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%) !important;
+      color: #034b7f !important;
+      font-weight: 800;
+      padding: 16px 20px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid #7dd3fc !important;
+    }
+    .table-veille-aero tbody td {
+      padding: 16px 20px;
+      vertical-align: middle;
+      color: #1e293b !important;
+      font-size: 0.94rem;
+      border-bottom: 1px solid #e2e8f0 !important;
+      background: transparent;
+    }
+    .table-veille-aero tbody tr:hover td {
+      background: rgba(224, 242, 254, 0.45) !important;
+    }
+
+    .btn-aero-more {
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 50%, #e0f2fe 100%);
+      color: #0369a1;
+      font-weight: 800;
+      border: 1px solid #7dd3fc;
+      border-radius: 980px;
+      padding: 12px 30px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.18), inset 0 1px 2px #fff;
+      transition: all 0.22s ease;
+    }
+    .btn-aero-more:hover {
+      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.3);
+    }
+
+    /* Timeline Parcours */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+      border-left: 3px solid #7dd3fc;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 38px;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -39px;
+      top: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0284c7;
+      border: 3px solid #ffffff;
+      box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+    }
+    .timeline-date {
+      color: #0284c7;
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    /* Footer */
+    footer {
+      padding: 45px 0;
+      border-top: 1px solid rgba(2, 132, 199, 0.15);
+      color: #64748b;
+      font-size: 0.88rem;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @media (max-width: 768px) {
-      .nav-pills-apple { flex-wrap: wrap; border-radius: 20px; }
+      .navbar-pill { border-radius: 24px; padding: 10px; }
+      .nav-item-aero { padding: 6px 12px; font-size: 0.82rem; }
+      .hero { min-height: 70vh; }
     }
   </style>
 </head>
 <body>
 
-  <div class="static-bg"></div>
+  <!-- Lueur Frutiger Aero en haut -->
+  <div class="aero-gloss-sky"></div>
 
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">BTS SIO</a>
-      <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <i class="bi bi-list fs-2"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto text-center">
-          <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
-          <li class="nav-item"><a class="nav-link" href="#apropos">À Propos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#projets">Projets</a></li>
-          <li class="nav-item"><a class="nav-link" href="#stage1">Stage 1</a></li>
-          <li class="nav-item"><a class="nav-link" href="#parcours">Parcours</a></li>
-          <li class="nav-item"><a class="nav-link" href="#veille">Veille Tech</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <!-- Navbar Centrée (Sans logo à gauche) -->
+  <div class="navbar-container">
+    <nav class="navbar-pill">
+      <a class="nav-item-aero" href="#accueil"><i class="bi bi-house-door"></i> Accueil</a>
+      <a class="nav-item-aero" href="#apropos"><i class="bi bi-person"></i> À Propos</a>
+      <a class="nav-item-aero" href="#projets"><i class="bi bi-folder"></i> Travaux & TP</a>
+      <a class="nav-item-aero" href="#stage1"><i class="bi bi-briefcase"></i> Stages</a>
+      <a class="nav-item-aero" href="#outils-veille"><i class="bi bi-search"></i> Outils de Veille</a>
+      <a class="nav-item-aero" href="#parcours"><i class="bi bi-mortarboard"></i> Parcours</a>
+      <a class="nav-item-aero" href="#veille"><i class="bi bi-cpu"></i> Veille Tech</a>
+    </nav>
+  </div>
 
+  <!-- Hero Section -->
   <section id="accueil" class="hero">
     <div class="container reveal">
-      <h1 class="hero-title">Alexandre Ewan.</h1>
-      <p class="text-dim fs-5 mb-5 mx-auto" style="max-width: 650px;">Étudiant en BTS SIO (1ère année).</p>
-      <div class="d-flex justify-content-center gap-3">
-        <a href="#projets" class="btn-apple">Voir mes TP/TD</a>
-        <a href="CVSIO.pdf" target="_blank" class="btn-apple" style="background: #2c2c2e; color: #fff;">Consulter mon CV</a>
+      <div class="hero-badge">
+        <i class="bi bi-stars text-info"></i> BTS SIO • Option SLAM
+      </div>
+      <h1 class="hero-title">Alexandre Ewan</h1>
+      <p class="hero-subtitle">
+        Portfolio d'études en développement logiciel, gestion de patrimoine informatique, virtualisation et veille technologique.
+      </p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="#projets" class="btn-aero-primary">
+          <i class="bi bi-folder-check"></i> Découvrir mes réalisations
+        </a>
+        <a href="CVSIO.pdf" target="_blank" class="btn-aero-secondary">
+          <i class="bi bi-file-earmark-person"></i> Consulter mon CV
+        </a>
       </div>
     </div>
   </section>
 
+  <!-- A Propos Section -->
   <section id="apropos">
     <div class="container">
-      <div class="row align-items-center">
+      <div class="row align-items-center g-4">
         <div class="col-lg-6 reveal">
           <span class="section-label">Profil</span>
-          <h2 class="section-title">Développement & Innovation Hardware.</h2>
-          <p class="text-dim mb-4">Actuellement en 1ère année de BTS SIO spécialité SLAM au Lycée Pierre-Gilles de Gennes, je me forme à la conception logicielle. Passionné par l'informatique, je réalise une veille constante sur les architectures GPU et CPU.</p>
-          <div class="d-flex flex-wrap gap-2 mb-5">
-            <span class="badge bg-dark border border-secondary p-2">Java</span>
-            <span class="badge bg-dark border border-secondary p-2">PHP</span>
-            <span class="badge bg-dark border border-secondary p-2">JavaScript</span>
-            <span class="badge bg-dark border border-secondary p-2">HTML</span>
-            <span class="badge bg-dark border border-secondary p-2">CSS</span>
-            <span class="badge bg-dark border border-secondary p-2">SQL</span>
-            <span class="badge bg-dark border border-secondary p-2">Python</span>
+          <h2 class="section-title">Développement & Solutions Logicielles</h2>
+          <p class="content-text mb-4">
+            Actuellement en <strong class="text-primary">2ème année de BTS SIO (option SLAM)</strong> au Lycée Pierre-Gilles de Gennes à Digne-les-Bains, je développe des compétences avancées en programmation orientée objet, gestion et sauvegarde de bases de données, cybersécurité et administration système.
+          </p>
+          <div class="d-flex flex-wrap gap-2 mb-4">
+            <span class="badge-aero"><i class="bi bi-code-slash text-info"></i> Java / JavaFX</span>
+            <span class="badge-aero"><i class="bi bi-filetype-php text-primary"></i> PHP & MySQL</span>
+            <span class="badge-aero"><i class="bi bi-filetype-js text-warning"></i> JavaScript</span>
+            <span class="badge-aero"><i class="bi bi-database text-info"></i> SQL</span>
+            <span class="badge-aero"><i class="bi bi-shield-check text-success"></i> RGPD & Cybersécurité</span>
+            <span class="badge-aero"><i class="bi bi-hdd-network text-info"></i> Proxmox / Linux</span>
           </div>
         </div>
         <div class="col-lg-6 reveal">
-          <div class="project-card p-4">
-             <div class="row g-3">
-               <div class="col-6"><h6>Nom</h6><p class="text-dim small">Alexandre Ewan</p></div>
-               <div class="col-6"><h6>Âge</h6><p class="text-dim small">18 ans</p></div>
-               <div class="col-12 mt-3"><h6>Formation Actuelle</h6><p class="text-dim small">BTS SIO (SLAM) - 1ère année (2025-2026)</p></div>
-               <div class="col-12"><h6>Email</h6><p class="text-dim small">ealexandre2804@gmail.com</p></div>
-             </div>
+          <div class="glass-panel p-4 p-md-5">
+            <h5 class="text-dark mb-4 fw-bold"><i class="bi bi-info-circle text-primary me-2"></i>Informations Personnelles</h5>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <span class="text-dim small d-block">Nom & Prénom</span>
+                <span class="text-dark fw-bold fs-6">Alexandre Ewan</span>
+              </div>
+              <div class="col-sm-6">
+                <span class="text-dim small d-block">Âge</span>
+                <span class="text-dark fw-bold fs-6">18 ans</span>
+              </div>
+              <div class="col-12">
+                <span class="text-dim small d-block">Formation</span>
+                <span class="text-dark fw-bold fs-6">BTS SIO (SLAM) — 2ème Année (2025-2027)</span>
+              </div>
+              <div class="col-12">
+                <span class="text-dim small d-block">Email de contact</span>
+                <a href="mailto:ealexandre2804@gmail.com" class="text-primary text-decoration-none fw-bold fs-6">
+                  <i class="bi bi-envelope me-1"></i> ealexandre2804@gmail.com
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Section Projets / TPs avec bascule 1ère Année / 2ème Année -->
   <section id="projets">
     <div class="container text-center">
-      <span class="section-label">Portfolio</span>
-      <h2 class="section-title">Réalisations de Formation.</h2>
+      <span class="section-label">Travaux Réalisés</span>
+      <h2 class="section-title">Comptes-Rendus & Travaux Pratiques</h2>
 
-      <div class="nav nav-pills nav-pills-apple justify-content-center" id="pills-tab" role="tablist">
-        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-bloc1">Bloc 1</button>
-        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-bloc2">Bloc 2</button>
-        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-bloc3">Bloc 3</button>
-        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-pro">Atelier Pro</button>
+      <!-- Année Switcher (2ème Année par défaut) -->
+      <div class="text-center mb-3">
+        <div class="year-switch-bar" id="year-switchers">
+          <button class="year-btn active" data-year="annee2">
+            <i class="bi bi-award"></i> 2ème Année (Actuelle)
+          </button>
+          <button class="year-btn" data-year="annee1">
+            <i class="bi bi-archive"></i> 1ère Année
+          </button>
+        </div>
       </div>
 
-      <div class="tab-content text-start" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-bloc1"><div class="row g-4" id="projects-bloc1"></div></div>
-        <div class="tab-pane fade" id="pills-bloc2"><div class="row g-4" id="projects-bloc2"></div></div>
-        <div class="tab-pane fade" id="pills-bloc3"><div class="row g-4" id="projects-bloc3"></div></div>
-        <div class="tab-pane fade" id="pills-pro"><div class="row g-4" id="projects-pro"></div></div>
+      <!-- Filtres de Blocs (simples : Bloc 1, Bloc 2, Bloc 3, Atelier Pro) -->
+      <div class="block-filter-bar" id="block-filters">
+        <button class="block-btn active" data-block="all">Tous</button>
+        <button class="block-btn" data-block="bloc1">Bloc 1</button>
+        <button class="block-btn" data-block="bloc2">Bloc 2</button>
+        <button class="block-btn" data-block="bloc3">Bloc 3</button>
+        <button class="block-btn" data-block="pro">Atelier Pro</button>
+      </div>
+
+      <!-- Recherche instantanée -->
+      <div class="search-wrapper">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="tp-search" class="search-box" placeholder="Rechercher un TP ou mot-clé...">
+      </div>
+
+      <!-- Grille des TPs -->
+      <div class="row g-4 text-start" id="tps-container">
+        <!-- Rendu dynamique via JavaScript avec conservation de toutes les images -->
       </div>
     </div>
   </section>
 
+  <!-- Stage Section -->
   <section id="stage1">
     <div class="container">
-      <span class="section-label">Stage 1ère Année</span>
-      <h2 class="section-title">Expérience en entreprise.</h2>
-
-      <div class="mb-5">
-        <h4 class="text-white mb-4"><i class="bi bi-box-seam me-2 text-primary"></i>Livrables</h4>
-        <div class="row g-4" id="stage-livrables">
-          <!-- Chargement dynamique via JS -->
-        </div>
+      <div class="text-center mb-5">
+        <span class="section-label">Immersion Professionnelle</span>
+        <h2 class="section-title">Stages & Livrables</h2>
+        <p class="content-text mx-auto" style="max-width: 680px;">
+          Documentation technique, mise en production, supervision et virtualisation réalisées lors de mes expériences en entreprise.
+        </p>
       </div>
 
-      <div>
-        <h4 class="text-white mb-4"><i class="bi bi-folder me-2 text-primary"></i>Documents importants</h4>
-        <div class="row g-4" id="stage-documents">
-          <!-- Emplacement libre pour tes futurs documents fixes si nécessaire -->
+      <div class="row g-4" id="stage-container">
+        <!-- Rendu dynamique via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Outils Utilisés pour la Veille (Les 4 outils demandés par l'utilisateur) -->
+  <section id="outils-veille">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="section-label">Méthodologie & Sourçage</span>
+        <h2 class="section-title">Outils Utilisés pour la Veille</h2>
+        <p class="content-text mx-auto" style="max-width: 680px;">
+          Dispositif d'alerte, de collecte et d'analyse mis en place pour assurer le suivi hebdomadaire des innovations GPU, CPU et IA.
+        </p>
+      </div>
+
+      <!-- Grille des 4 Outils de Veille -->
+      <div class="row g-4 justify-content-center">
+        <!-- Google Alertes -->
+        <div class="col-md-6 col-lg-3 reveal">
+          <div class="veille-tool-card">
+            <span class="veille-tool-icon text-warning"><i class="bi bi-bell-fill"></i></span>
+            <h5 class="text-dark fw-bold mb-2">Google Alertes</h5>
+            <span class="badge-aero mb-3">Automatisation</span>
+            <p class="text-sub small mb-2"><strong>Utilité :</strong> Surveillance automatisée du web avec notification e-mail dès qu'un article ou communiqué paraît.</p>
+            <p class="text-dim small mb-0"><strong>Requêtes :</strong> "NVIDIA Blackwell", "Intel 18A", "AMD Zen 6".</p>
+          </div>
+        </div>
+
+        <!-- Google News -->
+        <div class="col-md-6 col-lg-3 reveal">
+          <div class="veille-tool-card">
+            <span class="veille-tool-icon text-primary"><i class="bi bi-newspaper"></i></span>
+            <h5 class="text-dark fw-bold mb-2">Google News</h5>
+            <span class="badge-aero mb-3">Agrégation en direct</span>
+            <p class="text-sub small mb-2"><strong>Utilité :</strong> Découverte des actualités tech mondiales et francophones en temps réel.</p>
+            <p class="text-dim small mb-0"><strong>Usage :</strong> Recoupement des sources et suivi des tendances matérielles.</p>
+          </div>
+        </div>
+
+        <!-- X.com (Twitter) -->
+        <div class="col-md-6 col-lg-3 reveal">
+          <div class="veille-tool-card">
+            <span class="veille-tool-icon text-dark"><i class="bi bi-twitter-x"></i></span>
+            <h5 class="text-dark fw-bold mb-2">X.com (Twitter)</h5>
+            <span class="badge-aero mb-3">Annonces & Leaks</span>
+            <p class="text-sub small mb-2"><strong>Utilité :</strong> Suivi instantané des comptes officiels et des analystes hardware de référence.</p>
+            <p class="text-dim small mb-0"><strong>Comptes :</strong> @NVIDIA, @AMD, @Intel, @kopite7kimi, @harukaze5719.</p>
+          </div>
+        </div>
+
+        <!-- YouTube -->
+        <div class="col-md-6 col-lg-3 reveal">
+          <div class="veille-tool-card">
+            <span class="veille-tool-icon text-danger"><i class="bi bi-youtube"></i></span>
+            <h5 class="text-dark fw-bold mb-2">YouTube</h5>
+            <span class="badge-aero mb-3">Benchmarks & Tests</span>
+            <p class="text-sub small mb-2"><strong>Utilité :</strong> Visionnage d'analyses techniques complètes, démontages et mesures thermiques indépendantes.</p>
+            <p class="text-dim small mb-0"><strong>Chaînes :</strong> Gamers Nexus, Hardware Unboxed, Der8auer.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="parcours" class="bg-black">
+  <!-- Parcours Section -->
+  <section id="parcours">
     <div class="container">
-      <span class="section-label">Scolarité</span>
-      <h2 class="section-title">Mon Parcours.</h2>
+      <div class="text-center mb-5">
+        <span class="section-label">Scolarité</span>
+        <h2 class="section-title">Mon Parcours</h2>
+      </div>
       
       <div class="row justify-content-center">
         <div class="col-lg-8 reveal">
-          <div class="exp-item">
-            <span class="exp-date">2025 - 2027 (En cours)</span>
-            <h4 class="text-white">BTS SIO (Option SLAM)</h4>
-            <p class="text-dim small">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
-            <p class="text-dim">Première année de spécialisation en Solutions Logicielles et Applications Métier.</p>
-          </div>
-          
-          <div class="exp-item">
-            <span class="exp-date">2022 - 2025</span>
-            <h4 class="text-white">Baccalauréat STI2D</h4>
-            <p class="text-dim small">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
-            <p class="text-dim">Système d'Information et Numérique. <strong>Mention Assez Bien.</strong></p>
-          </div>
-          
-          <div class="exp-item">
-            <span class="exp-date">2018 - 2022</span>
-            <h4 class="text-white">Brevet des Collèges</h4>
-            <p class="text-dim small">Collège JMG Itard, Oraison</p>
-            <p class="text-dim"><strong>Mention Assez Bien.</strong></p>
+          <div class="glass-panel p-4 p-md-5">
+            <div class="timeline">
+              
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="timeline-date">2025 - 2027 (En cours)</span>
+                <h4 class="text-dark fw-bold">BTS SIO (Option SLAM)</h4>
+                <p class="text-primary small mb-1 fw-bold">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
+                <p class="content-text small">Formation approfondie en Solutions Logicielles et Applications Métier : développement orienté objet, bases de données relationnelles, sécurité logicielle et intégration continue.</p>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="timeline-date">2022 - 2025</span>
+                <h4 class="text-dark fw-bold">Baccalauréat STI2D — Spécialité SIN</h4>
+                <p class="text-primary small mb-1 fw-bold">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
+                <p class="content-text small">Systèmes d'Information et Numérique. <strong class="text-dark">Mention Assez Bien.</strong></p>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="timeline-date">2018 - 2022</span>
+                <h4 class="text-dark fw-bold">Diplôme National du Brevet</h4>
+                <p class="text-primary small mb-1 fw-bold">Collège JMG Itard, Oraison</p>
+                <p class="content-text small"><strong class="text-dark">Mention Assez Bien.</strong></p>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Veille Technologique Section (Avec Système Dropdown / Pagination) -->
   <section id="veille">
     <div class="container">
-      <span class="section-label">Veille Hardware</span>
-      <h2 class="section-title">Innovations NVIDIA, AMD & Intel.</h2>
-      
-      <div class="text-center">
-        <div class="year-selector">
-          <button class="year-btn active" data-year="2026">2026</button>
-          <button class="year-btn" data-year="2025">2025</button>
+      <div class="text-center mb-4">
+        <span class="section-label">Veille Technologique</span>
+        <h2 class="section-title">Innovations Hardware : NVIDIA, AMD & INTEL</h2>
+        <p class="content-text mx-auto mb-4" style="max-width: 680px;">
+          Suivi des avancées majeures réparties équitablement entre <strong>Intel</strong>, <strong>NVIDIA</strong> et <strong>AMD</strong>.
+        </p>
+
+        <!-- Sélecteur d'Année de Veille -->
+        <div class="block-filter-bar" id="veille-year-filters">
+          <button class="block-btn active" data-vyear="2026">
+            <i class="bi bi-calendar3 me-1"></i> Année 2026 (<span id="count-v-2026">0</span>)
+          </button>
+          <button class="block-btn" data-vyear="2025">
+            <i class="bi bi-calendar3 me-1"></i> Année 2025 (<span id="count-v-2025">0</span>)
+          </button>
         </div>
       </div>
 
-      <div class="veille-container reveal">
+      <!-- Table de Veille (Style Frutiger Aero Clair & Dropdown) -->
+      <div class="veille-panel-light reveal mb-4">
         <div class="table-responsive">
-          <table class="table">
+          <table class="table table-veille-aero">
             <thead>
               <tr>
-                <th style="width: 15%">Date</th>
-                <th style="width: 25%">Marque / Sujet</th>
-                <th>Analyse & Impact</th>
+                <th style="width: 15%"><i class="bi bi-clock me-1"></i> Date</th>
+                <th style="width: 25%"><i class="bi bi-cpu me-1"></i> Constructeur & Sujet</th>
+                <th><i class="bi bi-journal-text me-1"></i> Analyse & Impact</th>
               </tr>
             </thead>
-            <tbody id="veille-tech-body"></tbody>
+            <tbody id="veille-table-body">
+              <!-- Rendu dynamique via JavaScript -->
+            </tbody>
           </table>
         </div>
       </div>
+
+      <!-- Bouton Déroulant pour voir plus d'actualités -->
+      <div class="text-center" id="veille-more-container">
+        <button id="btn-toggle-veille" class="btn-aero-more">
+          <i class="bi bi-chevron-down" id="more-icon"></i> <span id="more-text">Afficher plus d'actualités</span>
+        </button>
+      </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="text-center">
     <div class="container">
-      <p>&copy; 2026 Alexandre Ewan. Portfolio BTS SIO.</p>
+      <p class="mb-1 text-dark fw-bold">Alexandre Ewan • Portfolio BTS SIO</p>
+      <p class="text-dim mb-0">&copy; 2026 Tous droits réservés. Design Frutiger Aero Clair.</p>
     </div>
   </footer>
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
+
   <script>
-    const projects = {
-      bloc1: [
-        { name:"TP01 - Maze solving", description:"Résolution de labyrinthes avec des blocs de code.", image:"https://studio.code.org/script_assets/k_1_images/maze_images/maze_WS.png", file:"TP01_BEAUVALLET.pdf" },
-        { name:"TP01 - SOTOCA", description:"Paramétrage du matériel informatique.", image:"https://ajsinformatique.fr/wp-content/uploads/2021/06/installation-et-parametrage-materiel-informatique.png", file:"TP01_SOTOCA.pdf" },
-        { name:"TP02 - Intro JAVA", description:"Premier pas en JAVA.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3S9FqOWEjqGZPQ98L55jzxu9OXbJqwXx_Gw&s", file:"TP02_BEAUVALLET.pdf" },
-        { name:"TP02 - Diagnostics", description:"Logiciels de diagnostic matériel.", image:"https://overclocking.com/wp-content/uploads/2021/04/hwinfo-.jpg", file:"TP02_SOTOCA.pdf" },
-        { name:"TP03 - JAVA", description:"Exercices JAVA fondamentaux.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuEorj7DUDeLvIJaZE_KLdaElDnIdiDenR9A&s", file:"TP03_BEAUVALLET.pdf" },
-        { name:"TP04 - Shifumi", description:"Jeu Shifumi en JAVA.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREMEYG7weSusIb8RtQfp_DKLkH0L--T42nWg&s", file:"TP04_BEAUVALLET.pdf" },
-        { name:"Carte Mentale CMD", description:"Les commandes indispensables du terminal.", image:"https://i.ytimg.com/vi/1sXHgXKfhRY/hqdefault.jpg", file:"CARTE_MENTALE.pdf" },
-        { name:"TP05 - CMD", description:"Commandes CMD avancées et doskey.", image:"https://www.valordi.com/wp-content/uploads/2024/10/35-commandes-utiles-pour-cmd-windows.jpg", file:"TP05_SOTOCA.pdf" },
-        { name:"TP05 - SWING", description:"Interfaces graphiques JAVA Swing.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZLXYV1xBTDsKUcO0XZzbvPXilm-W7D6JMcQ&s", file:"TP05_BEAUVALLET.pdf" },
-        { name:"TP06 - TechCorp", description:"Gestion d'entreprise fictive.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm5_VBMGuR_KBOv_gr00re9o4TShDogL5TPw&s", file:"TP06_SOTOCA.pdf" },
-        { name:"TP06 - Fonctions", description:"Utilisation des fonctions et procédures.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB1QGcLZYAH591V70KH0p9oZ2LvfCvu6mpbw&s", file:"TP06_BEAUVALLET.pdf" },
-        { name:"TP07 - Bataille Navale", description:"Développement d'un jeu de bataille navale.", image:"https://joueclub-joueclub-fr-storage.omn.proximis.com/Imagestorage/images/0/400/5e46c3cd37ef8_la_bataille_navale_un_jeu_simple_et_toujours_amusant.jpg", file:"TP07_BEAUVALLET.pdf" },
-        { name:"TP08 - Classes", description:"Objets Livre et Compte Bancaire.", image:"https://techvidvan.com/tutorials/wp-content/uploads/2020/02/java-class-objects.jpg", file:"TP08_BEAUVALLET.pdf" },
-        { name:"TP09 - PHP", description:"Introduction au PHP.", image:"https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg", file:"TP09_BEAUVALLET.pdf" },
-        { name:"TP10 - Scene Builder", description:"Interfaces JavaFX.", image:"https://i.ytimg.com/vi/ILraaBUTMJk/maxresdefault.jpg", file:"TP10_BEAUVALLET.pdf" },
-        { name:"TP11 - Modélisation", description:"Conception MLD/MCD.", image:"https://grafikart.fr/uploads/attachments/2022/mcd-mld-61f2a1ba6539b275694702.jpg", file:"TP11_BEAUVALLET.pdf" },
-        { name:"TP12 - SQL Leclerc", description:"Création de base de données SQL.", image:"https://www.michel-edouard-leclerc.com/sites/default/files/2019-02/E.Leclerc%20logo%20blog.png", file:"TP12_BEAUVALLET.pdf" },
-        { name:"TP13 - BDD Zoo", description:"Gestion d'un Zoo via CMD.", image:"https://static.actu.fr/uploads/2017/11/5a111cfc0155a464f9c42652c58afa3f0511c069-960x640.jpg", file:"TP13_BEAUVALLET.pdf" },
-        { name:"TP07 - Linux", description:"Scénarios et commandes Linux.", image:"https://i.extremetech.com/imagery/content-types/00ZTdioKuRFKHIEMNw8NtDb/hero-image.fit_lim.v1678673053.jpg", file:"TP21_SOTOCA.pdf" },
-        { name:"TP14 - JFX Livre", description:"Application JavaFX complète.", image:"https://upload.wikimedia.org/wikipedia/en/c/cc/JavaFX_Logo.png", file:"TP14_BEAUVALLET.pdf" },
-        { name:"TP15 - SQL Requêtes", description:"Requêtes SQL avancées.", image:"https://bairesdev.mo.cloudinary.net/blog/2023/10/What-is-SQL-Server.jpg?tx=w_1920,q_auto", file:"TD3_B2_BEAUVALLET.pdf" },
-        { name:"TD7 - Polymorphisme", description:"Concepts avancés POO.", image:"https://codegym.cc/images/article/1771301a-66f1-469c-868a-41809dc18672/original.png", file:"TD7_B1_BEAUVALLET.pdf" },
-        { name:"TP2 - AD", description:"Active Directory Windows Server.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8XquQhLJrNPKS6OgrlU07F_lW39S_TdGxXA&s", file:"TP2_S2_SOTOCA.pdf" },
-        { name:"TP16 - Users SQL", description:"Gestion des droits utilisateurs.", image:"https://i.ytimg.com/vi/IvOCAobeihs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBjDx4E-lNq5FnSay12MocUNWxr0w", file:"TP_SQL_BEAUVALLET.pdf" },
-        { name:"TP17 - Test PHP", description:"Création d'une page PHP", image:"https://bs-uploads.toptal.io/blackfish-uploads/components/blog_post_page/4085715/cover_image/retina_1708x683/0925-3D_Data_Visualization_with_Open_Source_Tools_A_Tutorial_Using_VTK_Dan_Newsletter-0a7d5944210766ea5745cce80218ad3a.png", file:"TP17_B1_S2_BEAUVALLET.pdf" },
-        { name:"TP18 - Programmation PHP", description:"Exercices en PHP", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxVmJY_qJbVsgNIrsR2M-yhryEPZTLgsPHkQ&s", file:"TP18_B1_BEAUVALLET.pdf" },
-        { name:"TP19 - Programmation PHP avancé", description:"Exercices en PHP", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXJQ0vTB99JutZEo8mFSo00mBh2UosGHtbdQ&s", file:"TP19_B1_BEAUVALLET.pdf" },
-        { name:"ANSSI", description:"ANSSI et questionnaire", image:"https://www.sgdsn.gouv.fr/files/styles/ds_image_paragraphe/public/files/Notre_Organisation/logo_anssi.png?itok=1nxb2Mtt", file:"ANSSI.pdf" },
-        { name:"TP3 - S2", description:"Connexion au domaine", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXJQ0vTB99JutZEo8mFSo00mBh2UosGHtbdQ&s", file:"TP3_S2_SOTOCA.pdf" },
-        { name:"TP4- PHP ET BDD", description:"Lien entre PHP et bases de données ", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxVmJY_qJbVsgNIrsR2M-yhryEPZTLgsPHkQ&s", file:"TP4_B1_S2_BEAUVALLET.pdf" },
-        { name:"TP4- Système d'authentification en PHP", description:"Création d'un mécanisme de système d'authentification en php", image:"https://www.xarala.co/blog/content/images/2023/09/Screenshot-2023-09-08-at-11.08.08.png", file:"TP5_S2_B1_BEAUVALLET.pdf" },
-        { name:"TP5- Rôle DHCP", description:"Attribution automatique des adresses IPs avec le rôle DHCP", image:"https://i.ytimg.com/vi/yH9UvkeAz-I/maxresdefault.jpg", file:"TP4_S2_SOTOCA.pdf" },
-      ],
-      bloc2: [
-        { name:"JDBC SQL-JAVA", description:"Connexion JAVA aux bases SQL.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYGd0F4N--qHe3cWXf7NTdG7tyPEQuFb6Xmg&s", file:"TD_JDBC.pdf" },
-        { name:"Diagrammes UML", description:"Modélisation UML complète.", image:"https://static-cse.canva.com/blob/1421441/long-form_UML-diagram_section-1_asset-1.jpg", file:"TP01_SLAM_BEAUVALLET.pdf" },
-        { name:"Classes UML", description:"Conception de diagrammes de classes.", image:"https://d3n817fwly711g.cloudfront.net/uploads/2018/08/New-Copy-of-Online-Shopping-System-Class-Diagram.png", file:"TP02_B2_BEAUVALLET.pdf" },
-        { name:"Modélisation avancée", description:"Différents types d'associations et d'identifiants dans un MCD", image:"https://www.cartelis.com/wp-content/uploads/2024/03/modele-conceptuel-donnees-mcd-exemple.jpeg", file:"TP_Modelisation_Beauvallet.pdf" },
-        { name:"Car Dealer", description:"Création d'une application anglaise pour un garage", image:"https://code-projects.org/wp-content/uploads/2018/03/Screenshot-3198000.png", file:"TP_CARDEALER.pdf" },
-      ],
-      bloc3: [
-        { name:"TP01 - Captures", description:"Outils de capture pro.", image:"https://th.bing.com/th/id/OIP.J5lfXNq9M83qmVJuLYk-VAHaEK?w=286&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3", file:"TP01_BLOC_3_SOTOCA.pdf" },
-        { name:"TP01 - Données Perso", description:"Règlementation et RGPD.", image:"https://leboncall.com/wp-content/uploads/2016/08/concept-de-centre-d-39-appels_23-2147506314.jpg", file:"TP01_BLOC_3_BEAUVALLET.pdf" },
-        { name:"TP02-04 NAS", description:"Mise en place serveur NAS.", image:"https://www.grosbill.com/images_produits/f408dbd5-fc27-40f0-ac52-02fa621acedb.jpg", file:"TP02_et_03_et_04_BLOC_3_SOTOCA.pdf" },
-        { name:"TP05 - Hachage", description:"Algorithmes de hachage.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROmh31Zb6Z0I0-YE2gclKk-2KaB8gDoAYP6A&s", file:"TP05_B3_SOTOCA.pdf" },
-        { name:"TP05 P2 - Data Leak", description:"Étude des fuites de données.", image:"https://www.webassetscdn.com/avira/prod-blog/wp-content/uploads/2019/08/dataleak_head.jpg", file:"TP05_B3_P2_SOTOCA.pdf" },
-        { name:"TP02 - Sensible", description:"Protection des données sensibles.", image:"https://ctrc-centre-valdeloire.fr/wp-content/uploads/2021/09/priotection_donnees_personnelles.jpg", file:"TP02_BLOC03_BEAUVALLET.pdf" },
-        { name:"TP02 P2 - PIA", description:"Utilisation de l'outil PIA CNIL.", image:"https://www.cnil.fr/sites/default/files/styles/contenu_generique_visuel/public/thumbnails/image/00_logo-1.png?itok=bdT6-lUn", file:"TP02_P2_B3_BEAUVALLET.pdf" },
-        { name:"TD01 - Audits", description:"Processus d'audit informatique.", image:"https://pyx4.com/wp-content/uploads/2019/10/PYX4-schema-definition-audit-internal-systeme-management.png", file:"TD01_B3_BEAUVALLET.pdf" },
-        { name:"TD02 - PGP", description:"Chiffrement via PGP.", image:"https://www.varonis.com/hs-fs/hubfs/Imported_Blog_Media/pgp-encryption-uses.png?width=1240&height=780&name=pgp-encryption-uses.png", file:"TD02_B3_BEAUVALLET.pdf" },
-        { name:"TD1 - Robustesse", description:"Sécurisation des mots de passe.", image:"https://cdn.mos.cms.futurecdn.net/7apbJravJFU2iSu5S3vuDU.jpg", file:"TD1_C4_B3_BEAUVALLET.pdf" },
-        { name:"TD2 - Menaces", description:"Analyse des menaces cybers.", image:"https://le-consultant-digital.com/wp-content/uploads/2023/07/Veille-informationnelle-2.jpg", file:"CH4_TD2_BEAUVALLET.pdf" },
-        { name:"TP08 - Efficacité de protection", description:"Cisco packet tracer", image:"https://www.startertutorials.com/blog/wp-content/uploads/2024/09/network-topology-using-cisco-packet-tracer.png", file:"TP08_B3_BEAUVALLET.pdf" },
-        { name:"TP16 - Deep Freeze", description:"Deep freeze sur Windows 7", image:"https://upload.wikimedia.org/wikipedia/fr/8/8c/Deep_freeze.png", file:"TP16_B3_SOTOCA.pdf" },
-        { name:"TP24 - Portswigger", description:"Cybersécurité via Burp Suite", image:"https://overclocking.com/wp-content/uploads/2021/04/hwinfo-.jpg", file:"TP24_B3_SOTOCA.pdf" },
-        { name:"TP09 - Protection d'application", description:"Codage sécurisé web.", image:"https://www.ovhcloud.com/sites/default/files/styles/large_screens_1x/public/2024-11/textmedia_1200x700.png", file:"TP09_B3_BEAUVALLET.pdf" },
-      ],
-      pro: [
-        { name:"TP01 - Portfolio", description:"Initialisation du portfolio actuel.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSprJmp8vZLTaprWtfns0cn4iQtPgJDsnN5lA&s", file:"TP01_ATELIER.pdf" },
-        { name:"TD01 - HTML", description:"Fondamentaux du HTML5.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8tGtuLs5kBlKBkl1vhb6EDqXQLgwfv2xH7g&s", file:"TP02_ATELIER.pdf" },
-        { name:"TD01 P2 - CSS", description:"Styles et mises en page CSS3.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vVQmOEYUC3sOv7yVNBohQcHIpL7XFbuuLg&s", file:"TP03_ATELIER.pdf" },
-        { name:"TD02 - Avancé", description:"Intégration complexe.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJfkp5e25y1UxY95Uo44WTv184iSsmyYdmkg&s", file:"TD02_SOTOCA.pdf" },
-        { name:"TD02 P2 - CSS+", description:"Pratique CSS avancée (Chuck).", image:"https://funky-stuff.com/wp-content/uploads/2020/04/Chuck-Norris-80th-birthday-Chuck-Norris-memes-Chuck-Norris-birthday-700x394.jpg", file:"TD02_Partie2_ATELIER.pdf" },
-        { name:"TD04 - Forms", description:"Formulaires et interaction.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgZZLlDXeF6Esg50gnnzbz1Pnxx7HpKa7h-Q&s", file:"TD4_ATELIER.pdf" },
-        { name:"TD05 - Responsive", description:"Design adaptatif multi-écrans.", image:"https://www.seo.fr/wp-content/uploads/2022/12/Responsive_design-1024x576.png", file:"TD05_ATELIER.pdf" },
-        { name:"TP09 - CDCF", description:"Rédaction cahier des charges.", image:"https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800", file:"TP09_ATELIER.pdf" },
-        { name:"TP10 - USB", description:"Sécurité des supports amovibles.", image:"https://dxbyzx5id4chj.cloudfront.net/pub/media/catalog/product/7/9/4/3/1/3/P_79431304_1.jpg", file:"TP10_ATELIER.pdf" },
-        { name:"TP11 - JS", description:"Dynamisation via JavaScript.", image:"https://logos-world.net/wp-content/uploads/2023/02/JavaScript-Symbol.png", file:"TP11_ATELIER.pdf" },
-        { name:"PROJET1 - SACINFO", description:"Gestion projet informatique.", image:"https://www.gantt.com/wp-content/uploads/2024/07/gantt-chart-1.jpg", file:"PROJET_SACINFO.pdf" },
-        { name:"PROJET2 - Gantt", description:"Planification Gantt Project.", image:"https://cg2010studio.com/wp-content/uploads/2012/03/ganttproject.jpg", file:"PROJET2_BEAUVALLET.pdf" },
-        { name:"PROJET3 - Suivi", description:"Suivi de projet avancé.", image:"https://methodo-projet.fr/wp-content/uploads/2014/07/IMG_Photo_001.jpg", file:"PROJET_3_BEAUVALLET.pdf" }
-      ],
+    // ====================================================
+    // DONNÉES DES TRAVAUX (TOUS LES THUMBNAILS D'ORIGINE RESTAURÉS)
+    // ====================================================
+    const projectsData = {
+      // 2ème Année (Par défaut) avec thumbnail de Patrimoine Informatique
+      annee2: {
+        bloc1: [
+          { 
+            name: "TP B1 S3 - Patrimoine Informatique", 
+            description: "Gestion, inventaire et maintien du patrimoine informatique (S3 SOTOCA).", 
+            // Thumbnail spécifique de patrimoine informatique
+            image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800", 
+            file: "TP_B1_S3_SOTOCA.pdf", 
+            cat: "bloc1", 
+            isDocx: false 
+          }
+        ],
+        bloc2: [],
+        bloc3: [],
+        pro: []
+      },
+
+      // 1ère Année (Exactement les données et thumbnails d'origine de l'utilisateur)
+      annee1: {
+        bloc1: [
+          { name:"TP01 - Maze solving", description:"Résolution de labyrinthes avec des blocs de code.", image:"https://studio.code.org/script_assets/k_1_images/maze_images/maze_WS.png", file:"TP01_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP01 - SOTOCA", description:"Paramétrage du matériel informatique.", image:"https://ajsinformatique.fr/wp-content/uploads/2021/06/installation-et-parametrage-materiel-informatique.png", file:"TP01_SOTOCA.pdf", cat:"bloc1" },
+          { name:"TP02 - Intro JAVA", description:"Premier pas en JAVA.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3S9FqOWEjqGZPQ98L55jzxu9OXbJqwXx_Gw&s", file:"TP02_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP02 - Diagnostics", description:"Logiciels de diagnostic matériel.", image:"https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800", file:"TP02_SOTOCA.pdf", cat:"bloc1" },
+          { name:"TP03 - JAVA", description:"Exercices JAVA fondamentaux.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuEorj7DUDeLvIJaZE_KLdaElDnIdiDenR9A&s", file:"TP03_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP04 - Shifumi", description:"Jeu Shifumi en JAVA.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREMEYG7weSusIb8RtQfp_DKLkH0L--T42nWg&s", file:"TP04_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"Carte Mentale CMD", description:"Les commandes indispensables du terminal.", image:"https://i.ytimg.com/vi/1sXHgXKfhRY/hqdefault.jpg", file:"CARTE_MENTALE.pdf", cat:"bloc1" },
+          { name:"TP05 - CMD", description:"Commandes CMD avancées et doskey.", image:"https://www.valordi.com/wp-content/uploads/2024/10/35-commandes-utiles-pour-cmd-windows.jpg", file:"TP05_SOTOCA.pdf", cat:"bloc1" },
+          { name:"TP05 - SWING", description:"Interfaces graphiques JAVA Swing.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZLXYV1xBTDsKUcO0XZzbvPXilm-W7D6JMcQ&s", file:"TP05_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP06 - TechCorp", description:"Gestion d'entreprise fictive.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm5_VBMGuR_KBOv_gr00re9o4TShDogL5TPw&s", file:"TP06_SOTOCA.pdf", cat:"bloc1" },
+          { name:"TP06 - Fonctions", description:"Utilisation des fonctions et procédures.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB1QGcLZYAH591V70KH0p9oZ2LvfCvu6mpbw&s", file:"TP06_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP07 - Bataille Navale", description:"Développement d'un jeu de bataille navale.", image:"https://joueclub-joueclub-fr-storage.omn.proximis.com/Imagestorage/images/0/400/5e46c3cd37ef8_la_bataille_navale_un_jeu_simple_et_toujours_amusant.jpg", file:"TP07_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP08 - Classes", description:"Objets Livre et Compte Bancaire.", image:"https://techvidvan.com/tutorials/wp-content/uploads/2020/02/java-class-objects.jpg", file:"TP08_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP09 - PHP", description:"Introduction au PHP.", image:"https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg", file:"TP09_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP10 - Scene Builder", description:"Interfaces JavaFX.", image:"https://i.ytimg.com/vi/ILraaBUTMJk/maxresdefault.jpg", file:"TP10_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP11 - Modélisation", description:"Conception MLD/MCD.", image:"https://grafikart.fr/uploads/attachments/2022/mcd-mld-61f2a1ba6539b275694702.jpg", file:"TP11_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP12 - SQL Leclerc", description:"Création de base de données SQL.", image:"https://www.michel-edouard-leclerc.com/sites/default/files/2019-02/E.Leclerc%20logo%20blog.png", file:"TP12_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP13 - BDD Zoo", description:"Gestion d'un Zoo via CMD.", image:"https://static.actu.fr/uploads/2017/11/5a111cfc0155a464f9c42652c58afa3f0511c069-960x640.jpg", file:"TP13_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP07 - Linux", description:"Scénarios et commandes Linux.", image:"https://i.extremetech.com/imagery/content-types/00ZTdioKuRFKHIEMNw8NtDb/hero-image.fit_lim.v1678673053.jpg", file:"TP21_SOTOCA.pdf", cat:"bloc1" },
+          { name:"TP14 - JFX Livre", description:"Application JavaFX complète.", image:"https://upload.wikimedia.org/wikipedia/en/c/cc/JavaFX_Logo.png", file:"TP14_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP15 - SQL Requêtes", description:"Requêtes SQL avancées.", image:"https://bairesdev.mo.cloudinary.net/blog/2023/10/What-is-SQL-Server.jpg?tx=w_1920,q_auto", file:"TD3_B2_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TD7 - Polymorphisme", description:"Concepts avancés POO.", image:"https://codegym.cc/images/article/1771301a-66f1-469c-868a-41809dc18672/original.png", file:"TD7_B1_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP2 - AD", description:"Active Directory Windows Server.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8XquQhLJrNPKS6OgrlU07F_lW39S_TdGxXA&s", file:"TP2_S2_SOTOCA.pdf", cat:"bloc1" },
+          { name:"TP16 - Users SQL", description:"Gestion des droits utilisateurs.", image:"https://i.ytimg.com/vi/IvOCAobeihs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBjDx4E-lNq5FnSay12MocUNWxr0w", file:"TP_SQL_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP17 - Test PHP", description:"Création d'une page PHP", image:"https://bs-uploads.toptal.io/blackfish-uploads/components/blog_post_page/4085715/cover_image/retina_1708x683/0925-3D_Data_Visualization_with_Open_Source_Tools_A_Tutorial_Using_VTK_Dan_Newsletter-0a7d5944210766ea5745cce80218ad3a.png", file:"TP17_B1_S2_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP18 - Programmation PHP", description:"Exercices en PHP", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxVmJY_qJbVsgNIrsR2M-yhryEPZTLgsPHkQ&s", file:"TP18_B1_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP19 - Programmation PHP avancé", description:"Exercices en PHP", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXJQ0vTB99JutZEo8mFSo00mBh2UosGHtbdQ&s", file:"TP19_B1_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"ANSSI", description:"ANSSI et questionnaire", image:"https://www.sgdsn.gouv.fr/files/styles/ds_image_paragraphe/public/files/Notre_Organisation/logo_anssi.png?itok=1nxb2Mtt", file:"ANSSI.pdf", cat:"bloc1" },
+          { name:"TP3 - S2", description:"Connexion au domaine", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXJQ0vTB99JutZEo8mFSo00mBh2UosGHtbdQ&s", file:"TP3_S2_SOTOCA.pdf", cat:"bloc1" },
+          { name:"TP4- PHP ET BDD", description:"Lien entre PHP et bases de données ", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxVmJY_qJbVsgNIrsR2M-yhryEPZTLgsPHkQ&s", file:"TP4_B1_S2_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP4- Système d'authentification en PHP", description:"Création d'un mécanisme de système d'authentification en php", image:"https://www.xarala.co/blog/content/images/2023/09/Screenshot-2023-09-08-at-11.08.08.png", file:"TP5_S2_B1_BEAUVALLET.pdf", cat:"bloc1" },
+          { name:"TP5- Rôle DHCP", description:"Attribution automatique des adresses IPs avec le rôle DHCP", image:"https://i.ytimg.com/vi/yH9UvkeAz-I/maxresdefault.jpg", file:"TP4_S2_SOTOCA.pdf", cat:"bloc1" }
+        ],
+        bloc2: [
+          { name:"JDBC SQL-JAVA", description:"Connexion JAVA aux bases SQL.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYGd0F4N--qHe3cWXf7NTdG7tyPEQuFb6Xmg&s", file:"TD_JDBC.pdf", cat:"bloc2" },
+          { name:"Diagrammes UML", description:"Modélisation UML complète.", image:"https://static-cse.canva.com/blob/1421441/long-form_UML-diagram_section-1_asset-1.jpg", file:"TP01_SLAM_BEAUVALLET.pdf", cat:"bloc2" },
+          { name:"Classes UML", description:"Conception de diagrammes de classes.", image:"https://d3n817fwly711g.cloudfront.net/uploads/2018/08/New-Copy-of-Online-Shopping-System-Class-Diagram.png", file:"TP02_B2_BEAUVALLET.pdf", cat:"bloc2" },
+          { name:"Modélisation avancée", description:"Différents types d'associations et d'identifiants dans un MCD", image:"https://www.cartelis.com/wp-content/uploads/2024/03/modele-conceptuel-donnees-mcd-exemple.jpeg", file:"TP_Modelisation_Beauvallet.pdf", cat:"bloc2" },
+          { name:"Car Dealer", description:"Création d'une application anglaise pour un garage", image:"https://code-projects.org/wp-content/uploads/2018/03/Screenshot-3198000.png", file:"TP_CARDEALER.pdf", cat:"bloc2" }
+        ],
+        bloc3: [
+          { name:"TP01 - Captures", description:"Outils de capture pro.", image:"https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80&w=800", file:"TP01_BLOC_3_SOTOCA.pdf", cat:"bloc3" },
+          { name:"TP01 - Données Perso", description:"Règlementation et RGPD.", image:"https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?auto=format&fit=crop&q=80&w=800", file:"TP01_BLOC_3_BEAUVALLET.pdf", cat:"bloc3" },
+          { name:"TP02-04 NAS", description:"Mise en place serveur NAS.", image:"https://www.grosbill.com/images_produits/f408dbd5-fc27-40f0-ac52-02fa621acedb.jpg", file:"TP02_et_03_et_04_BLOC_3_SOTOCA.pdf", cat:"bloc3" },
+          { name:"TP05 - Hachage", description:"Algorithmes de hachage.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROmh31Zb6Z0I0-YE2gclKk-2KaB8gDoAYP6A&s", file:"TP05_B3_SOTOCA.pdf", cat:"bloc3" },
+          { name:"TP05 P2 - Data Leak", description:"Étude des fuites de données.", image:"https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800", file:"TP05_B3_P2_SOTOCA.pdf", cat:"bloc3" },
+          { name:"TP02 - Sensible", description:"Protection des données sensibles.", image:"https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800", file:"TP02_BLOC03_BEAUVALLET.pdf", cat:"bloc3" },
+          { name:"TP02 P2 - PIA", description:"Utilisation de l'outil PIA CNIL.", image:"https://www.cnil.fr/sites/default/files/styles/contenu_generique_visuel/public/thumbnails/image/00_logo-1.png?itok=bdT6-lUn", file:"TP02_P2_B3_BEAUVALLET.pdf", cat:"bloc3" },
+          { name:"TD01 - Audits", description:"Processus d'audit informatique.", image:"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800", file:"TD01_B3_BEAUVALLET.pdf", cat:"bloc3" },
+          { name:"TD02 - PGP", description:"Chiffrement via PGP.", image:"https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=800", file:"TD02_B3_BEAUVALLET.pdf", cat:"bloc3" },
+          { name:"TD1 - Robustesse", description:"Sécurisation des mots de passe.", image:"https://cdn.mos.cms.futurecdn.net/7apbJravJFU2iSu5S3vuDU.jpg", file:"TD1_C4_B3_BEAUVALLET.pdf", cat:"bloc3" },
+          { name:"TD2 - Menaces", description:"Analyse des menaces cybers.", image:"https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800", file:"CH4_TD2_BEAUVALLET.pdf", cat:"bloc3" },
+          { name:"TP08 - Efficacité de protection", description:"Cisco packet tracer", image:"https://www.startertutorials.com/blog/wp-content/uploads/2024/09/network-topology-using-cisco-packet-tracer.png", file:"TP08_B3_BEAUVALLET.pdf", cat:"bloc3" },
+          { name:"TP16 - Deep Freeze", description:"Deep freeze sur Windows 7", image:"https://upload.wikimedia.org/wikipedia/fr/8/8c/Deep_freeze.png", file:"TP16_B3_SOTOCA.pdf", cat:"bloc3" },
+          { name:"TP24 - Portswigger", description:"Cybersécurité via Burp Suite", image:"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800", file:"TP24_B3_SOTOCA.pdf", cat:"bloc3" },
+          { name:"TP09 - Protection d'application", description:"Codage sécurisé web.", image:"https://www.ovhcloud.com/sites/default/files/styles/large_screens_1x/public/2024-11/textmedia_1200x700.png", file:"TP09_B3_BEAUVALLET.pdf", cat:"bloc3" }
+        ],
+        pro: [
+          { name:"TP01 - Portfolio", description:"Initialisation du portfolio actuel.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSprJmp8vZLTaprWtfns0cn4iQtPgJDsnN5lA&s", file:"TP01_ATELIER.pdf", cat:"pro" },
+          { name:"TD01 - HTML", description:"Fondamentaux du HTML5.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8tGtuLs5kBlKBkl1vhb6EDqXQLgwfv2xH7g&s", file:"TP02_ATELIER.pdf", cat:"pro" },
+          { name:"TD01 P2 - CSS", description:"Styles et mises en page CSS3.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vVQmOEYUC3sOv7yVNBohQcHIpL7XFbuuLg&s", file:"TP03_ATELIER.pdf", cat:"pro" },
+          { name:"TD02 - Avancé", description:"Intégration complexe.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJfkp5e25y1UxY95Uo44WTv184iSsmyYdmkg&s", file:"TD02_SOTOCA.pdf", cat:"pro" },
+          { name:"TD02 P2 - CSS+", description:"Pratique CSS avancée (Chuck).", image:"https://funky-stuff.com/wp-content/uploads/2020/04/Chuck-Norris-80th-birthday-Chuck-Norris-memes-Chuck-Norris-birthday-700x394.jpg", file:"TD02_Partie2_ATELIER.pdf", cat:"pro" },
+          { name:"TD04 - Forms", description:"Formulaires et interaction.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgZZLlDXeF6Esg50gnnzbz1Pnxx7HpKa7h-Q&s", file:"TD4_ATELIER.pdf", cat:"pro" },
+          { name:"TD05 - Responsive", description:"Design adaptatif multi-écrans.", image:"https://www.seo.fr/wp-content/uploads/2022/12/Responsive_design-1024x576.png", file:"TD05_ATELIER.pdf", cat:"pro" },
+          { name:"TP09 - CDCF", description:"Rédaction cahier des charges.", image:"https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800", file:"TP09_ATELIER.pdf", cat:"pro" },
+          { name:"TP10 - USB", description:"Sécurité des supports amovibles.", image:"https://dxbyzx5id4chj.cloudfront.net/pub/media/catalog/product/7/9/4/3/1/3/P_79431304_1.jpg", file:"TP10_ATELIER.pdf", cat:"pro" },
+          { name:"TP11 - JS", description:"Dynamisation via JavaScript.", image:"https://logos-world.net/wp-content/uploads/2023/02/JavaScript-Symbol.png", file:"TP11_ATELIER.pdf", cat:"pro" },
+          { name:"PROJET1 - SACINFO", description:"Gestion projet informatique.", image:"https://www.gantt.com/wp-content/uploads/2024/07/gantt-chart-1.jpg", file:"PROJET_SACINFO.pdf", cat:"pro" },
+          { name:"PROJET2 - Gantt", description:"Planification Gantt Project.", image:"https://cg2010studio.com/wp-content/uploads/2012/03/ganttproject.jpg", file:"PROJET2_BEAUVALLET.pdf", cat:"pro" },
+          { name:"PROJET3 - Suivi", description:"Suivi de projet avancé.", image:"https://methodo-projet.fr/wp-content/uploads/2014/07/IMG_Photo_001.jpg", file:"PROJET_3_BEAUVALLET.pdf", cat:"pro" }
+        ]
+      },
+
+      // Stages
       stage1: [
-        { name:"STAGE PROXMOX", description:"Documentation et réalisation sur l'environnement Proxmox.", image:"https://dynfi.com/media/products/proxmox-logo-color-stacked_kwS20y7.png", file:"STAGE_PROXMOX.pdf" },
-        { name:"STAG SQL", description:"Documentation et requêtes SQL liées aux tâches de stage.", image:"https://linuxcapable.com/wp-content/uploads/2026/03/how-to-install-postgresql-15-on-debian-linux-feature-image.png", file:"STAGE_SQL.pdf" },
-        { name:"STAGE STRATEGIE DE SAUVEGARDE PROXMOX", description:"Mise en place d'une stratégie de sauvegarde des machines virtuelles et données critiques de Proxmox", image:"https://i.ytimg.com/vi/QMBEcA6j_mE/maxresdefault.jpg", file:"STAGE_SAUVEGARDE_PROXMOX.pdf" },
-        { name:"STAGE KEEPASS", description:"Guide d'utilisation de Keepass", image:"https://i.pcmag.com/imagery/reviews/05t4m52bfjArEaJoAGOXdEu-18.fit_scale.size_400x225.v1648759091.jpg", file:"STAGE_KEEPASS.pdf" },
-        { name:"STAGE N8N", description:"Différentes utilisation de n8n", image:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/N8n-logo-new.svg/1280px-N8n-logo-new.svg.png", file:"stage_n8n.pdf" },
-        { name:"STAGE GNS3", description:"Documentation technique GNS3", image:"https://dosztal.com/blog/gns3-automation/cover.png", file:"STAGE_GNS3.pdf" },
-        { name:"STAGE MISTRAL", description:"Installation de Mistral AI en local", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwlxZ2rDwRme02UA1j5xdlc_9AqsED-cDQtw&s", file:"STAGE_MISTRAL.pdf" },
-        { name:"STAGE ZABBIX", description:"Rapport sur Zabbix", image:"https://wiki.calculate-linux.org/download_images/original/zabbix_logo_500x131.png", file:"STAGE_ZABBIX.pdf" },
-        { name:"STAGE GLPI", description:"Suivi et gestion d'incidents avec GLPI", image:"https://cugit-consulting.com/sites/default/files/portfolio/GLPI.gif", file:"STAGE_GLPI.pdf" },
-        { name:"STAGE HAPROXY", description:"Equilibre des charges d'utilisateurs sur un serveur web avec HAProxy", image:"https://www.haproxy.com/img/containers/posts/haproxy-configuration-load-balance-your-servers.png/d3d71b2ca84a588091a93bb3ffbdfc87/haproxy-configuration-load-balance-your-servers.png", file:"STAGE_HAPROXY.pdf" },
-        { name:"STAGE DCSR", description:"DCSR de mon environnement", image:"https://sunapsis.net/wp-content/uploads/2020/11/communication-en-ligne-internet-securisee-paiement-et-reseau-securisee-et-bancaire-concept.-Verser-au-web-via-un-ordinateur.-Serrures-et-cadenas-sur-le-diagramme.jpg", file:"STAGE_DCSR.pdf" },       
-        { name:"MCD PROJET DOLPHISIC", description:"MCD Mocodo.net du projet Dolphisic", image:"https://sql.sh/wp-content/uploads/2017/06/mocodo-diagramme.png", file:"MCD PROJET.png" },
+        { name:"STAGE PROXMOX", description:"Documentation et réalisation sur l'environnement Proxmox.", image:"https://dynfi.com/media/products/proxmox-logo-color-stacked_kwS20y7.png", file:"STAGE_PROXMOX.pdf", tag:"Virtualisation" },
+        { name:"STAGE SQL", description:"Documentation et requêtes SQL liées aux tâches de stage.", image:"https://linuxcapable.com/wp-content/uploads/2026/03/how-to-install-postgresql-15-on-debian-linux-feature-image.png", file:"STAGE_SQL.pdf", tag:"BDD" },
+        { name:"STRATÉGIE SAUVEGARDE PROXMOX", description:"Mise en place d'une stratégie de sauvegarde des VMs et données critiques.", image:"https://i.ytimg.com/vi/QMBEcA6j_mE/maxresdefault.jpg", file:"STAGE_SAUVEGARDE_PROXMOX.pdf", tag:"Backup" },
+        { name:"STAGE KEEPASS", description:"Guide d'utilisation et sécurisation Keepass.", image:"https://i.pcmag.com/imagery/reviews/05t4m52bfjArEaJoAGOXdEu-18.fit_scale.size_400x225.v1648759091.jpg", file:"STAGE_KEEPASS.pdf", tag:"Sécurité" },
+        { name:"STAGE N8N", description:"Différentes utilisations et workflows n8n.", image:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/N8n-logo-new.svg/1280px-N8n-logo-new.svg.png", file:"stage_n8n.pdf", tag:"Automation" },
+        { name:"STAGE GNS3", description:"Documentation technique GNS3 et maquettage.", image:"https://dosztal.com/blog/gns3-automation/cover.png", file:"STAGE_GNS3.pdf", tag:"Réseau" },
+        { name:"STAGE MISTRAL AI", description:"Installation de Mistral AI en local.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwlxZ2rDwRme02UA1j5xdlc_9AqsED-cDQtw&s", file:"STAGE_MISTRAL.pdf", tag:"IA" },
+        { name:"STAGE ZABBIX", description:"Rapport et monitoring sur Zabbix.", image:"https://wiki.calculate-linux.org/download_images/original/zabbix_logo_500x131.png", file:"STAGE_ZABBIX.pdf", tag:"Monitoring" },
+        { name:"STAGE GLPI", description:"Suivi et gestion d'incidents avec GLPI.", image:"https://cugit-consulting.com/sites/default/files/portfolio/GLPI.gif", file:"STAGE_GLPI.pdf", tag:"ITSM" },
+        { name:"STAGE HAPROXY", description:"Équilibre des charges web avec HAProxy.", image:"https://www.haproxy.com/img/containers/posts/haproxy-configuration-load-balance-your-servers.png/d3d71b2ca84a588091a93bb3ffbdfc87/haproxy-configuration-load-balance-your-servers.png", file:"STAGE_HAPROXY.pdf", tag:"Réseau" },
+        { name:"STAGE DCSR", description:"Dossier de Choix et Schéma Réseau de l'infrastructure.", image:"https://sunapsis.net/wp-content/uploads/2020/11/communication-en-ligne-internet-securisee-paiement-et-reseau-securisee-et-bancaire-concept.-Verser-au-web-via-un-ordinateur.-Serrures-et-cadenas-sur-le-diagramme.jpg", file:"STAGE_DCSR.pdf", tag:"Architecture" },
+        { name:"MCD PROJET DOLPHISIC", description:"MCD Mocodo.net du projet Dolphisic.", image:"https://sql.sh/wp-content/uploads/2017/06/mocodo-diagramme.png", file:"MCD PROJET.png", tag:"MCD" }
       ]
     };
 
+    // ====================================================
+    // DONNÉES DE VEILLE ÉQUILIBRÉES (INTEL, NVIDIA, AMD)
+    // ====================================================
     const veilleData = {
       2025: [
-        { date: "06/12/2025", sujet: "NVIDIA CUDA 13.1", impact: "Intégration des CUDA Tiles pour accélérer les calculs IA sur Blackwell." },
-        { date: "19/11/2025", sujet: "AMD FSR Redstone", impact: "Upscaling IA matériel pour rivaliser avec DLSS sur RX 9000." },
-        { date: "10/11/2025", sujet: "Intel Panther Lake", impact: "Premières puces gravées sur nœud 18A pour l'efficacité." },
-        { date: "28/10/2025", sujet: "NVIDIA RTX 5080", impact: "Architecture Blackwell grand public avec GDDR7." },
-        { date: "09/10/2025", sujet: "AMD Ryzen 9000X3D", impact: "Domination du segment gaming via le V-Cache 3D." }
+        { date: "15/12/2025", marque: "Intel", sujet: "Intel Xeon 6 Sierra Forest", impact: "Déploiement massif des processeurs à 288 cœurs E pour l'efficacité énergétique en datacenter." },
+        { date: "06/12/2025", marque: "NVIDIA", sujet: "NVIDIA CUDA 13.1", impact: "Intégration des CUDA Tiles pour accélérer les calculs matriciels IA sur l'architecture Blackwell." },
+        { date: "24/11/2025", marque: "Intel", sujet: "Intel Thunderbolt 5", impact: "Disponibilité des contrôleurs Barlow Ridge offrant jusqu'à 120 Gbps pour cartes graphiques externes." },
+        { date: "19/11/2025", marque: "AMD", sujet: "AMD FSR Redstone", impact: "Upscaling IA matériel pour rivaliser directement avec le DLSS sur les GPU Radeon RX 9000." },
+        { date: "10/11/2025", marque: "Intel", sujet: "Intel Panther Lake (18A)", impact: "Premières puces gravées sur nœud 18A avec RibbonFET et alimentation PowerVia en test interne." },
+        { date: "28/10/2025", marque: "NVIDIA", sujet: "NVIDIA RTX 5080", impact: "Lancement de l'architecture Blackwell grand public avec mémoire GDDR7 à haute fréquence." },
+        { date: "09/10/2025", marque: "AMD", sujet: "AMD Ryzen 9000X3D", impact: "Optimisation de la technologie 3D V-Cache pour les performances en compilation et calcul." }
       ],
       2026: [
-        { date: "16/03/2026", sujet: "AMD RDNA 4", impact: "Nouveau moteur Ray Tracing offrant +50% de perf par rapport à RDNA 3." },
-        { date: "09/03/2026", sujet: "Intel Nova Lake", impact: "Premières fuites sur le socket LGA-1851 v2 et cache L3 unifié." },
-        { date: "02/03/2026", sujet: "NVIDIA RTX 60", impact: "Architecture Vera Rubin confirmée pour 2027 avec mémoire HBM4." },
-        { date: "23/02/2026", sujet: "AMD Zen 6", impact: "Soutien du support DDR6 et passage au procédé 2nm chez TSMC." },
-        { date: "16/02/2026", sujet: "Intel 14A Node", impact: "Démarrage de la phase test pour la gravure 1.4nm (Intel 14A)." },
-        { date: "09/02/2026", sujet: "NVIDIA DLSS 4.5", impact: "Reconstruction complète de l'image par IA pour une fluidité absolue." },
-        { date: "02/02/2026", sujet: "AMD Instinct MI400", impact: "Accélérateur IA conçu pour détrôner le H200 de NVIDIA." },
-        { date: "26/01/2026", sujet: "Intel Arc Battlemage", impact: "Lancement des cartes B580 pour le marché milieu de gamme." },
-        { date: "19/01/2026", sujet: "NVIDIA Blackwell Ultra", impact: "Révision matériel corrigeant les problèmes thermiques des serveurs AI." },
-        { date: "12/01/2026", sujet: "AMD Strix Halo", impact: "Sortie des APU surpuissants intégrant 40 unités de calcul GPU." },
-        { date: "05/01/2026", sujet: "CES 2026", impact: "Keynotes NVIDIA/AMD/Intel focalisées sur le Local AI Processing." }
+        { date: "31/08/2026", marque: "Intel", sujet: "Intel Core Ultra 200S (Arrow Lake)", impact: "Lancement des processeurs de bureau sans hyper-threading avec réduction de 30% de la consommation." },
+        { date: "24/08/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 5090", impact: "Révélation des protocoles d'alimentation 12V-2x6 renforcés pour la sécurité des cartes haut de gamme." },
+        { date: "17/08/2026", marque: "Intel", sujet: "Intel Lunar Lake (Core Ultra 2)", impact: "Généralisation des PC portables avec mémoire embarquée (MoP) et NPU 48 TOPS pour le traitement local." },
+        { date: "10/08/2026", marque: "AMD", sujet: "AMD Zen 6 Architecture", impact: "Confirmation de la gravure 2nm TSMC et de l'interconnexion mémoire unifiée DDR6." },
+        { date: "03/08/2026", marque: "Intel", sujet: "Intel Arc Battlemage (Xe2-HPG)", impact: "Déploiement des GPU dédiés milieu de gamme avec moteur XMX pour accélération IA." },
+        { date: "27/07/2026", marque: "NVIDIA", sujet: "NVIDIA DGX Cloud", impact: "Extension des clusters d'inférence distribuée pour les modèles de fondation en entreprise." },
+        { date: "20/07/2026", marque: "Intel", sujet: "Intel 18A Clearwater Forest", impact: "Validation des puces serveur entièrement gravées sur le procédé Intel 18A avec PowerVia." },
+        { date: "13/07/2026", marque: "AMD", sujet: "AMD MI325X", impact: "Extension mémoire à 288 Go HBM3e pour modèles de langage géants face au H200." },
+        { date: "06/07/2026", marque: "Intel", sujet: "Intel Gaudi 3 AI Accelerator", impact: "Disponibilité générale des accélérateurs Gaudi 3 offrant une alternative économique aux GPU Nvidia." },
+        { date: "29/06/2026", marque: "NVIDIA", sujet: "NVIDIA Rubin Architecture", impact: "Premières bandes passantes HBM4 à 2 To/s dévoilées pour les supercalculateurs IA." },
+        { date: "22/06/2026", marque: "Intel", sujet: "Intel Xeon 6 Granite Rapids", impact: "Performances records des cœurs Performance (P-Cores) en virtualisation et calcul scientifique." },
+        { date: "15/06/2026", marque: "AMD", sujet: "AMD Zen 5c", impact: "Déploiement des cœurs haute densité pour serveurs cloud et hébergement web." },
+        { date: "08/06/2026", marque: "Intel", sujet: "Intel 14A Node (High-NA EUV)", impact: "Démarrage des essais sur la première machine lithographique High-NA EUV commerciale au monde." },
+        { date: "01/06/2026", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72", impact: "Premières livraisons de baies complètes avec refroidissement liquide direct aux hyperscalers." },
+        { date: "25/05/2026", marque: "AMD", sujet: "AMD Ryzen 9 9950X3D", impact: "Performances exceptionnelles en compilation logicielle et modélisation 3D." },
+        { date: "18/05/2026", marque: "Intel", sujet: "Intel OpenVINO 2026.1", impact: "Mise à jour majeure du framework pour l'inférence optimisée sur CPU, GPU et NPU Intel." },
+        { date: "11/05/2026", marque: "NVIDIA", sujet: "NVIDIA TensorRT-LLM", impact: "Réduction de 40% de la latence lors de l'exécution de petits modèles open-source en local." },
+        { date: "04/05/2026", marque: "AMD", sujet: "AMD Strix Point", impact: "Intégration du NPU XDNA 2 dans les stations nomades pour le traitement d'IA sans latence." },
+        { date: "27/04/2026", marque: "Intel", sujet: "Intel Wi-Fi 7 BE200", impact: "Standardisation du débit sans fil multi-gigabit et réduction drastique de la gigue en réseau local." },
+        { date: "20/04/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 5070 Ti", impact: "Spécifications confirmées avec 16 Go de GDDR7 et bus 256-bit pour le segment créateur." },
+        { date: "13/04/2026", marque: "Intel", sujet: "Intel Falcon Shores", impact: "Architecture hybride combinant x86 et cœurs GPU pour le calcul intensif en laboratoire." },
+        { date: "06/04/2026", marque: "AMD", sujet: "AMD ROCm 6.3", impact: "Prise en charge native de PyTorch sur Linux pour l'ensemble de la gamme Radeon RX." },
+        { date: "30/03/2026", marque: "Intel", sujet: "Intel Socket LGA-1851", impact: "Généralisation du nouveau socket avec support exclusif de la DDR5 haute vitesse et PCIe 5.0." },
+        { date: "23/03/2026", marque: "NVIDIA", sujet: "NVIDIA GTC 2026 Keynote", impact: "Présentation de l'infrastructure réseau Quantum-X800 InfiniBand pour grappes IA." },
+        { date: "16/03/2026", marque: "AMD", sujet: "AMD RDNA 4", impact: "Refonte du pipeline Ray Tracing offrant +50% d'efficacité par rapport à RDNA 3." },
+        { date: "09/03/2026", marque: "Intel", sujet: "Intel Nova Lake Leaks", impact: "Premières révélations sur l'architecture avec cache L3 unifié ultra-large prévue pour succéder à Arrow Lake." },
+        { date: "02/03/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 60", impact: "Architecture Vera Rubin confirmée pour 2027 avec interconnexion NVLink nouvelle génération." },
+        { date: "23/02/2026", marque: "AMD", sujet: "AMD Zen 6", impact: "Validation des contrôleurs mémoires compatibles avec les futurs standards de bus DDR6." },
+        { date: "16/02/2026", marque: "Intel", sujet: "Intel 14A Node", impact: "Démarrage officiel de la phase de prototypage de la gravure 1,4 nm chez Intel Foundry." },
+        { date: "09/02/2026", marque: "NVIDIA", sujet: "NVIDIA DLSS 4.5", impact: "Reconstruction complète neuronale de l'image pour une netteté absolue en temps réel." },
+        { date: "02/02/2026", marque: "AMD", sujet: "AMD Instinct MI400", impact: "Accélérateur IA conçu pour rivaliser avec les architectures multinœuds de NVIDIA." },
+        { date: "26/01/2026", marque: "Intel", sujet: "Intel Arc Battlemage B580", impact: "Lancement des cartes dédiées avec double encodeur matériel AV1." },
+        { date: "19/01/2026", marque: "NVIDIA", sujet: "NVIDIA Blackwell Ultra", impact: "Optimisation de la dissipation thermique sur les modules serveurs d'intelligence artificielle." },
+        { date: "12/01/2026", marque: "AMD", sujet: "AMD Strix Halo", impact: "APU surpuissant intégrant 40 unités de calcul GPU pour créateurs de contenu." },
+        { date: "05/01/2026", marque: "Intel", sujet: "CES 2026 : Keynote Intel", impact: "Présentation des nouveaux processeurs basse consommation pour l'écosystème PC IA." }
       ]
     };
 
-    function generateCardHTML(p) {
+    // ====================================================
+    // CRÉATION DES CARTES TP (THUMBNAILS D'ORIGINE)
+    // ====================================================
+    function createTPCard(p, isStage = false) {
+      const isDocx = p.isDocx || (p.file && p.file.endsWith('.docx'));
+      const btnIcon = isDocx ? 'bi-file-earmark-word' : 'bi-file-earmark-pdf';
+      const btnText = isDocx ? 'Télécharger (.docx)' : 'Consulter le PDF';
+      const badgeText = isStage ? (p.tag || 'Stage') : p.cat.toUpperCase();
+
       return `
-        <div class="col-md-6 col-lg-4 col-xl-3">
-          <div class="project-card reveal">
-            <div class="project-img-wrapper"><img src="${p.image}" class="project-img" alt="${p.name}" loading="lazy"></div>
-            <div class="project-body">
-              <h6 class="text-white mb-2" style="font-size:0.9rem">${p.name}</h6>
-              <p class="text-dim small mb-4">${p.description}</p>
-              <a href="${p.file}" target="_blank" class="btn-apple w-100 py-2 text-center" style="background: rgba(255,255,255,0.05); color: #fff; font-size: 0.75rem; border: 1px solid var(--glass-border);">Ouvrir</a>
+        <div class="col-md-6 col-lg-4 col-xl-3 tp-item reveal" data-name="${p.name.toLowerCase()}" data-desc="${p.description.toLowerCase()}" data-cat="${p.cat || 'stage'}">
+          <div class="glass-card">
+            <div class="tp-img-wrapper">
+              <img src="${p.image}" 
+                   class="tp-img" 
+                   alt="${p.name}" 
+                   loading="lazy" 
+                   onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800';">
+            </div>
+            <div class="tp-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge-aero" style="font-size:0.75rem; padding: 3px 8px;">${badgeText}</span>
+              </div>
+              <h6 class="tp-title">${p.name}</h6>
+              <p class="tp-desc">${p.description}</p>
+              <a href="${p.file}" target="_blank" class="btn-tp-open">
+                <i class="bi ${btnIcon}"></i> ${btnText}
+              </a>
             </div>
           </div>
         </div>`;
     }
 
-    function loadProjects(cat) {
-      const cont = document.getElementById(`projects-${cat}`);
-      if (!cont) return;
-      cont.innerHTML = '';
-      projects[cat].forEach((p) => {
-        cont.innerHTML += generateCardHTML(p);
+    // ====================================================
+    // GESTION DES TPS ET RECHERCHE
+    // ====================================================
+    let activeYear = 'annee2'; // 2ème année par défaut
+    let activeBlock = 'all';
+
+    function renderTPs() {
+      const container = document.getElementById('tps-container');
+      container.innerHTML = '';
+
+      const currentYearObj = projectsData[activeYear] || {};
+      let listToFilter = [];
+
+      if (activeBlock === 'all') {
+        listToFilter = [
+          ...(currentYearObj.bloc1 || []),
+          ...(currentYearObj.bloc2 || []),
+          ...(currentYearObj.bloc3 || []),
+          ...(currentYearObj.pro || [])
+        ];
+      } else {
+        listToFilter = currentYearObj[activeBlock] || [];
+      }
+
+      const search = document.getElementById('tp-search').value.toLowerCase().trim();
+      const filtered = listToFilter.filter(p => {
+        return !search || 
+          p.name.toLowerCase().includes(search) || 
+          p.description.toLowerCase().includes(search) ||
+          p.cat.toLowerCase().includes(search);
       });
-      refreshReveal();
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <div class="glass-panel p-5 d-inline-block">
+              <i class="bi bi-folder2-open fs-1 text-primary mb-3 d-block"></i>
+              <h5 class="text-dark">Aucun document dans cette catégorie pour le moment.</h5>
+              <p class="text-dim small">Les prochains travaux pratiques de la 2ème année seront ajoutés au fil des cours.</p>
+            </div>
+          </div>`;
+      } else {
+        filtered.forEach(p => {
+          container.innerHTML += createTPCard(p, false);
+        });
+      }
+
+      initObserver();
     }
 
-    function loadStageLivrables() {
-      const cont = document.getElementById('stage-livrables');
-      if (!cont || !projects.stage1) return;
-      cont.innerHTML = '';
-      projects.stage1.forEach((p) => {
-        cont.innerHTML += generateCardHTML(p);
+    function renderStage() {
+      const container = document.getElementById('stage-container');
+      container.innerHTML = '';
+      projectsData.stage1.forEach(p => {
+        container.innerHTML += createTPCard(p, true);
       });
-      refreshReveal();
+      initObserver();
     }
 
-    function loadVeille(year) {
-      const body = document.getElementById('veille-tech-body');
-      if (!body) return;
-      body.innerHTML = '';
-      veilleData[year].forEach(v => {
-        body.innerHTML += `
-          <tr class="reveal">
-            <td class="text-dim">${v.date}</td>
-            <td class="fw-bold">${v.sujet}</td>
-            <td class="text-dim small">${v.impact}</td>
+    // ====================================================
+    // ====================================================
+    // GESTION DU TABLEAU DE VEILLE AVEC CHARGEMENT PROGRESSIF (+10)
+    // ====================================================
+    const VEILLE_STEP = 10;
+    let visibleVeilleCount = VEILLE_STEP;
+    let currentVeilleYear = 2026;
+
+    function renderVeille(year) {
+      currentVeilleYear = year;
+      const tbody = document.getElementById('veille-table-body');
+      tbody.innerHTML = '';
+      const items = veilleData[year] || [];
+
+      const visibleItems = items.slice(0, visibleVeilleCount);
+
+      visibleItems.forEach(v => {
+        let tagClass = 'badge-aero';
+        if (v.marque === 'Intel') tagClass = 'badge-intel';
+        else if (v.marque === 'NVIDIA') tagClass = 'badge-nvidia';
+        else if (v.marque === 'AMD') tagClass = 'badge-amd';
+
+        tbody.innerHTML += `
+          <tr class="reveal active">
+            <td class="text-primary fw-bold" style="white-space: nowrap;"><i class="bi bi-calendar2-check me-1"></i>${v.date}</td>
+            <td>
+              <span class="text-dark fw-bold d-block mb-1">${v.sujet}</span>
+              <span class="${tagClass}" style="font-size:0.75rem; padding: 3px 8px;">${v.marque || 'Tech'}</span>
+            </td>
+            <td style="color:#1e293b !important;">${v.impact}</td>
           </tr>`;
       });
-      refreshReveal();
+
+      // Gestion du bouton progressif "+10"
+      const moreContainer = document.getElementById('veille-more-container');
+      const moreIcon = document.getElementById('more-icon');
+      const moreText = document.getElementById('more-text');
+
+      if (items.length > VEILLE_STEP) {
+        moreContainer.style.display = 'block';
+        if (visibleVeilleCount < items.length) {
+          const remaining = items.length - visibleVeilleCount;
+          const nextBatch = Math.min(VEILLE_STEP, remaining);
+          moreIcon.className = 'bi bi-chevron-down';
+          moreText.innerText = `Afficher +${nextBatch} actualités (${visibleVeilleCount}/${items.length})`;
+        } else {
+          moreIcon.className = 'bi bi-chevron-up';
+          moreText.innerText = `Replier le tableau (revenir aux ${VEILLE_STEP} premières)`;
+        }
+      } else {
+        moreContainer.style.display = 'none';
+      }
+
+      document.getElementById('count-v-2026').innerText = veilleData[2026].length;
+      document.getElementById('count-v-2025').innerText = veilleData[2025].length;
+      initObserver();
     }
 
-    function refreshReveal() {
-      const obs = new IntersectionObserver((entries) => {
+    // ====================================================
+    // INTERSECTION OBSERVER ANIMATION
+    // ====================================================
+    function initObserver() {
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active');
-            obs.unobserve(entry.target);
+            observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+      }, { threshold: 0.08 });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
 
+    // ====================================================
+    // EVENTS LISTENERS
+    // ====================================================
     window.addEventListener('DOMContentLoaded', () => {
-      ['bloc1', 'bloc2', 'bloc3', 'pro'].forEach(loadProjects);
-      loadStageLivrables();
-      loadVeille(2026);
-      
-      document.querySelectorAll('.year-btn').forEach(btn => {
-        btn.onclick = () => {
-          document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+      renderTPs();
+      renderStage();
+      renderVeille(2026);
+
+      // Année Switcher (1ère / 2ème Année)
+      document.querySelectorAll('#year-switchers .year-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#year-switchers .year-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          loadVeille(btn.dataset.year);
-        };
+          activeYear = btn.dataset.year;
+          renderTPs();
+        });
+      });
+
+      // Bloc Filters (Tous, Bloc 1, Bloc 2, Bloc 3, Atelier Pro)
+      document.querySelectorAll('#block-filters .block-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#block-filters .block-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeBlock = btn.dataset.block;
+          renderTPs();
+        });
+      });
+
+      // Live search input
+      document.getElementById('tp-search').addEventListener('input', () => {
+        renderTPs();
+      });
+
+      // Veille Year Switcher (2026 / 2025)
+      document.querySelectorAll('#veille-year-filters .block-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#veille-year-filters .block-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          visibleVeilleCount = VEILLE_STEP; // reset à 10 lors du changement d'année
+          renderVeille(parseInt(btn.dataset.vyear));
+        });
+      });
+
+      // Bouton déroulant progressif (+10 ou replier)
+      document.getElementById('btn-toggle-veille').addEventListener('click', () => {
+        const items = veilleData[currentVeilleYear] || [];
+        if (visibleVeilleCount < items.length) {
+          visibleVeilleCount += VEILLE_STEP; // ajoute 10 lignes
+        } else {
+          visibleVeilleCount = VEILLE_STEP; // replie aux 10 premières
+        }
+        renderVeille(currentVeilleYear);
       });
     });
   </script>
