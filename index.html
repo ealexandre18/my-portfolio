@@ -585,6 +585,36 @@
       font-size: 0.88rem;
       background: rgba(255, 255, 255, 0.75);
     }
+    .btn-github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 9px 22px;
+      border-radius: 980px;
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08), inset 0 1px 2px #ffffff;
+      text-decoration: none;
+      transition: all 0.22s ease;
+      margin-bottom: 1.25rem;
+    }
+    .btn-github-link i {
+      font-size: 1.25rem;
+      transition: transform 0.22s ease;
+    }
+    .btn-github-link:hover {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+    }
+    .btn-github-link:hover i {
+      transform: scale(1.15);
+    }
 
     .reveal {
       opacity: 0;
@@ -637,6 +667,9 @@
         </a>
         <a href="CVSIO.pdf" target="_blank" class="btn-aero-secondary">
           <i class="bi bi-file-earmark-person"></i> Consulter mon CV
+        </a>
+        <a href="https://github.com/ealexandre18" target="_blank" rel="noopener noreferrer" class="btn-aero-secondary">
+          <i class="bi bi-github"></i> GitHub
         </a>
       </div>
     </div>
@@ -902,8 +935,14 @@
   <!-- Footer -->
   <footer class="text-center">
     <div class="container">
+      <div class="mb-3">
+        <a href="https://github.com/ealexandre18" target="_blank" rel="noopener noreferrer" class="btn-github-link" title="Profil GitHub : ealexandre18">
+          <i class="bi bi-github"></i>
+          <span>GitHub</span>
+        </a>
+      </div>
       <p class="mb-1 text-dark fw-bold">Alexandre Ewan • Portfolio BTS SIO</p>
-      <p class="text-dim mb-0">&copy; 2026 Tous droits réservés. Design Frutiger Aero Clair.</p>
+      <p class="text-dim mb-0">&copy; 2026 Tous droits réservés.</p>
     </div>
   </footer>
 
