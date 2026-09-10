@@ -526,6 +526,28 @@
       background: rgba(224, 242, 254, 0.45) !important;
     }
 
+    .btn-source-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #0284c7 !important;
+      background: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(2, 132, 199, 0.28);
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.08);
+    }
+    .btn-source-link:hover {
+      background: linear-gradient(135deg, #0284c7, #00b4d8);
+      color: #ffffff !important;
+      border-color: #0284c7;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+      transform: translateY(-2px);
+    }
+
     .btn-aero-more {
       background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 50%, #e0f2fe 100%);
       color: #0369a1;
@@ -704,7 +726,7 @@
               </div>
               <div class="col-sm-6">
                 <span class="text-dim small d-block">Âge</span>
-                <span class="text-dark fw-bold fs-6">18 ans</span>
+                <span class="text-dark fw-bold fs-6">19 ans</span>
               </div>
               <div class="col-12">
                 <span class="text-dim small d-block">Formation</span>
@@ -800,7 +822,7 @@
             <h5 class="text-dark fw-bold mb-2">Google Alertes</h5>
             <span class="badge-aero mb-3">Automatisation</span>
             <p class="text-sub small mb-2"><strong>Utilité :</strong> Surveillance automatisée du web avec notification e-mail dès qu'un article ou communiqué paraît.</p>
-            <p class="text-dim small mb-0"><strong>Requêtes :</strong> Nvidia / AMD / Intel.</p>
+            <p class="text-dim small mb-0"><strong>Paramétrage :</strong> Mots-clés pour les notifications : Nvidia / AMD / Intel.</p>
           </div>
         </div>
 
@@ -811,7 +833,7 @@
             <h5 class="text-dark fw-bold mb-2">Google News</h5>
             <span class="badge-aero mb-3">Agrégation en direct</span>
             <p class="text-sub small mb-2"><strong>Utilité :</strong> Découverte des actualités tech mondiales et francophones en temps réel.</p>
-            <p class="text-dim small mb-0"><strong>Usage :</strong> Recoupement des sources et suivi des tendances matérielles.</p>
+            <p class="text-dim small mb-0"><strong>Paramétrage :</strong> Mots-clés de recherche : Nvidia / AMD / Intel.</p>
           </div>
         </div>
 
@@ -911,9 +933,10 @@
           <table class="table table-veille-aero">
             <thead>
               <tr>
-                <th style="width: 15%"><i class="bi bi-clock me-1"></i> Date</th>
+                <th style="width: 14%"><i class="bi bi-clock me-1"></i> Date</th>
                 <th style="width: 25%"><i class="bi bi-cpu me-1"></i> Constructeur & Sujet</th>
                 <th><i class="bi bi-journal-text me-1"></i> Analyse & Impact</th>
+                <th style="width: 15%"><i class="bi bi-link-45deg me-1"></i> Source</th>
               </tr>
             </thead>
             <tbody id="veille-table-body">
@@ -1080,51 +1103,50 @@
     // ====================================================
     const veilleData = {
       2025: [
-        { date: "15/12/2025", marque: "Intel", sujet: "Intel Xeon 6 Sierra Forest", impact: "Déploiement massif des processeurs à 288 cœurs E pour l'efficacité énergétique en datacenter." },
-        { date: "06/12/2025", marque: "NVIDIA", sujet: "NVIDIA CUDA 13.1", impact: "Intégration des CUDA Tiles pour accélérer les calculs matriciels IA sur l'architecture Blackwell." },
-        { date: "24/11/2025", marque: "Intel", sujet: "Intel Thunderbolt 5", impact: "Disponibilité des contrôleurs Barlow Ridge offrant jusqu'à 120 Gbps pour cartes graphiques externes." },
-        { date: "19/11/2025", marque: "AMD", sujet: "AMD FSR Redstone", impact: "Upscaling IA matériel pour rivaliser directement avec le DLSS sur les GPU Radeon RX 9000." },
-        { date: "10/11/2025", marque: "Intel", sujet: "Intel Panther Lake (18A)", impact: "Premières puces gravées sur nœud 18A avec RibbonFET et alimentation PowerVia en test interne." },
-        { date: "28/10/2025", marque: "NVIDIA", sujet: "NVIDIA RTX 5080", impact: "Lancement de l'architecture Blackwell grand public avec mémoire GDDR7 à haute fréquence." },
-        { date: "09/10/2025", marque: "AMD", sujet: "AMD Ryzen 9000X3D", impact: "Optimisation de la technologie 3D V-Cache pour les performances en compilation et calcul." }
+        { date: "29/12/2025", marque: "NVIDIA", sujet: "NVIDIA crée la panique chez les utilisateurs de Arch Linux", impact: "Les fidèles de la marque au caméléon découvrent amèrement le prix de l'obsolescence logicielle avec une mise à jour qui transforme leur machine en brique numérique. Une simple actualisation du système suffit désormais à rendre une configuration parfaitement fonctionnelle inopérante, laissant les utilisateurs se débrouiller seuls face à un écran désespérément noir.", url: "https://www.clubic.com/actualite-592981-nvidia-cree-la-panique-chez-les-utilisateurs-de-arch-linux.html", source: "Clubic" },
+        { date: "27/12/2025", marque: "NVIDIA", sujet: "Remaniement chez NVIDIA : l'ambitieux plan Cloud de Jensen Huang victime de ses propres clients", impact: "Nvidia réorganise son activité cloud. DGX Cloud quitte le marché commercial et rejoint les équipes internes d’ingénierie. L’entreprise abandonne la concurrence directe avec AWS, Google et Microsoft et transforme le service en outil pour la R&D et le soutien aux partenaires.", url: "https://www.clubic.com/actualite-592897-remaniement-chez-nvidia-l-ambitieux-plan-cloud-de-jensen-huang-victime-de-ses-propres-clients.html", source: "Clubic" },
+        { date: "27/12/2025", marque: "AMD", sujet: "Pas de nouveautés graphiques chez AMD en 2026 : RDNA 5 n'arriverait qu'en 2027", impact: "AMD travaille à la refonte complète de son architecture graphique, mais le projet ne devrait pas aboutir en fin d'année prochaine comme certaines sources semblaient jusqu'à présent le croire.", url: "https://www.clubic.com/actualite-592915-pas-de-nouveautes-graphiques-chez-amd-en-2026-rdna-5-n-arriverait-qu-en-2027.html", source: "Clubic" },
+        { date: "27/12/2025", marque: "AMD", sujet: "Premières fuites autour du AMD Ryzen 9 9950X3D2, ses 16 cœurs, ses 192 Mo de cache", impact: "Un monstre de CPU doté de 192 Mo de cache combiné : chaque cœur du Ryzen 9 9950X3D2 aura ainsi accès au fameux 3D Vertical Cache.", url: "https://www.clubic.com/actualite-592909-premieres-fuites-autour-du-amd-ryzen-9-9950x3d2-ses-16-c-urs-ses-192-mo-de-cache.html", source: "Clubic" },
+        { date: "26/12/2025", marque: "NVIDIA", sujet: "20 milliards de dollars : NVIDIA signe un accord de génie pour régner un peu plus sur l’IA", impact: "Cela ressemble à une acquisition, cela a le goût d'une acquisition, mais officiellement c'est simplement un accord de non-exclusivité.", url: "https://www.clubic.com/actualite-592846-milliards-de-dollars-nvidia-signe-un-accord-de-genie-pour-regner-un-plus-sur-l-ia.html", source: "Clubic" },
+        { date: "25/12/2025", marque: "Intel", sujet: "NVIDIA a testé les nouvelles usines d'Intel en secret : le verdict est tombé", impact: "Le récent – et énorme – investissement de NVIDIA au sein d'Intel doit porter ses fruits pour que le promoteur des GeForce y trouve son compte, mais ça ne passera vraisemblablement pas par le procédé 18A.", url: "https://www.clubic.com/actualite-592792-nvidia-a-teste-les-nouvelles-usines-d-intel-en-secret-le-verdict-est-tombe.html", source: "Clubic" },
+        { date: "25/12/2025", marque: "NVIDIA", sujet: "Parfait pour lire ses mails ! Ce laptop embarque une RTX 5090, 256 Go de RAM et 32 To de SSD", impact: "Véritable monstre de puissance, Le Raptor X18 annoncé par Eurocom coûte entre 3 952 euros et… 13 111 euros selon les composants retenus. Comment ça, trop cher ?", url: "https://www.clubic.com/actualite-592804-parfait-pour-lire-ses-mails-ce-laptop-embarque-une-rtx-5090-256-go-de-ram-et-32-to-de-ssd.html", source: "Clubic" },
+        { date: "24/12/2025", marque: "NVIDIA", sujet: "Fini l'illimité ! Cette restriction sur GeForce NOW tombe le 1er janvier", impact: "Jusqu'à présent, seuls les « nouveaux » abonnés étaient concernés par la limitation mensuelle d'utilisation de GeForce NOW. Ce ne sera plus le cas.", url: "https://www.clubic.com/actualite-592729-fini-l-illimite-cette-restriction-stricte-sur-geforce-now-tombe-le-1er-janvier.html", source: "Clubic" },
+        { date: "22/12/2025", marque: "NVIDIA", sujet: "Ras-le-bol du farming ? NVIDIA dévoile une IA qui va jouer à votre place", impact: "NVIDIA vient de dévoiler NitroGen, une IA capable de jouer automatiquement à plus de 1 000 jeux vidéo. Elle regarde des vidéos de gameplay et reproduit les actions à la manette. Mieux encore, le modèle est open source, poids et données inclus, avec en prime un simulateur universel pour tester le système sur de nouveaux titres.", url: "https://www.clubic.com/actualite-592501-ras-le-bol-du-farming-nvidia-devoile-une-ia-qui-va-jouer-a-votre-place.html", source: "Clubic" },
+        { date: "22/12/2025", marque: "AMD", sujet: "Samsung : le géant débauche un expert d'AMD pour tout changer sur ses puces", impact: "Samsung ne lâche rien. Le géant coréen, fatigué de voir ses puces Exynos traîner une réputation de grille-pain, s'offre une pointure de la concurrence. John Rayfield, ex-vice-président d'AMD, arrive avec une mission simple : transformer le vilain petit canard en cygne technologique.​", url: "https://www.clubic.com/actualite-592435-samsung-le-geant-debauche-un-expert-d-amd-pour-tout-changer-sur-ses-puces.html", source: "Clubic" },
+        { date: "15/12/2025", marque: "AMD", sujet: "À peine un litre pour ce mini-PC équipé du surpuissant Ryzen AI MAX+ 395 !", impact: "Sans aucun doute le plus petit mini-PC équipé du fameux processeur d'AMD, le FAEX1 vient d'être commercialisé en Chine.", url: "https://www.clubic.com/actualite-591610-a-peine-un-litre-pour-ce-mini-pc-equipe-du-surpuissant-ryzen-ai-max-395.html", source: "Clubic" },
+        { date: "13/12/2025", marque: "AMD", sujet: "Xbox : Microsoft collabore avec AMD pour améliorer le Ray Tracing via FSR", impact: "Microsoft parle sans détour de l'arrivée des technologies AMD FSR Redstone sur ses futures consoles. Non, les Xbox Series ne sont pas concernées.", url: "https://www.clubic.com/actualite-591445-xbox-microsoft-collabore-avec-amd-pour-ameliorer-le-ray-tracing-via-fsr.html", source: "Clubic" },
+        { date: "11/12/2025", marque: "AMD", sujet: "Nouveaux pilotes, nouvelle technologie : AMD lance FSR Redstone sur un certain nombre de jeux", impact: "AMD marche dans les traces de NVIDIA et délivre enfin la technologie FSR Redstone promise depuis déjà un petit moment avec, comme la concurrente, différents niveaux d'implémentation selon les jeux.", url: "https://www.clubic.com/actualite-591097-nouveaux-pilotes-nouvelle-technologie-amd-lance-fsr-redstone-sur-un-certain-nombre-de-jeux.html", source: "Clubic" },
+        { date: "07/12/2025", marque: "Intel", sujet: "Panther Lake ARC B390 : Intel surpasse même la Radeon 890M d'AMD", impact: "Prometteuse, l'architecture Panther Lake est en mesure de damer le pion d'AMD même sur la partie graphique intégrée.", url: "https://www.clubic.com/actualite-590521-panther-lake-arc-b390-intel-surpasse-meme-la-radeon-890m-d-amd.html", source: "Clubic" },
+        { date: "30/11/2025", marque: "Intel", sujet: "Pas moins de 144 Mo de cache sur Nova Lake ? Oui, mais que pour le Core Ultra 400K", impact: "Nouveau cache bLLC boosté, nouveau NPU et nouvelle finese de gravure, la gamme Nova Lake avance de solides arguments pour s'imposer… et c'est tant mieux pour la lutte Intel vs. AMD.", url: "https://www.clubic.com/actualite-589480-pas-moins-de-144-mo-de-cache-sur-nova-lake-oui-mais-que-pour-le-core-ultra-400k.html", source: "Clubic" },
+        { date: "18/11/2025", marque: "Intel", sujet: "Core Ultra 290K, 270K et 250K Plus : Intel lâche les spécifications de ses CPU Arrow Lake \"Refresh\"", impact: "Intel fait évoluer en douceur ses processeurs Core Ultra « Arrow Lake » avec un refresh qui devrait être plus intéressant que celui opéré sur la précédente génération, Raptor Lake.", url: "https://www.clubic.com/actualite-587386-core-ultra-290k-270k-et-250k-plus-intel-lache-les-specifications-de-ses-cpu-arrow-lake-refresh.html", source: "Clubic" },
+        { date: "10/11/2025", marque: "NVIDIA", sujet: "En quête d'un gamer Linux ? Tuxedo lance l'InfinityBook Max 15, avec Ryzen 9 et RTX 5070 sous le capot", impact: "Relativement méconnu du grand public, et c'est d'ailleurs malheureux, le constructeur allemand Tuxedo a lancé son nouvel InfinityBook Max 15. Cette 10ème génération de l'appareil, équipée par AMD et Nvidia, se veut puissante mais discrète, avec une particularité en prime : être animée par Linux.", url: "https://www.clubic.com/actualite-586441-en-quete-d-un-gamer-linux-tuxedo-lance-son-infinitybook-max-15-sous-amd-ryzen-9-et-rtx-5070.html", source: "Clubic" },
+        { date: "10/09/2025", marque: "Intel", sujet: "Panther Lake fin-2025, Nova Lake en 2026 : Intel confirme ses prochains CPU", impact: "Panther Lake, Arrow Lake Refresh et Nova Lake constitueront les prochains jalons pour Intel. Des jalons qui devraient marquer une évolution rapide de son processus de gravure pour valider les qualité de l'Intel 14A.", url: "https://www.clubic.com/actualite-578687-panther-lake-fin-2025-nova-lake-en-2026-intel-confirme-ses-prochains-cpu.html", source: "Clubic" },
+        { date: "11/08/2025", marque: "AMD", sujet: "AMD Ryzen Z2 Extreme et Intel Core Ultra 7 258V comparés sur les dernières consoles MSI", impact: "Toutes nouvelles, les consoles MSI Claw 8 AI+ et A8 sont les premières à être équipées des proceseurs AMD Ryzen Z2 Extreme et Intel Core Ultra 7 258V. La comparaison s'imposait.", url: "https://www.clubic.com/actualite-575643-amd-ryzen-z2-extreme-et-intel-core-ultra-7-258v-compares-sur-les-dernieres-consoles-msi.html", source: "Clubic" },
+        { date: "05/05/2025", marque: "Intel", sujet: "Avec l'ARC Battlemage B770, Intel pourrait concurrencer les GeForce RTX 5060. Une annonce au Computex ?", impact: "Intel aura pris son temps, mais la firme américaine semble sur le point d'officialiser l'ARC B770 et ainsi monter en gamme face à AMD/NVIDIA.", url: "https://www.clubic.com/actualite-564327-avec-l-arc-battlemage-b770-intel-pourrait-concurrencer-les-geforce-rtx-5060-une-annonce-au-computex.html", source: "Clubic" },
+        { date: "24/02/2025", marque: "Intel", sujet: "La gravure 18A d'Intel est \"prête\", tandis que TSMC redouble d'efforts sur le 2 nm", impact: "Intel et TSMC fourbissent leurs armes autour de leurs procédés de gravure les plus modernes, respectivement les 18A et N2.", url: "https://www.clubic.com/actualite-554751-la-gravure-18a-d-intel-est-prete-tandis-que-tsmc-redouble-d-efforts-sur-le-2-nm.html", source: "Clubic" }
       ],
       2026: [
-        { date: "31/08/2026", marque: "Intel", sujet: "Intel Core Ultra 200S (Arrow Lake)", impact: "Lancement des processeurs de bureau sans hyper-threading avec réduction de 30% de la consommation." },
-        { date: "24/08/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 5090", impact: "Révélation des protocoles d'alimentation 12V-2x6 renforcés pour la sécurité des cartes haut de gamme." },
-        { date: "17/08/2026", marque: "Intel", sujet: "Intel Lunar Lake (Core Ultra 2)", impact: "Généralisation des PC portables avec mémoire embarquée (MoP) et NPU 48 TOPS pour le traitement local." },
-        { date: "10/08/2026", marque: "AMD", sujet: "AMD Zen 6 Architecture", impact: "Confirmation de la gravure 2nm TSMC et de l'interconnexion mémoire unifiée DDR6." },
-        { date: "03/08/2026", marque: "Intel", sujet: "Intel Arc Battlemage (Xe2-HPG)", impact: "Déploiement des GPU dédiés milieu de gamme avec moteur XMX pour accélération IA." },
-        { date: "27/07/2026", marque: "NVIDIA", sujet: "NVIDIA DGX Cloud", impact: "Extension des clusters d'inférence distribuée pour les modèles de fondation en entreprise." },
-        { date: "20/07/2026", marque: "Intel", sujet: "Intel 18A Clearwater Forest", impact: "Validation des puces serveur entièrement gravées sur le procédé Intel 18A avec PowerVia." },
-        { date: "13/07/2026", marque: "AMD", sujet: "AMD MI325X", impact: "Extension mémoire à 288 Go HBM3e pour modèles de langage géants face au H200." },
-        { date: "06/07/2026", marque: "Intel", sujet: "Intel Gaudi 3 AI Accelerator", impact: "Disponibilité générale des accélérateurs Gaudi 3 offrant une alternative économique aux GPU Nvidia." },
-        { date: "29/06/2026", marque: "NVIDIA", sujet: "NVIDIA Rubin Architecture", impact: "Premières bandes passantes HBM4 à 2 To/s dévoilées pour les supercalculateurs IA." },
-        { date: "22/06/2026", marque: "Intel", sujet: "Intel Xeon 6 Granite Rapids", impact: "Performances records des cœurs Performance (P-Cores) en virtualisation et calcul scientifique." },
-        { date: "15/06/2026", marque: "AMD", sujet: "AMD Zen 5c", impact: "Déploiement des cœurs haute densité pour serveurs cloud et hébergement web." },
-        { date: "08/06/2026", marque: "Intel", sujet: "Intel 14A Node (High-NA EUV)", impact: "Démarrage des essais sur la première machine lithographique High-NA EUV commerciale au monde." },
-        { date: "02/06/2026", marque: "NVIDIA", sujet: "NVIDIA RTX Spark (SoC ARM)", impact: "Rupture architecturale : superpuce réunissant CPU Grace, GPU Blackwell et jusqu'à 128 Go de mémoire unifiée pour exécuter des modèles d'IA en local sous Windows." },
-        { date: "01/06/2026", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72", impact: "Premières livraisons de baies complètes avec refroidissement liquide direct aux hyperscalers." },
-        { date: "25/05/2026", marque: "AMD", sujet: "AMD Ryzen 9 9950X3D", impact: "Performances exceptionnelles en compilation logicielle et modélisation 3D." },
-        { date: "18/05/2026", marque: "Intel", sujet: "Intel OpenVINO 2026.1", impact: "Mise à jour majeure du framework pour l'inférence optimisée sur CPU, GPU et NPU Intel." },
-        { date: "11/05/2026", marque: "NVIDIA", sujet: "NVIDIA TensorRT-LLM", impact: "Réduction de 40% de la latence lors de l'exécution de petits modèles open-source en local." },
-        { date: "04/05/2026", marque: "AMD", sujet: "AMD Strix Point", impact: "Intégration du NPU XDNA 2 dans les stations nomades pour le traitement d'IA sans latence." },
-        { date: "27/04/2026", marque: "Intel", sujet: "Intel Wi-Fi 7 BE200", impact: "Standardisation du débit sans fil multi-gigabit et réduction drastique de la gigue en réseau local." },
-        { date: "20/04/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 5070 Ti", impact: "Spécifications confirmées avec 16 Go de GDDR7 et bus 256-bit pour le segment créateur." },
-        { date: "13/04/2026", marque: "Intel", sujet: "Intel Falcon Shores", impact: "Architecture hybride combinant x86 et cœurs GPU pour le calcul intensif en laboratoire." },
-        { date: "06/04/2026", marque: "AMD", sujet: "AMD ROCm 6.3", impact: "Prise en charge native de PyTorch sur Linux pour l'ensemble de la gamme Radeon RX." },
-        { date: "30/03/2026", marque: "Intel", sujet: "Intel Socket LGA-1851", impact: "Généralisation du nouveau socket avec support exclusif de la DDR5 haute vitesse et PCIe 5.0." },
-        { date: "23/03/2026", marque: "NVIDIA", sujet: "NVIDIA GTC 2026 Keynote", impact: "Présentation de l'infrastructure réseau Quantum-X800 InfiniBand pour grappes IA." },
-        { date: "16/03/2026", marque: "AMD", sujet: "AMD RDNA 4", impact: "Refonte du pipeline Ray Tracing offrant +50% d'efficacité par rapport à RDNA 3." },
-        { date: "09/03/2026", marque: "Intel", sujet: "Intel Nova Lake Leaks", impact: "Premières révélations sur l'architecture avec cache L3 unifié ultra-large prévue pour succéder à Arrow Lake." },
-        { date: "02/03/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 60", impact: "Architecture Vera Rubin confirmée pour 2027 avec interconnexion NVLink nouvelle génération." },
-        { date: "23/02/2026", marque: "AMD", sujet: "AMD Zen 6", impact: "Validation des contrôleurs mémoires compatibles avec les futurs standards de bus DDR6." },
-        { date: "16/02/2026", marque: "Intel", sujet: "Intel 14A Node", impact: "Démarrage officiel de la phase de prototypage de la gravure 1,4 nm chez Intel Foundry." },
-        { date: "09/02/2026", marque: "NVIDIA", sujet: "NVIDIA DLSS 4.5", impact: "Reconstruction complète neuronale de l'image pour une netteté absolue en temps réel." },
-        { date: "02/02/2026", marque: "AMD", sujet: "AMD Instinct MI400", impact: "Accélérateur IA conçu pour rivaliser avec les architectures multinœuds de NVIDIA." },
-        { date: "26/01/2026", marque: "Intel", sujet: "Intel Arc Battlemage B580", impact: "Lancement des cartes dédiées avec double encodeur matériel AV1." },
-        { date: "19/01/2026", marque: "NVIDIA", sujet: "NVIDIA Blackwell Ultra", impact: "Optimisation de la dissipation thermique sur les modules serveurs d'intelligence artificielle." },
-        { date: "12/01/2026", marque: "AMD", sujet: "AMD Strix Halo", impact: "APU surpuissant intégrant 40 unités de calcul GPU pour créateurs de contenu." },
-        { date: "05/01/2026", marque: "Intel", sujet: "CES 2026 : Keynote Intel", impact: "Présentation des nouveaux processeurs basse consommation pour l'écosystème PC IA." }
+        { date: "09/09/2026", marque: "Intel", sujet: "Intel Nova Lake 12Xe : vers une prise en charge de mémoire CSO-DIMM ultra rapide et évolutive", impact: "Avec les moutures mobiles de Nova Lake, Intel passerait le cap d'une prise en charge des modules DDR5-8000 CSO-DIMM. Une avancée intéressante par rapport à Panther Lake. On vous explique pourquoi.", url: "https://www.clubic.com/actualite-628939-intel-nova-lake-12xe-vers-une-prise-en-charge-de-memoire-cso-dimm-ultra-rapide-et-evolutive.html", source: "Clubic" },
+        { date: "09/09/2026", marque: "AMD", sujet: "La Radeon RX 9070 XT devient le GPU dédié AMD le plus populaire sur Steam", impact: "La Radeon RX 9070 XT atteint 1,46 pour cent sur Steam et devient la carte AMD dédiée la plus représentée, malgré la forte avance de NVIDIA chez les joueurs.", url: "https://www.clubic.com/actualite-628927-amd-radeon-rx-9070-xt-devient-le-gpu-dedie-amd-le-plus-populaire-sur-steam.html", source: "Clubic" },
+        { date: "08/09/2026", marque: "NVIDIA", sujet: "NVIDIA RTX Spark : ces PC font tourner des IA géantes en local… et des jeux AAA", impact: "À l’IFA, les PC RTX Spark de NVIDIA font tourner des agents IA en local et des jeux AAA avec ray tracing. Nous avons pu les voir en action.", url: "https://www.clubic.com/actualite-628825-agents-ia-en-local-et-jeux-aaa-les-pc-rtx-spark-montrent-leurs-muscles-a-l-ifa.html", source: "Clubic" },
+        { date: "08/09/2026", marque: "NVIDIA", sujet: "Et si DLSS 5 devait ressusciter le SLI ? Un moddeur tente l'expérience avec deux RTX 5060 Ti", impact: "Faire travailler deux GeForce RTX 5060 Ti permet de dissocier le travail graphique pour exploiter au mieux un DLSS 5 plutôt gourmand.", url: "https://www.clubic.com/actualite-628783-et-si-dlss-5-devait-ressusciter-le-sli-un-moddeur-tente-l-experience-avec-deux-rtx-5060-ti.html", source: "Clubic" },
+        { date: "08/09/2026", marque: "NVIDIA", sujet: "La plus compacte des GeForce RTX 3060 : une version single-slot sans connecteur d’alimentation débarque", impact: "La SRhonyra SR306D6LP12G1 est une GeForce RTX 3060 qui ne ressemble à aucune autre, mais qui doit faire avec une puissance largement en retrait.", url: "https://www.clubic.com/actualite-628768-geforce-rtx-3060-inedite-une-version-single-slot-sans-conla-plus-compacte-des-geforce-rtx-3060-une-version-single-slot-sans-connecteur-d-alimentation-debarquenecteur-d-alimentation-debarque.html", source: "Clubic" },
+        { date: "07/09/2026", marque: "NVIDIA", sujet: "DLSS 5 fait bondir la consommation des GPU et ça pose de sérieux problèmes", impact: "Nous ne l'avions pas vu venir, mais la technologie DLSS 5 semble avoir un impact autrement plus important que les précédentes versions sur la consommation des GPU.", url: "https://www.clubic.com/actualite-628552-dlss-5-fait-bondir-la-consommation-des-gpu-et-ca-pose-de-serieux-problemes.html", source: "Clubic" },
+        { date: "06/09/2026", marque: "AMD", sujet: "Pas assez cher mon fils : avec le Ryzen AI Max Pro 495 et 192 Go de RAM, Minisforum crève les prix du mini-PC", impact: "Minisforum fait évoluer son MS-S1 MAX avec l'intégration du nouveau Ryzen AI MAX+ d'AMD et une quantité impressionnante de mémoire vive. Problème, le prix passe d'environ 4 000 euros à plus de 7 000 !", url: "https://www.clubic.com/actualite-628417-pas-assez-cher-mon-fils-avec-le-ryzen-ai-max-pro-495-et-192-mo-de-ram-minisforum-creve-les-prix-du-mini-pc.html", source: "Clubic" },
+        { date: "05/09/2026", marque: "AMD", sujet: "Un moddeur trouve le moyen de faire tourner DLSS 5 sur Radeon RX 9000 et RX 7000", impact: "Avouez qu'il est assez cocasse de – déjà – découvrir des mods pour que la technologie dernier cri de NVIDIA soit exploitable sur les cartes graphiques du concurrent de toujours, AMD.", url: "https://www.clubic.com/actualite-628360-un-moddeur-trouve-le-moyen-de-faire-tourner-dlss-5-sur-radeon-rx-9000-et-rx-7000.html", source: "Clubic" },
+        { date: "04/09/2026", marque: "NVIDIA", sujet: "Lenovo détaille ses PC RTX Spark et dévoile un solide rival au MacBook Neo", impact: "Lenovo a dévoilé ses dernières nouveautés à l'IFA 2026. Parmi elles, de nouveaux PC portables grand public destinés au segment premium et à l'entrée de gamme : les modèles RTX Spark Yoga Pro 9n / Yoga 9n 2-en-1, désormais présentés en détail ; et les IdeaPad Vibe déclinés en 14 et 15 pouces. Ces derniers ont pour vocation de concurrencer le MacBook Neo d'Apple dès 799 euros. Présentations…", url: "https://www.clubic.com/actualite-628252-lenovo-detaille-ses-pc-rtx-spark-et-devoile-un-solide-rival-au-macbook-neo.html", source: "Clubic" },
+        { date: "03/09/2026", marque: "NVIDIA", sujet: "Énorme coup de NVIDIA, qui rachète Hugging Face pour 12,93 milliards de dollars, Jensen Huang s'explique", impact: "NVIDIA a officialisé jeudi le rachat de Hugging Face pour 12,93 milliards de dollars. Jensen Huang, le patron du géant américain, promet que la plateforme d'IA ouverte, référence pour des millions de développeurs et fondée par des Français, conservera son indépendance.", url: "https://www.clubic.com/actualite-628171-enorme-coup-de-nvidia-qui-rachete-hugging-face-pour-12-93-milliards-de-dollars-jensen-huang-s-explique.html", source: "Clubic" },
+        { date: "31/08/2026", marque: "AMD", sujet: "Framework Desktop : 192 Go de RAM, bande passante accrue... la version Ryzen AI Max+ PRO 495 est en vue", impact: "Framework mentionne désormais, sur la page officielle de son Framework Desktop, l'arrivée imminente d'une nouvelle option Ryzen AI Max+ PRO 495 pour son mini-PC modulaire. Cette puce AMD « Gorgon Halo » offre avant tout plus de mémoire vive embarquée et une bande passante plus généreuse. On fait le point.", url: "https://www.clubic.com/actualite-627454-framework-desktop-192-go-de-ram-bande-passante-accrue-la-version-ryzen-ai-max-pro-495-est-en-vue.html", source: "Clubic" },
+        { date: "29/08/2026", marque: "AMD", sujet: "Enfin une carte graphique Radeon RX 9060 XT low profile... avec 16 Go de VRAM pour ne rien gâcher", impact: "La Radeon RX 9060 XT low profile de Vastarmor refait surface, plusieurs mois après avoir été présentée. ETA Prime l'a eue entre les mains.", url: "https://www.clubic.com/actualite-627313-enfin-une-carte-graphique-radeon-rx-9060-xt-low-profile-avec-16-go-de-vram-pour-ne-rien-gacher.html", source: "Clubic" },
+        { date: "28/08/2026", marque: "NVIDIA", sujet: "NVIDIA DLSS 5 fuite sur le Web : pourquoi ses performances dans Control ne veulent rien dire", impact: "Attendu à l'automne sur les RTX 50, DLSS 5 a été débloqué par des moddeurs via une DLL cachée dans NBA 2K27, et testé dans Control avec 7 styles de Neural Rendering.", url: "https://www.clubic.com/actualite-627142-le-dlss-5-fuite-avant-sa-sortie-pourquoi-ses-performances-dans-control-ne-veulent-rien-dire.html", source: "Clubic" },
+        { date: "25/08/2026", marque: "Intel", sujet: "Intel sort l’artillerie lourde : jusqu'à 256 cœurs et 1,28 Go de cache pour le Xeon 7 Diamond Rapids", impact: "Concurrencé par AMD et ses processeurs EPYC, Intel se doit de réagir pour ne pas être complètement distancé dans les serveurs : Diamond Rapids constitue LA réponse du fondeur américain.", url: "https://www.clubic.com/actualite-626656-intel-sort-l-artillerie-lourde-jusqu-a-256-c-urs-et-1-28-go-de-cache-pour-le-xeon-7-diamond-rapids.html", source: "Clubic" },
+        { date: "22/08/2026", marque: "AMD", sujet: "AMD confirme la version 4 Go de sa Radeon RX 9050 : la plus petite RDNA 4 sur le marché", impact: "La carte graphique la plus entrée de gamme que vous pourriez imaginer : ce n'est pas quand même un petit peu juste, M. AMD ?", url: "https://www.clubic.com/actualite-626314-amd-confirme-la-version-4-go-de-sa-radeon-rx-9050-la-plus-petite-rdna-4-sur-le-marche.html", source: "Clubic" },
+        { date: "20/08/2026", marque: "Intel", sujet: "Le nom des processeurs Nova Lake se précise : Intel reviendrait à une numérotation à quatre chiffres", impact: "Pièce par pièce, le puzzle Nova Lake se complète alors qu'Intel devrait faire les présentations officielles avant la fin de l'année pour un lancement au cours du premier trimestre 2027.", url: "https://www.clubic.com/actualite-625975-le-nom-des-processeurs-nova-lake-se-precise-intel-reviendrait-a-une-numerotation-a-quatre-chiffres.html", source: "Clubic" },
+        { date: "19/08/2026", marque: "Intel", sujet: "Intel préparerait un rival aux processeurs Ryzen X3D sur PC portables avec Razor Lake", impact: "Si le calendrier exact d'Intel n'est pas encore défini, AMD ne devrait plus être seul bien longtemps sur le segment des processeurs avec « gros cache ».", url: "https://www.clubic.com/actualite-625828-intel-preparerait-un-rival-aux-processeurs-ryzen-x3d-sur-pc-portables-avec-razor-lake.html", source: "Clubic" },
+        { date: "18/08/2026", marque: "Intel", sujet: "192 Go de RAM, Arrow Lake-HX Plus... HP dégaine le nouveau ZBook Fury G1i : un colosse voué au pros", impact: "Au rang des bêtes de somme vouées aux pros et aux usages intensifs, HP renouvelle cette semaine son ZBook Fury G1i de 16 pouces. Ce gros modèle s'équipe désormais d'un maximum de 192 Go de RAM et des nouveaux processeurs mobiles Intel « Arrow Lake-HX Plus ».", url: "https://www.clubic.com/actualite-625723-go-de-ram-arrow-lake-hx-plus-hp-degaine-le-nouveau-zbook-fury-g1i-un-colosse-voue-au-pros.html", source: "Clubic" },
+        { date: "17/08/2026", marque: "AMD", sujet: "Semi-conducteurs : 44 ans après, AMD pourrait devenir le client d'Intel", impact: "Selon le groupe bancaire suisse UBS, AMD pourrait adopter l'encapsulation EMIB-T d'Intel Foundry. Une alliance industrielle qui offrirait un savoureux retournement dans l'histoire des deux rivaux.", url: "https://www.clubic.com/actualite-625564-semi-conducteurs-44-ans-apres-amd-pourrait-devenir-le-client-d-intel.html", source: "Clubic" },
+        { date: "19/04/2026", marque: "Intel", sujet: "Intel attend le verdict : le second semestre 2026 sera décisif pour la gravure 14A", impact: "Intel promet des « victoires » imminentes pour son procédé 14A. Mais tant qu'aucun contrat n'est signé, l'avance technologique sur TSMC reste un argument sans preneur.", url: "https://www.clubic.com/actualite-609661-intel-attend-le-verdict-le-second-semestre-2026-sera-decisif-pour-la-gravure-14a.html", source: "Clubic" },
+        { date: "17/04/2026", marque: "Intel", sujet: "Intel lance ses Core Series 3 \"non Ultra\" : la gravure 18A s'invite sur le PC portable de Monsieur Tout-le-monde", impact: "Après avoir laissé à ses processeurs Core Ultra de série 3 le temps d'infuser le milieu et (surtout) le haut de gamme, Intel revient en cette mi-avril avec ses processeurs mobiles Core de série 3 « non Ultra ». Nettement plus modestes, ces puces se destinent aux PC portables abordables en reprenant tout de même à leur compte la dernière gravure 18A du géant américain.", url: "https://www.clubic.com/actualite-609463-intel-lance-ses-core-series-3-non-ultra-la-gravure-18a-s-invite-sur-le-pc-portable-de-monsieur-tout-le-monde.html", source: "Clubic" }
       ]
     };
 
@@ -1250,6 +1272,11 @@
               <span class="${tagClass}" style="font-size:0.75rem; padding: 3px 8px;">${v.marque || 'Tech'}</span>
             </td>
             <td style="color:#1e293b !important;">${v.impact}</td>
+            <td style="vertical-align: middle; white-space: nowrap;">
+              <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn-source-link" title="Consulter la source datée du ${v.date}">
+                <i class="bi bi-box-arrow-up-right me-1"></i> ${v.source || 'Consulter'}
+              </a>
+            </td>
           </tr>`;
       });
 
