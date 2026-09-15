@@ -933,9 +933,10 @@
           <table class="table table-veille-aero">
             <thead>
               <tr>
-                <th style="width: 15%"><i class="bi bi-clock me-1"></i> Date</th>
+                <th style="width: 14%"><i class="bi bi-clock me-1"></i> Date</th>
                 <th style="width: 25%"><i class="bi bi-cpu me-1"></i> Constructeur & Sujet</th>
                 <th><i class="bi bi-journal-text me-1"></i> Analyse & Impact</th>
+                <th style="width: 16%"><i class="bi bi-link-45deg me-1"></i> Source</th>
               </tr>
             </thead>
             <tbody id="veille-table-body">
@@ -1129,52 +1130,31 @@
     // ====================================================
     const veilleData = {
       2025: [
-        { date: "15/12/2025", marque: "Intel", sujet: "Intel Xeon 6 Sierra Forest", impact: "Déploiement massif des processeurs à 288 cœurs E pour l'efficacité énergétique en datacenter." },
-        { date: "06/12/2025", marque: "NVIDIA", sujet: "NVIDIA CUDA 13.1", impact: "Intégration des CUDA Tiles pour accélérer les calculs matriciels IA sur l'architecture Blackwell." },
-        { date: "24/11/2025", marque: "Intel", sujet: "Intel Thunderbolt 5", impact: "Disponibilité des contrôleurs Barlow Ridge offrant jusqu'à 120 Gbps pour cartes graphiques externes." },
-        { date: "19/11/2025", marque: "AMD", sujet: "AMD FSR Redstone", impact: "Upscaling IA matériel pour rivaliser directement avec le DLSS sur les GPU Radeon RX 9000." },
-        { date: "10/11/2025", marque: "Intel", sujet: "Intel Panther Lake (18A)", impact: "Premières puces gravées sur nœud 18A avec RibbonFET et alimentation PowerVia en test interne." },
-        { date: "28/10/2025", marque: "NVIDIA", sujet: "NVIDIA RTX 5080", impact: "Lancement de l'architecture Blackwell grand public avec mémoire GDDR7 à haute fréquence." },
-        { date: "09/10/2025", marque: "AMD", sujet: "AMD Ryzen 9000X3D", impact: "Optimisation de la technologie 3D V-Cache pour les performances en compilation et calcul." }
+        { date: "10/12/2025", marque: "AMD", sujet: "AMD FSR Redstone (IA Matériel)", impact: "Intégration d'un upscaling matériel neuronal pour concurrencer le DLSS sur les GPU Radeon RX 9000.", url: "https://www.lesnumeriques.com/carte-graphique/amd-tient-enfin-son-dlss-killer-pourquoi-la-technologie-redstone-change-la-donne-pour-les-radeon-n247910.html", source: "Les Numériques" },
+        { date: "07/12/2025", marque: "Intel", sujet: "Intel Panther Lake Arc B390 (18A)", impact: "Première architecture graphique intégrée gravée sur nœud 18A avec performances supérieures aux iGPU concurrents.", url: "https://www.clubic.com/actualite-590521-panther-lake-arc-b390-intel-surpasse-meme-la-radeon-890m-d-amd.html", source: "Clubic" },
+        { date: "18/11/2025", marque: "Intel", sujet: "Intel Arrow Lake Refresh (Core Ultra 200 Plus)", impact: "Spécifications des CPU optimisés avec révision de la consommation et des fréquences d'horloge.", url: "https://www.clubic.com/actualite-587386-core-ultra-290k-270k-et-250k-plus-intel-lache-les-specifications-de-ses-cpu-arrow-lake-refresh.html", source: "Clubic" },
+        { date: "03/09/2025", marque: "AMD", sujet: "AMD Zen 6 Architecture (Série 10000)", impact: "Validation des procédés de gravure 2 nm et 3 nm de TSMC pour la prochaine génération de processeurs.", url: "https://www.tomshardware.fr/amd-zen-6-le-constructeur-fait-une-annonce-majeure-sur-les-processeurs-de-serie-10-000/", source: "Tom's Hardware" },
+        { date: "01/09/2025", marque: "Intel", sujet: "Intel Core Ultra 5 235HX", impact: "Premières mesures de performance de la déclinaison mobile Arrow Lake pour stations de travail nomades.", url: "https://www.tomshardware.fr/intel-core-ultra-5-235hx-ce-benchmark-devoile-des-performances-en-tres-nette-hausse/", source: "Tom's Hardware" },
+        { date: "27/08/2025", marque: "NVIDIA", sujet: "NVIDIA DLSS Streamline SDK", impact: "Évolution de l'architecture d'intégration du rendu neuronal et de l'upscaling temps réel pour développeurs.", url: "https://www.tomshardware.fr/nvidia-annonce-une-mise-a-jour-du-dlss-pour-les-developpeurs-voici-ce-que-ca-va-changer/", source: "Tom's Hardware" },
+        { date: "24/02/2025", marque: "Intel", sujet: "Intel 18A Node (PowerVia & RibbonFET)", impact: "Finalisation du procédé de gravure 18A avec alimentation par la face arrière pour contrer le nœud N2 de TSMC.", url: "https://www.clubic.com/actualite-554751-la-gravure-18a-d-intel-est-prete-tandis-que-tsmc-redouble-d-efforts-sur-le-2-nm.html", source: "Clubic" }
       ],
       2026: [
-        { date: "14/09/2026", marque: "NVIDIA", sujet: "NVIDIA RTX Spark (SoC N1X)", impact: "Architecture unifiée réunissant CPU Grace ARM et GPU Blackwell pour l'inférence IA locale sous Windows." },
-        { date: "07/09/2026", marque: "AMD", sujet: "AMD Radeon RX 9070 XT (RDNA 4)", impact: "Déploiement de la nouvelle architecture RDNA 4 avec Ray Tracing matériel de 4e génération." },
-        { date: "31/08/2026", marque: "Intel", sujet: "Intel Core Ultra 200S (Arrow Lake)", impact: "Lancement des processeurs de bureau sans hyper-threading avec réduction de 30% de la consommation." },
-        { date: "24/08/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 5090", impact: "Révélation des protocoles d'alimentation 12V-2x6 renforcés pour la sécurité des cartes haut de gamme." },
-        { date: "17/08/2026", marque: "Intel", sujet: "Intel Lunar Lake (Core Ultra 2)", impact: "Généralisation des PC portables avec mémoire embarquée (MoP) et NPU 48 TOPS pour le traitement local." },
-        { date: "10/08/2026", marque: "AMD", sujet: "AMD Zen 6 Architecture", impact: "Confirmation de la gravure 2nm TSMC et de l'interconnexion mémoire unifiée DDR6." },
-        { date: "03/08/2026", marque: "Intel", sujet: "Intel Arc Battlemage (Xe2-HPG)", impact: "Déploiement des GPU dédiés milieu de gamme avec moteur XMX pour accélération IA." },
-        { date: "27/07/2026", marque: "NVIDIA", sujet: "NVIDIA DGX Cloud", impact: "Extension des clusters d'inférence distribuée pour les modèles de fondation en entreprise." },
-        { date: "20/07/2026", marque: "Intel", sujet: "Intel 18A Clearwater Forest", impact: "Validation des puces serveur entièrement gravées sur le procédé Intel 18A avec PowerVia." },
-        { date: "13/07/2026", marque: "AMD", sujet: "AMD MI325X", impact: "Extension mémoire à 288 Go HBM3e pour modèles de langage géants face au H200." },
-        { date: "06/07/2026", marque: "Intel", sujet: "Intel Gaudi 3 AI Accelerator", impact: "Disponibilité générale des accélérateurs Gaudi 3 offrant une alternative économique aux GPU Nvidia." },
-        { date: "29/06/2026", marque: "NVIDIA", sujet: "NVIDIA Rubin Architecture", impact: "Premières bandes passantes HBM4 à 2 To/s dévoilées pour les supercalculateurs IA." },
-        { date: "22/06/2026", marque: "Intel", sujet: "Intel Xeon 6 Granite Rapids", impact: "Performances records des cœurs Performance (P-Cores) en virtualisation et calcul scientifique." },
-        { date: "15/06/2026", marque: "AMD", sujet: "AMD Zen 5c", impact: "Déploiement des cœurs haute densité pour serveurs cloud et hébergement web." },
-        { date: "08/06/2026", marque: "Intel", sujet: "Intel 14A Node (High-NA EUV)", impact: "Démarrage des essais sur la première machine lithographique High-NA EUV commerciale au monde." },
-        { date: "01/06/2026", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72", impact: "Premières livraisons de baies complètes avec refroidissement liquide direct aux hyperscalers." },
-        { date: "25/05/2026", marque: "AMD", sujet: "AMD Ryzen 9 9950X3D", impact: "Performances exceptionnelles en compilation logicielle et modélisation 3D." },
-        { date: "18/05/2026", marque: "Intel", sujet: "Intel OpenVINO 2026.1", impact: "Mise à jour majeure du framework pour l'inférence optimisée sur CPU, GPU et NPU Intel." },
-        { date: "11/05/2026", marque: "NVIDIA", sujet: "NVIDIA TensorRT-LLM", impact: "Réduction de 40% de la latence lors de l'exécution de petits modèles open-source en local." },
-        { date: "04/05/2026", marque: "AMD", sujet: "AMD Strix Point", impact: "Intégration du NPU XDNA 2 dans les stations nomades pour le traitement d'IA sans latence." },
-        { date: "27/04/2026", marque: "Intel", sujet: "Intel Wi-Fi 7 BE200", impact: "Standardisation du débit sans fil multi-gigabit et réduction drastique de la gigue en réseau local." },
-        { date: "20/04/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 5070 Ti", impact: "Spécifications confirmées avec 16 Go de GDDR7 et bus 256-bit pour le segment créateur." },
-        { date: "13/04/2026", marque: "Intel", sujet: "Intel Falcon Shores", impact: "Architecture hybride combinant x86 et cœurs GPU pour le calcul intensif en laboratoire." },
-        { date: "06/04/2026", marque: "AMD", sujet: "AMD ROCm 6.3", impact: "Prise en charge native de PyTorch sur Linux pour l'ensemble de la gamme Radeon RX." },
-        { date: "30/03/2026", marque: "Intel", sujet: "Intel Socket LGA-1851", impact: "Généralisation du nouveau socket avec support exclusif de la DDR5 haute vitesse et PCIe 5.0." },
-        { date: "23/03/2026", marque: "NVIDIA", sujet: "NVIDIA GTC 2026 Keynote", impact: "Présentation de l'infrastructure réseau Quantum-X800 InfiniBand pour grappes IA." },
-        { date: "16/03/2026", marque: "AMD", sujet: "AMD RDNA 4", impact: "Refonte du pipeline Ray Tracing offrant +50% d'efficacité par rapport à RDNA 3." },
-        { date: "09/03/2026", marque: "Intel", sujet: "Intel Nova Lake Leaks", impact: "Premières révélations sur l'architecture avec cache L3 unifié ultra-large prévue pour succéder à Arrow Lake." },
-        { date: "02/03/2026", marque: "NVIDIA", sujet: "NVIDIA RTX 60", impact: "Architecture Vera Rubin confirmée pour 2027 avec interconnexion NVLink nouvelle génération." },
-        { date: "23/02/2026", marque: "AMD", sujet: "AMD Zen 6", impact: "Validation des contrôleurs mémoires compatibles avec les futurs standards de bus DDR6." },
-        { date: "16/02/2026", marque: "Intel", sujet: "Intel 14A Node", impact: "Démarrage officiel de la phase de prototypage de la gravure 1,4 nm chez Intel Foundry." },
-        { date: "09/02/2026", marque: "NVIDIA", sujet: "NVIDIA DLSS 4.5", impact: "Reconstruction complète neuronale de l'image pour une netteté absolue en temps réel." },
-        { date: "02/02/2026", marque: "AMD", sujet: "AMD Instinct MI400", impact: "Accélérateur IA conçu pour rivaliser avec les architectures multinœuds de NVIDIA." },
-        { date: "26/01/2026", marque: "Intel", sujet: "Intel Arc Battlemage B580", impact: "Lancement des cartes dédiées avec double encodeur matériel AV1." },
-        { date: "19/01/2026", marque: "NVIDIA", sujet: "NVIDIA Blackwell Ultra", impact: "Optimisation de la dissipation thermique sur les modules serveurs d'intelligence artificielle." },
-        { date: "12/01/2026", marque: "AMD", sujet: "AMD Strix Halo", impact: "APU surpuissant intégrant 40 unités de calcul GPU pour créateurs de contenu." },
-        { date: "05/01/2026", marque: "Intel", sujet: "CES 2026 : Keynote Intel", impact: "Présentation des nouveaux processeurs basse consommation pour l'écosystème PC IA." }
+        { date: "11/09/2026", marque: "NVIDIA", sujet: "NVIDIA RTX PRO 5500 (Architecture Blackwell)", impact: "GPU professionnel doté de la puce GB202 complète, 21 760 cœurs CUDA et 84 Go de GDDR7.", url: "https://www.comptoir-hardware.com/actus/cartes-graphiques/48825-la-rtx-pro-5500-blackwell-est-arrivee.html", source: "Le Comptoir du Hardware" },
+        { date: "10/09/2026", marque: "AMD", sujet: "AMD Ryzen 5 5500F (Socket AM4)", impact: "Nouveau processeur 6 cœurs / 12 threads à 4,4 GHz avec 16 Mo de cache L3 pour prolonger la plateforme AM4.", url: "https://www.comptoir-hardware.com/actus/processeurs/48823-un-nouveau-processeur-am4-le-ryzen-5-5500f.html", source: "Le Comptoir du Hardware" },
+        { date: "09/09/2026", marque: "Intel", sujet: "Intel Nova Lake (Core Ultra 3)", impact: "Prise en charge de la mémoire CSO-DIMM ultra-rapide et nouveau cache unifié pour PC portables.", url: "https://www.clubic.com/actualite-628939-intel-nova-lake-12xe-vers-une-prise-en-charge-de-memoire-cso-dimm-ultra-rapide-et-evolutive.html", source: "Clubic" },
+        { date: "09/09/2026", marque: "AMD", sujet: "AMD Radeon RX 9070 XT (Architecture RDNA 4)", impact: "Confirmation de l'adoption massive de l'architecture RDNA 4 avec Ray Tracing matériel de 4e génération.", url: "https://www.comptoir-hardware.com/actus/cartes-graphiques/48820-la-radeon-rx-9070-xt-nouvelle-reine-des-radeon-sur-steam-reine-oui-nouvelle-non.html", source: "Le Comptoir du Hardware" },
+        { date: "28/08/2026", marque: "NVIDIA", sujet: "NVIDIA DLSS 5 (Neural Rendering)", impact: "Reconstruction d'images 3D-Guided Neural Rendering pour la génération de GPU Blackwell.", url: "https://www.comptoir-hardware.com/actus/software-pilotes/48800-dlss-5-apres-la-frame-generation-voici-la-frame-division.html", source: "Le Comptoir du Hardware" },
+        { date: "27/08/2026", marque: "NVIDIA", sujet: "NVIDIA NVHBM (Architecture Mémoire)", impact: "Conception d'une mémoire HBM personnalisée optimisant la bande passante et l'encombrement sur le die.", url: "https://www.comptoir-hardware.com/actus/ram/48798-nvidia-veut-muscler-la-hbm-avec-la-nvhbm.html", source: "Le Comptoir du Hardware" },
+        { date: "25/08/2026", marque: "Intel", sujet: "Intel Xeon 7 Diamond Rapids", impact: "Architecture serveur jusqu'à 256 cœurs et 1,28 Go de cache L3 pour rivaliser avec AMD EPYC.", url: "https://www.clubic.com/actualite-626656-intel-sort-l-artillerie-lourde-jusqu-a-256-c-urs-et-1-28-go-de-cache-pour-le-xeon-7-diamond-rapids.html", source: "Clubic" },
+        { date: "22/08/2026", marque: "AMD", sujet: "AMD Radeon RX 9050 (Architecture RDNA 4)", impact: "Déclinaison d'entrée de gamme de l'architecture RDNA 4 pour démocratiser les nouvelles unités de calcul.", url: "https://www.clubic.com/actualite-626314-amd-confirme-la-version-4-go-de-sa-radeon-rx-9050-la-plus-petite-rdna-4-sur-le-marche.html", source: "Clubic" },
+        { date: "20/08/2026", marque: "Intel", sujet: "Intel Nova Lake (Feuille de route)", impact: "Spécifications et architecture de la future génération de processeurs x86 succédant à Arrow Lake.", url: "https://www.clubic.com/actualite-625975-le-nom-des-processeurs-nova-lake-se-precise-intel-reviendrait-a-une-numerotation-a-quatre-chiffres.html", source: "Clubic" },
+        { date: "17/08/2026", marque: "AMD", sujet: "AMD & Intel EMIB-T Packaging", impact: "Étude de l'adoption de l'encapsulation avancée EMIB-T d'Intel Foundry pour les puces AMD.", url: "https://www.clubic.com/actualite-625564-semi-conducteurs-44-ans-apres-amd-pourrait-devenir-le-client-d-intel.html", source: "Clubic" },
+        { date: "02/06/2026", marque: "NVIDIA", sujet: "NVIDIA RTX Spark (SoC Grace-Blackwell)", impact: "Rupture architecturale : superpuce combinant CPU Grace ARM, GPU Blackwell et mémoire unifiée.", url: "https://www.comptoir-hardware.com/actus/processeurs/48812-rtx-spark-nvidia-precise-les-deux-variantes-du-n1x.html", source: "Le Comptoir du Hardware" },
+        { date: "19/04/2026", marque: "Intel", sujet: "Intel 14A Node (High-NA EUV)", impact: "Avancement de la lithographie commerciale High-NA EUV pour le nœud de gravure 1,4 nm d'Intel Foundry.", url: "https://www.clubic.com/actualite-609661-intel-attend-le-verdict-le-second-semestre-2026-sera-decisif-pour-la-gravure-14a.html", source: "Clubic" },
+        { date: "17/04/2026", marque: "Intel", sujet: "Intel Core Series 3 (Gravure 18A mobile)", impact: "Intégration du procédé 18A sur les processeurs pour ordinateurs portables abordables.", url: "https://www.clubic.com/actualite-609463-intel-lance-ses-core-series-3-non-ultra-la-gravure-18a-s-invite-sur-le-pc-portable-de-monsieur-tout-le-monde.html", source: "Clubic" },
+        { date: "06/01/2026", marque: "NVIDIA", sujet: "NVIDIA DLSS 4.5 (Reconstruction neuronale)", impact: "Moteur de rendu neuronal temps réel permettant le jeu 4K haute fréquence.", url: "https://www.lesnumeriques.com/carte-graphique/claque-graphique-avec-nvidia-dlss-4-5-la-4k-a-240-i-s-devient-enfin-une-realite-n249024.html", source: "Les Numériques" },
+        { date: "06/01/2026", marque: "AMD", sujet: "AMD Ryzen 7 9850X3D", impact: "Processeur de bureau haut de gamme doté du 3D V-Cache de nouvelle génération.", url: "https://www.lesnumeriques.com/cpu-processeur/amd-ryzen-7-9850x3d-le-nouveau-roi-du-gaming-est-la-et-il-va-faire-mal-a-intel-n248951.html", source: "Les Numériques" },
+        { date: "06/01/2026", marque: "AMD", sujet: "AMD Ryzen AI 400 (NPU XDNA 2)", impact: "Optimisation de la gamme mobile avec puissance de calcul IA accrue pour les PC portables.", url: "https://www.lesnumeriques.com/cpu-processeur/amd-renouvelle-a-minima-ses-processeurs-pour-pc-portables-et-les-destine-a-un-nouveau-segment-n248976.html", source: "Les Numériques" }
       ]
     };
 
@@ -1310,6 +1290,11 @@
               <span class="${tagClass}" style="font-size:0.75rem; padding: 3px 8px;">${v.marque || 'Tech'}</span>
             </td>
             <td style="color:#1e293b !important;">${v.impact}</td>
+            <td style="vertical-align: middle; white-space: nowrap;">
+              <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn-source-link" title="Consulter la source datée du ${v.date}">
+                <i class="bi bi-box-arrow-up-right me-1"></i> ${v.source || 'Consulter'}
+              </a>
+            </td>
           </tr>`;
       });
 
