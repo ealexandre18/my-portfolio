@@ -1453,6 +1453,7 @@
     // ====================================================
     // EASTER EGG EXPÉRIMENTAL : EFFET PARANOÏA KIRKY
     // (Image qui apparaît brièvement toutes les 5-6 secondes dans un coin aléatoire)
+    // Secret : Taper K I R K Y au clavier pour activer/désactiver le mode prolongé
     // ====================================================
     (function initKirkyParanoia() {
       // Passer ENABLE_KIRKY à false pour désactiver immédiatement sans rien casser
@@ -1476,7 +1477,11 @@
       kirky.style.transition = 'none';
       document.body.appendChild(kirky);
 
-      function flashKirky() {
+      let isLongMode = false;
+      let flashTimeout = null;
+      let scheduleTimeout = null;
+
+      function flashKirky(customDuration) {
         // Sélection d'un coin aléatoire ou bordure périphérique
         const spots = [
           { top: `${15 + Math.random() * 35}px`, left: `${15 + Math.random() * 35}px`, right: 'auto', bottom: 'auto' },
@@ -1492,21 +1497,93 @@
         kirky.style.bottom = spot.bottom;
         kirky.style.left = spot.left;
         kirky.style.right = spot.right;
+        kirky.style.width = isLongMode ? '95px' : '70px';
+        kirky.style.opacity = isLongMode ? '1' : '0.9';
         kirky.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg) scale(${0.85 + Math.random() * 0.3})`;
         kirky.style.display = 'block';
 
-        // Flash subliminal de 65ms (effet de paranoïa garanti : perçu par l'œil mais disparu au moment de fixer)
-        setTimeout(() => {
+        // Durée : 65ms en mode subliminal, ~2.5s en mode prolongé (ou durée sur-mesure)
+        const duration = customDuration !== undefined ? customDuration : (isLongMode ? 2500 : 65);
+
+        clearTimeout(flashTimeout);
+        flashTimeout = setTimeout(() => {
           kirky.style.display = 'none';
           scheduleNextFlash();
-        }, 65);
+        }, duration);
       }
 
       function scheduleNextFlash() {
+        clearTimeout(scheduleTimeout);
         // Apparaît aléatoirement toutes les 5 à 6 secondes
         const delay = 5000 + Math.random() * 1200;
-        setTimeout(flashKirky, delay);
+        scheduleTimeout = setTimeout(flashKirky, delay);
       }
+
+      // Petite notification stylée lors de l'activation/désactivation du code
+      function showSecretNotification(text) {
+        let toast = document.getElementById('kirky-toast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'kirky-toast';
+          toast.style.position = 'fixed';
+          toast.style.bottom = '24px';
+          toast.style.left = '50%';
+          toast.style.transform = 'translateX(-50%)';
+          toast.style.background = 'rgba(15, 23, 42, 0.92)';
+          toast.style.color = '#38bdf8';
+          toast.style.padding = '8px 20px';
+          toast.style.borderRadius = '30px';
+          toast.style.fontSize = '0.85rem';
+          toast.style.fontWeight = '600';
+          toast.style.zIndex = '1000000';
+          toast.style.backdropFilter = 'blur(10px)';
+          toast.style.boxShadow = '0 8px 24px rgba(0,0,0,0.3)';
+          toast.style.border = '1px solid rgba(56, 189, 248, 0.3)';
+          toast.style.pointerEvents = 'none';
+          toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+          document.body.appendChild(toast);
+        }
+        toast.innerText = text;
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(-50%) translateY(10px)';
+        }, 2500);
+      }
+
+      function toggleLongMode() {
+        isLongMode = !isLongMode;
+        clearTimeout(flashTimeout);
+        clearTimeout(scheduleTimeout);
+
+        showSecretNotification(isLongMode ? "👁️ Code KIRKY activé : Kirky reste plus longtemps !" : "👁️ Code KIRKY désactivé : retour au mode subliminal");
+
+        // Fait apparaître Kirky immédiatement
+        flashKirky(isLongMode ? 3500 : 65);
+      }
+
+      // Détection stricte de la séquence K -> I -> R -> K -> Y
+      const SECRET_CODE = ['k', 'i', 'r', 'k', 'y'];
+      let currentCodeIndex = 0;
+
+      window.addEventListener('keydown', (e) => {
+        // Ne pas intercepter si l'utilisateur écrit dans la barre de recherche ou un champ texte
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        const key = e.key.toLowerCase();
+        if (key === SECRET_CODE[currentCodeIndex]) {
+          currentCodeIndex++;
+          if (currentCodeIndex === SECRET_CODE.length) {
+            currentCodeIndex = 0;
+            toggleLongMode();
+          }
+        } else {
+          // Si une touche erronée est tapée (ex: K I R A...),
+          // la séquence est rompue immédiatement.
+          currentCodeIndex = (key === SECRET_CODE[0]) ? 1 : 0;
+        }
+      });
 
       scheduleNextFlash();
     })();
