@@ -1001,6 +1001,22 @@
             isDocx: false
           },
           {
+            name: "TD Restaurant - Modélisation & Bilan",
+            description: "Modélisation budgétaire, calcul de marges, simulation fiscale et bilan sous tableur (S3 BEAUVALLET).",
+            image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=800",
+            file: "TD_RESTAURANT_BEAUVALLET_B1.pdf",
+            cat: "bloc1",
+            isDocx: false
+          },
+          {
+            name: "Restaurant Excel",
+            description: "Classeur Excel simulant les charges, le chiffre d'affaires et la rentabilité du restaurant.",
+            image: "https://upload.wikimedia.org/wikipedia/commons/7/73/Microsoft_Excel_2013-2019_logo.svg",
+            file: "TD_RESTAURANT_ALEXANDRE_EWAN.xlsx",
+            cat: "bloc1",
+            isDocx: false
+          },
+          {
             name: "TP02 - Veille sur GLPI",
             description: "Étude et justification de l'adoption de GLPI pour la gestion de parc et helpdesk (S3).",
             image: "https://cugit-consulting.com/sites/default/files/portfolio/GLPI.gif",
@@ -1220,7 +1236,7 @@
       const isXls = p.file && (p.file.endsWith('.xls') || p.file.endsWith('.xlsx'));
       if (isXls) {
         btnIcon = 'bi-file-earmark-excel';
-        btnText = 'Télécharger (.xls)';
+        btnText = p.file.endsWith('.xlsx') ? 'Télécharger (.xlsx)' : 'Télécharger (.xls)';
       }
 
       const badgeText = isStage ? (p.tag || 'Stage') : p.cat.toUpperCase();
