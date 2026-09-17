@@ -652,6 +652,7 @@
       .navbar-pill { border-radius: 24px; padding: 10px; }
       .nav-item-aero { padding: 6px 12px; font-size: 0.82rem; }
       .hero { min-height: 70vh; }
+      #bottom-peeker { width: 125px !important; right: 15px !important; }
     }
   </style>
 </head>
@@ -1709,6 +1710,41 @@
         }
       });
     })();
+
+    // ====================================================
+    // EASTER EGG : PERSONNAGE DU BAS DE PAGE (EFFET SCARE SLIDE)
+    // ====================================================
+    (function initBottomPeeker() {
+      const peeker = document.getElementById('bottom-peeker');
+      if (!peeker) return;
+
+      function updatePeeker() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const distanceToBottom = documentHeight - (scrollY + windowHeight);
+
+        // Zone d'apparition : lorsqu'on approche du bas du site (les 750 derniers pixels)
+        const isNearBottom = distanceToBottom < 750;
+        // Effet de peur / fuite : lorsqu'on scroll TOUT en bas (les 60 derniers pixels)
+        const isAllTheWayDown = distanceToBottom <= 60;
+
+        if (isNearBottom && !isAllTheWayDown) {
+          // Il remonte depuis le bas de l'écran pour nous épier
+          peeker.style.transform = 'translateY(12px)';
+        } else {
+          // Tout en bas ou plus haut dans la page : il slide en dehors de l'écran vers le bas
+          peeker.style.transform = 'translateY(105%)';
+        }
+      }
+
+      window.addEventListener('scroll', updatePeeker, { passive: true });
+      window.addEventListener('resize', updatePeeker);
+      updatePeeker();
+    })();
   </script>
+
+  <!-- Personnage Peeker (Bas de page) -->
+  <img id="bottom-peeker" src="peeker.png" alt="" style="position: fixed; bottom: 0; right: 40px; width: 175px; height: auto; z-index: 9999; pointer-events: none; user-select: none; transform: translateY(105%); transition: transform 0.42s cubic-bezier(0.25, 1, 0.5, 1); filter: drop-shadow(0 -4px 14px rgba(0, 0, 0, 0.3));" />
 </body>
 </html>
