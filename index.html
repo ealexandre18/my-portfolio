@@ -679,7 +679,7 @@
       <div class="hero-badge">
         <i class="bi bi-stars text-info"></i> BTS SIO • Option SLAM
       </div>
-      <h1 class="hero-title">Alexandre Ewan</h1>
+      <h1 class="hero-title">Alexandre E<span id="ewan-w">w</span>an</h1>
       <p class="hero-subtitle">
         Portfolio d'études en développement logiciel, gestion de patrimoine informatique, virtualisation et veille technologique.
       </p>
@@ -1586,6 +1586,128 @@
       });
 
       scheduleNextFlash();
+    })();
+
+    // ====================================================
+    // EASTER EGG : SAMUS SORT DU W DE EWAN (CODE SAMUS)
+    // ====================================================
+    (function initSamusEasterEgg() {
+      const SAMUS_CODE = ['s', 'a', 'm', 'u', 's'];
+      let currentSamusIndex = 0;
+      let isSamusRunning = false;
+
+      function startSamusAnimation() {
+        const ewanW = document.getElementById('ewan-w');
+        if (!ewanW) {
+          isSamusRunning = false;
+          return;
+        }
+
+        const rect = ewanW.getBoundingClientRect();
+        const samusHeight = 85;
+        const samusWidth = 120;
+
+        // "Tuyau" Mario : boîte de masquage située juste au-dessus du 'w'
+        const pipeWrapper = document.createElement('div');
+        pipeWrapper.id = 'samus-pipe-wrapper';
+        pipeWrapper.style.position = 'fixed';
+        pipeWrapper.style.left = `${rect.left + (rect.width / 2) - (samusWidth / 2)}px`;
+        pipeWrapper.style.top = `${rect.top - samusHeight + 6}px`;
+        pipeWrapper.style.width = `${samusWidth}px`;
+        pipeWrapper.style.height = `${samusHeight}px`;
+        pipeWrapper.style.overflow = 'hidden';
+        pipeWrapper.style.pointerEvents = 'none';
+        pipeWrapper.style.zIndex = '9999999';
+
+        const samusImg = document.createElement('img');
+        samusImg.src = 'samus.gif';
+        samusImg.alt = 'Samus';
+        samusImg.style.position = 'absolute';
+        samusImg.style.left = '0';
+        samusImg.style.bottom = `-${samusHeight}px`; // Cachée dans le W
+        samusImg.style.width = `${samusWidth}px`;
+        samusImg.style.height = `${samusHeight}px`;
+        samusImg.style.objectFit = 'contain';
+        samusImg.style.userSelect = 'none';
+        samusImg.style.pointerEvents = 'none';
+        // Sortie verticale du tuyau façon Mario
+        samusImg.style.transition = 'transform 0.9s cubic-bezier(0.2, 0.9, 0.4, 1)';
+        samusImg.style.transform = 'translateY(0)';
+
+        pipeWrapper.appendChild(samusImg);
+        document.body.appendChild(pipeWrapper);
+
+        // Déclenchement de la sortie du tuyau
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            samusImg.style.transform = `translateY(-${samusHeight}px)`;
+          });
+        });
+
+        // Une fois complètement sortie du tuyau, elle court vers la droite
+        setTimeout(() => {
+          const currentRect = samusImg.getBoundingClientRect();
+          pipeWrapper.remove();
+
+          samusImg.style.position = 'fixed';
+          samusImg.style.left = `${currentRect.left}px`;
+          samusImg.style.top = `${currentRect.top}px`;
+          samusImg.style.bottom = 'auto';
+          samusImg.style.transform = 'none';
+          samusImg.style.transition = 'none';
+          document.body.appendChild(samusImg);
+
+          samusImg.offsetHeight; // Force reflow
+
+          // Course vers la droite jusqu'à dépasser complètement l'écran
+          const distanceToExit = window.innerWidth - currentRect.left + samusWidth + 50;
+          const runDuration = Math.max(1.8, distanceToExit / 500);
+
+          samusImg.style.transition = `transform ${runDuration}s linear`;
+          samusImg.style.transform = `translateX(${distanceToExit}px)`;
+
+          // Nettoyage après sortie d'écran
+          setTimeout(() => {
+            samusImg.remove();
+            isSamusRunning = false;
+          }, runDuration * 1000 + 100);
+        }, 950);
+      }
+
+      function triggerSamusEasterEgg() {
+        if (isSamusRunning) return;
+        const ewanW = document.getElementById('ewan-w');
+        if (!ewanW) return;
+
+        isSamusRunning = true;
+
+        // Si l'utilisateur a défilé plus bas, on le remonte doucement vers le titre
+        const ewanRect = ewanW.getBoundingClientRect();
+        const isOutOfView = ewanRect.top < 0 || ewanRect.bottom > window.innerHeight;
+
+        if (isOutOfView) {
+          ewanW.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(startSamusAnimation, 450);
+        } else {
+          startSamusAnimation();
+        }
+      }
+
+      // Écoute de la séquence S -> A -> M -> U -> S
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        const key = e.key.toLowerCase();
+        if (key === SAMUS_CODE[currentSamusIndex]) {
+          currentSamusIndex++;
+          if (currentSamusIndex === SAMUS_CODE.length) {
+            currentSamusIndex = 0;
+            triggerSamusEasterEgg();
+          }
+        } else {
+          currentSamusIndex = (key === SAMUS_CODE[0]) ? 1 : 0;
+        }
+      });
     })();
   </script>
 </body>
