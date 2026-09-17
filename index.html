@@ -1452,37 +1452,66 @@
     });
 
     // ====================================================
-    // EASTER EGG EXPÉRIMENTAL : EFFET PARANOÏA KIRKY
-    // (Image qui apparaît brièvement toutes les 5-6 secondes dans un coin aléatoire)
-    // Secret : Taper K I R K Y au clavier pour activer/désactiver le mode prolongé
+    // NOTIFICATION TOAST COMMUNE POUR LES CODES SECRETS
+    // ====================================================
+    function showSecretNotification(text) {
+      let toast = document.getElementById('secret-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'secret-toast';
+        toast.style.position = 'fixed';
+        toast.style.bottom = '24px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = 'rgba(15, 23, 42, 0.94)';
+        toast.style.color = '#38bdf8';
+        toast.style.padding = '8px 22px';
+        toast.style.borderRadius = '30px';
+        toast.style.fontSize = '0.85rem';
+        toast.style.fontWeight = '700';
+        toast.style.zIndex = '10000000';
+        toast.style.backdropFilter = 'blur(10px)';
+        toast.style.boxShadow = '0 8px 25px rgba(0,0,0,0.35)';
+        toast.style.border = '1px solid rgba(56, 189, 248, 0.35)';
+        toast.style.pointerEvents = 'none';
+        toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        document.body.appendChild(toast);
+      }
+      toast.innerText = text;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(10px)';
+      }, 2500);
+    }
+
+    // ====================================================
+    // EASTER EGG : EFFET PARANOÏA KIRKY (DÉSACTIVÉ PAR DÉFAUT)
+    // Code secret d'activation / désactivation : K U R K
     // ====================================================
     (function initKirkyParanoia() {
-      // Passer ENABLE_KIRKY à false pour désactiver immédiatement sans rien casser
-      const ENABLE_KIRKY = true;
-      if (!ENABLE_KIRKY) return;
-
-      const kirky = document.createElement('img');
-      kirky.id = 'kirky-paranoia';
-      kirky.src = 'kirky.png';
-      kirky.alt = '';
-      kirky.style.position = 'fixed';
-      kirky.style.width = '70px';
-      kirky.style.height = 'auto';
-      kirky.style.borderRadius = '8px';
-      kirky.style.boxShadow = '0 4px 15px rgba(0,0,0,0.35)';
-      kirky.style.pointerEvents = 'none';
-      kirky.style.zIndex = '999999';
-      kirky.style.display = 'none';
-      kirky.style.opacity = '0.9';
-      kirky.style.userSelect = 'none';
-      kirky.style.transition = 'none';
-      document.body.appendChild(kirky);
-
-      let isLongMode = false;
+      let isKirkyActive = false; // Désactivé par défaut
       let flashTimeout = null;
       let scheduleTimeout = null;
+      let kirky = null;
 
-      function flashKirky(customDuration) {
+      function getKirky() {
+        if (!kirky) {
+          kirky = document.createElement('img');
+          kirky.id = 'kirky-paranoia';
+          kirky.src = 'kirky.png';
+          kirky.alt = '';
+          kirky.style.cssText = 'position: fixed; width: 75px; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.35); pointer-events: none; z-index: 999999; display: none; opacity: 0.9; user-select: none; transition: none;';
+          document.body.appendChild(kirky);
+        }
+        return kirky;
+      }
+
+      function flashKirky() {
+        if (!isKirkyActive) return;
+        const el = getKirky();
+
         // Sélection d'un coin aléatoire ou bordure périphérique
         const spots = [
           { top: `${15 + Math.random() * 35}px`, left: `${15 + Math.random() * 35}px`, right: 'auto', bottom: 'auto' },
@@ -1494,99 +1523,59 @@
         ];
 
         const spot = spots[Math.floor(Math.random() * spots.length)];
-        kirky.style.top = spot.top;
-        kirky.style.bottom = spot.bottom;
-        kirky.style.left = spot.left;
-        kirky.style.right = spot.right;
-        kirky.style.width = isLongMode ? '95px' : '70px';
-        kirky.style.opacity = isLongMode ? '1' : '0.9';
-        kirky.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg) scale(${0.85 + Math.random() * 0.3})`;
-        kirky.style.display = 'block';
-
-        // Durée : 65ms en mode subliminal, ~2.5s en mode prolongé (ou durée sur-mesure)
-        const duration = customDuration !== undefined ? customDuration : (isLongMode ? 2500 : 65);
+        el.style.top = spot.top;
+        el.style.bottom = spot.bottom;
+        el.style.left = spot.left;
+        el.style.right = spot.right;
+        el.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg) scale(${0.85 + Math.random() * 0.3})`;
+        el.style.display = 'block';
 
         clearTimeout(flashTimeout);
         flashTimeout = setTimeout(() => {
-          kirky.style.display = 'none';
+          el.style.display = 'none';
           scheduleNextFlash();
-        }, duration);
+        }, 80);
       }
 
       function scheduleNextFlash() {
+        if (!isKirkyActive) return;
         clearTimeout(scheduleTimeout);
-        // Apparaît aléatoirement toutes les 5 à 6 secondes
         const delay = 5000 + Math.random() * 1200;
         scheduleTimeout = setTimeout(flashKirky, delay);
       }
 
-      // Petite notification stylée lors de l'activation/désactivation du code
-      function showSecretNotification(text) {
-        let toast = document.getElementById('kirky-toast');
-        if (!toast) {
-          toast = document.createElement('div');
-          toast.id = 'kirky-toast';
-          toast.style.position = 'fixed';
-          toast.style.bottom = '24px';
-          toast.style.left = '50%';
-          toast.style.transform = 'translateX(-50%)';
-          toast.style.background = 'rgba(15, 23, 42, 0.92)';
-          toast.style.color = '#38bdf8';
-          toast.style.padding = '8px 20px';
-          toast.style.borderRadius = '30px';
-          toast.style.fontSize = '0.85rem';
-          toast.style.fontWeight = '600';
-          toast.style.zIndex = '1000000';
-          toast.style.backdropFilter = 'blur(10px)';
-          toast.style.boxShadow = '0 8px 24px rgba(0,0,0,0.3)';
-          toast.style.border = '1px solid rgba(56, 189, 248, 0.3)';
-          toast.style.pointerEvents = 'none';
-          toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-          document.body.appendChild(toast);
-        }
-        toast.innerText = text;
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-        setTimeout(() => {
-          toast.style.opacity = '0';
-          toast.style.transform = 'translateX(-50%) translateY(10px)';
-        }, 2500);
-      }
-
-      function toggleLongMode() {
-        isLongMode = !isLongMode;
+      function toggleKirky() {
+        isKirkyActive = !isKirkyActive;
         clearTimeout(flashTimeout);
         clearTimeout(scheduleTimeout);
 
-        showSecretNotification(isLongMode ? "👁️ Code KIRKY activé : Kirky reste plus longtemps !" : "👁️ Code KIRKY désactivé : retour au mode subliminal");
-
-        // Fait apparaître Kirky immédiatement
-        flashKirky(isLongMode ? 3500 : 65);
+        if (isKirkyActive) {
+          showSecretNotification("👁️ Code KURK activé : Paranoïa Kirky enclenchée !");
+          flashKirky();
+        } else {
+          if (kirky) kirky.style.display = 'none';
+          showSecretNotification("👁️ Code KURK désactivé : Kirky désactivé");
+        }
       }
 
-      // Détection stricte de la séquence K -> I -> R -> K -> Y
-      const SECRET_CODE = ['k', 'i', 'r', 'k', 'y'];
-      let currentCodeIndex = 0;
+      // Code secret strict : K -> U -> R -> K
+      const KURK_CODE = ['k', 'u', 'r', 'k'];
+      let kurkIndex = 0;
 
       window.addEventListener('keydown', (e) => {
-        // Ne pas intercepter si l'utilisateur écrit dans la barre de recherche ou un champ texte
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
         const key = e.key.toLowerCase();
-        if (key === SECRET_CODE[currentCodeIndex]) {
-          currentCodeIndex++;
-          if (currentCodeIndex === SECRET_CODE.length) {
-            currentCodeIndex = 0;
-            toggleLongMode();
+        if (key === KURK_CODE[kurkIndex]) {
+          kurkIndex++;
+          if (kurkIndex === KURK_CODE.length) {
+            kurkIndex = 0;
+            toggleKirky();
           }
         } else {
-          // Si une touche erronée est tapée (ex: K I R A...),
-          // la séquence est rompue immédiatement.
-          currentCodeIndex = (key === SECRET_CODE[0]) ? 1 : 0;
+          kurkIndex = (key === KURK_CODE[0]) ? 1 : 0;
         }
       });
-
-      scheduleNextFlash();
     })();
 
     // ====================================================
@@ -1712,29 +1701,45 @@
     })();
 
     // ====================================================
-    // EASTER EGG : PERSONNAGE DU BAS DE PAGE (SLIDE FLUIDE POWERPOINT)
+    // EASTER EGG : PERSONNAGE DU BAS DE PAGE (DÉSACTIVÉ PAR DÉFAUT)
+    // Code secret d'activation / désactivation : B O N N Y
     // ====================================================
     (function initBottomPeeker() {
-      // Création dynamique garantie de l'élément pour éviter tout problème d'ordre de parsing
-      let peeker = document.getElementById('bottom-peeker');
-      if (!peeker) {
-        peeker = document.createElement('img');
-        peeker.id = 'bottom-peeker';
-        peeker.src = 'peeker.png';
-        peeker.alt = '';
-        peeker.style.cssText = 'position: fixed; bottom: 0; right: 40px; width: 200px; height: auto; z-index: 999999; pointer-events: none; user-select: none; transform: translateY(115%); transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 -6px 20px rgba(0, 0, 0, 0.35));';
-        document.body.appendChild(peeker);
+      let isPeekerActive = false; // Désactivé par défaut
+      let peeker = null;
+
+      function getPeeker() {
+        if (!peeker) {
+          peeker = document.getElementById('bottom-peeker');
+          if (!peeker) {
+            peeker = document.createElement('img');
+            peeker.id = 'bottom-peeker';
+            peeker.src = 'peeker.png';
+            peeker.alt = '';
+            peeker.style.cssText = 'position: fixed; bottom: 0; right: 40px; width: 200px; height: auto; z-index: 999999; pointer-events: none; user-select: none; transform: translateY(115%); transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 -6px 20px rgba(0, 0, 0, 0.35));';
+            document.body.appendChild(peeker);
+          }
+        }
+        return peeker;
       }
 
       function showPeeker() {
-        peeker.style.transform = 'translateY(0)';
+        if (!isPeekerActive) return;
+        getPeeker().style.transform = 'translateY(0)';
       }
 
       function hidePeeker() {
-        peeker.style.transform = 'translateY(115%)';
+        if (peeker) {
+          peeker.style.transform = 'translateY(115%)';
+        }
       }
 
       function checkScroll() {
+        if (!isPeekerActive) {
+          hidePeeker();
+          return;
+        }
+
         const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
         const windowHeight = window.innerHeight || document.documentElement.clientHeight || 0;
         const documentHeight = Math.max(
@@ -1743,7 +1748,7 @@
         );
         const distanceToBottom = documentHeight - (scrollY + windowHeight);
 
-        // Dès qu'on arrive dans le dernier tiers / les 650px du bas
+        // Dès qu'on arrive dans les 650px du bas
         if (distanceToBottom < 650) {
           showPeeker();
         } else {
@@ -1756,7 +1761,7 @@
       if (footer && 'IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && isPeekerActive) {
               showPeeker();
             } else {
               checkScroll();
@@ -1766,9 +1771,39 @@
         observer.observe(footer);
       }
 
+      function togglePeeker() {
+        isPeekerActive = !isPeekerActive;
+        if (isPeekerActive) {
+          showSecretNotification("👻 Code BONNY activé : Slide footer débloqué !");
+          getPeeker();
+          checkScroll();
+        } else {
+          hidePeeker();
+          showSecretNotification("👻 Code BONNY désactivé : Slide footer masqué");
+        }
+      }
+
+      // Code secret strict : B -> O -> N -> N -> Y
+      const BONNY_CODE = ['b', 'o', 'n', 'n', 'y'];
+      let bonnyIndex = 0;
+
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        const key = e.key.toLowerCase();
+        if (key === BONNY_CODE[bonnyIndex]) {
+          bonnyIndex++;
+          if (bonnyIndex === BONNY_CODE.length) {
+            bonnyIndex = 0;
+            togglePeeker();
+          }
+        } else {
+          bonnyIndex = (key === BONNY_CODE[0]) ? 1 : 0;
+        }
+      });
+
       window.addEventListener('scroll', checkScroll, { passive: true });
       window.addEventListener('resize', checkScroll);
-      checkScroll();
     })();
   </script>
 </body>
