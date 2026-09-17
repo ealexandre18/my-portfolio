@@ -1715,31 +1715,61 @@
     // EASTER EGG : PERSONNAGE DU BAS DE PAGE (SLIDE FLUIDE POWERPOINT)
     // ====================================================
     (function initBottomPeeker() {
-      const peeker = document.getElementById('bottom-peeker');
-      if (!peeker) return;
+      // Création dynamique garantie de l'élément pour éviter tout problème d'ordre de parsing
+      let peeker = document.getElementById('bottom-peeker');
+      if (!peeker) {
+        peeker = document.createElement('img');
+        peeker.id = 'bottom-peeker';
+        peeker.src = 'peeker.png';
+        peeker.alt = '';
+        peeker.style.cssText = 'position: fixed; bottom: 0; right: 40px; width: 200px; height: auto; z-index: 999999; pointer-events: none; user-select: none; transform: translateY(115%); transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 -6px 20px rgba(0, 0, 0, 0.35));';
+        document.body.appendChild(peeker);
+      }
 
-      function updatePeeker() {
-        const scrollY = window.scrollY || window.pageYOffset;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
+      function showPeeker() {
+        peeker.style.transform = 'translateY(0)';
+      }
+
+      function hidePeeker() {
+        peeker.style.transform = 'translateY(115%)';
+      }
+
+      function checkScroll() {
+        const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const documentHeight = Math.max(
+          document.body.scrollHeight, document.documentElement.scrollHeight,
+          document.body.offsetHeight, document.documentElement.offsetHeight
+        );
         const distanceToBottom = documentHeight - (scrollY + windowHeight);
 
-        // Dès qu'on approche ou qu'on est tout en bas de la page (les 550 derniers pixels)
-        // Le personnage glisse avec un effet slide PowerPoint ultra fluide
-        if (distanceToBottom < 550) {
-          peeker.style.transform = 'translateY(0)'; // Parfaitement visible, posé sur le bord inférieur
+        // Dès qu'on arrive dans le dernier tiers / les 650px du bas
+        if (distanceToBottom < 650) {
+          showPeeker();
         } else {
-          peeker.style.transform = 'translateY(115%)'; // Glisse en dehors de l'écran vers le bas
+          hidePeeker();
         }
       }
 
-      window.addEventListener('scroll', updatePeeker, { passive: true });
-      window.addEventListener('resize', updatePeeker);
-      updatePeeker();
+      // IntersectionObserver sur le footer pour une réactivité 100% garantie
+      const footer = document.querySelector('footer');
+      if (footer && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              showPeeker();
+            } else {
+              checkScroll();
+            }
+          });
+        }, { rootMargin: '250px 0px 0px 0px' });
+        observer.observe(footer);
+      }
+
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      window.addEventListener('resize', checkScroll);
+      checkScroll();
     })();
   </script>
-
-  <!-- Personnage Peeker (Bas de page avec transition PowerPoint) -->
-  <img id="bottom-peeker" src="peeker.png" alt="" style="position: fixed; bottom: 0; right: 40px; width: 195px; height: auto; z-index: 9999; pointer-events: none; user-select: none; transform: translateY(115%); transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 -6px 20px rgba(0, 0, 0, 0.35));" />
 </body>
 </html>
