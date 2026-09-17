@@ -1449,6 +1449,67 @@
         renderVeille(currentVeilleYear);
       });
     });
+
+    // ====================================================
+    // EASTER EGG EXPÉRIMENTAL : EFFET PARANOÏA KIRKY
+    // (Image qui apparaît brièvement toutes les 5-6 secondes dans un coin aléatoire)
+    // ====================================================
+    (function initKirkyParanoia() {
+      // Passer ENABLE_KIRKY à false pour désactiver immédiatement sans rien casser
+      const ENABLE_KIRKY = true;
+      if (!ENABLE_KIRKY) return;
+
+      const kirky = document.createElement('img');
+      kirky.id = 'kirky-paranoia';
+      kirky.src = 'kirky.png';
+      kirky.alt = '';
+      kirky.style.position = 'fixed';
+      kirky.style.width = '70px';
+      kirky.style.height = 'auto';
+      kirky.style.borderRadius = '8px';
+      kirky.style.boxShadow = '0 4px 15px rgba(0,0,0,0.35)';
+      kirky.style.pointerEvents = 'none';
+      kirky.style.zIndex = '999999';
+      kirky.style.display = 'none';
+      kirky.style.opacity = '0.9';
+      kirky.style.userSelect = 'none';
+      kirky.style.transition = 'none';
+      document.body.appendChild(kirky);
+
+      function flashKirky() {
+        // Sélection d'un coin aléatoire ou bordure périphérique
+        const spots = [
+          { top: `${15 + Math.random() * 35}px`, left: `${15 + Math.random() * 35}px`, right: 'auto', bottom: 'auto' },
+          { top: `${15 + Math.random() * 35}px`, right: `${15 + Math.random() * 35}px`, left: 'auto', bottom: 'auto' },
+          { bottom: `${15 + Math.random() * 35}px`, left: `${15 + Math.random() * 35}px`, top: 'auto', right: 'auto' },
+          { bottom: `${15 + Math.random() * 35}px`, right: `${15 + Math.random() * 35}px`, top: 'auto', left: 'auto' },
+          { top: `${20 + Math.random() * 55}%`, left: `${10 + Math.random() * 15}px`, right: 'auto', bottom: 'auto' },
+          { top: `${20 + Math.random() * 55}%`, right: `${10 + Math.random() * 15}px`, left: 'auto', bottom: 'auto' }
+        ];
+
+        const spot = spots[Math.floor(Math.random() * spots.length)];
+        kirky.style.top = spot.top;
+        kirky.style.bottom = spot.bottom;
+        kirky.style.left = spot.left;
+        kirky.style.right = spot.right;
+        kirky.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg) scale(${0.85 + Math.random() * 0.3})`;
+        kirky.style.display = 'block';
+
+        // Flash subliminal de 65ms (effet de paranoïa garanti : perçu par l'œil mais disparu au moment de fixer)
+        setTimeout(() => {
+          kirky.style.display = 'none';
+          scheduleNextFlash();
+        }, 65);
+      }
+
+      function scheduleNextFlash() {
+        // Apparaît aléatoirement toutes les 5 à 6 secondes
+        const delay = 5000 + Math.random() * 1200;
+        setTimeout(flashKirky, delay);
+      }
+
+      scheduleNextFlash();
+    })();
   </script>
 </body>
 </html>
