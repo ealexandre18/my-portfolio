@@ -770,7 +770,7 @@
         <button class="block-btn" data-block="bloc1">Bloc 1</button>
         <button class="block-btn" data-block="bloc2">Bloc 2</button>
         <button class="block-btn" data-block="bloc3">Bloc 3</button>
-        <button class="block-btn" data-block="pro">Atelier Pro</button>
+        <button class="block-btn" data-block="pro">Atelier Pro et PCC</button>
       </div>
 
       <!-- Recherche instantanée -->
@@ -1297,7 +1297,7 @@
       }
 
       let badgeText = isStage ? (p.tag || 'Stage') : p.cat.toUpperCase();
-      if (!isStage && p.cat === 'pro') badgeText = 'ATELIER PRO';
+      if (!isStage && p.cat === 'pro') badgeText = 'ATELIER PRO ET PCC';
 
       return `
         <div class="col-md-6 col-lg-4 col-xl-3 tp-item reveal" data-name="${p.name.toLowerCase()}" data-desc="${p.description.toLowerCase()}" data-cat="${p.cat || 'stage'}">
