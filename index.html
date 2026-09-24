@@ -1101,7 +1101,16 @@
             isDocx: false
           }
         ],
-        pro: []
+        pro: [
+          {
+            name: "TP MOOC - Autoformation en Ligne",
+            description: "Étude et analyse comparative de plateformes de MOOC (FUN MOOC, Coursera, OpenClassrooms) et suivi d'un cours en ligne (S3 SOTOCA).",
+            image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800",
+            file: "mooc_tp_sotoca.pdf",
+            cat: "pro",
+            isDocx: false
+          }
+        ]
       },
 
       // 1ère Année (Exactement les données et thumbnails d'origine de l'utilisateur)
@@ -1273,6 +1282,13 @@
       let btnIcon = isDocx ? 'bi-file-earmark-word' : 'bi-file-earmark-pdf';
       let btnText = isDocx ? 'Télécharger (.docx)' : 'Consulter le PDF';
       
+      // Ajout de gestion des fichiers html
+      const isHtml = p.file && p.file.endsWith('.html');
+      if (isHtml) {
+        btnIcon = 'bi-file-earmark-code';
+        btnText = 'Consulter le TP (Web)';
+      }
+
       // Ajout de gestion des fichiers xls
       const isXls = p.file && (p.file.endsWith('.xls') || p.file.endsWith('.xlsx'));
       if (isXls) {

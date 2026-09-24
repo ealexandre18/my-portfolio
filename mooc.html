@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP Découverte du MOOC | BTS SIO</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f0f4f8;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: #1e2b3c;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tp-container {
+      max-width: 1100px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      border: 1px solid #d9e2ef;
+    }
+
+    /* En-tête compact */
+    .tp-header {
+      background: linear-gradient(135deg, #0b2b4e 0%, #1a4a73 100%);
+      color: white;
+      padding: 1rem 2rem;
+      position: relative;
+    }
+
+    .tp-header::after {
+      content: "⏱️ 1h";
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.2rem 0.9rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .tp-header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.2rem;
+      max-width: 80%;
+      line-height: 1.25;
+    }
+
+    .tp-header .subtitle {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: #2ecc71;
+      color: #0b2b4e;
+      padding: 0.1rem 0.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+    }
+
+    /* Contenu principal */
+    .tp-content {
+      padding: 1.5rem 2rem 2rem;
+    }
+
+    .objectifs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .objectif-card {
+      background: #f7faff;
+      border-left: 4px solid #2b6f9e;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .objectif-card strong {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #1a4a73;
+      margin-bottom: 0.2rem;
+    }
+
+    .objectif-card p {
+      font-size: 0.9rem;
+      color: #1e2b3c;
+      line-height: 1.4;
+    }
+
+    /* Chronogramme compact */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0b2b4e;
+      margin: 1.5rem 0 0.8rem 0;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid #e1eaf1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chrono-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 5px;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .chrono-table th {
+      text-align: left;
+      font-weight: 600;
+      color: #1a4a73;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 0.35rem 0.6rem;
+      background: #eef3f9;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .chrono-table td {
+      background: #ffffff;
+      padding: 0.6rem 0.6rem;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+      border: 1px solid #e2eaf3;
+      vertical-align: top;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .chrono-table tr {
+      transition: transform 0.1s ease;
+    }
+
+    .chrono-table tr:hover td {
+      background: #f9fcff;
+      border-color: #b8d1e8;
+    }
+
+    .temps {
+      font-weight: 700;
+      color: #0b2b4e;
+      background: #e1eef9;
+      padding: 0.1rem 0.6rem;
+      border-radius: 30px;
+      font-size: 0.78rem;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .activite {
+      font-weight: 600;
+      color: #1e2b3c;
+      font-size: 0.85rem;
+    }
+
+    .detail {
+      font-size: 0.78rem;
+      color: #4a5e73;
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+
+    /* Cartes consignes */
+    .consignes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin: 1.2rem 0;
+    }
+
+    .consigne-card {
+      background: #f9fcff;
+      border: 1px solid #d9e6f2;
+      border-radius: 16px;
+      padding: 1.2rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .consigne-card:hover {
+      box-shadow: 0 12px 24px -10px rgba(0, 60, 120, 0.15);
+    }
+
+    .consigne-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #0b2b4e;
+      margin-bottom: 0.8rem;
+    }
+
+    .consigne-card ol {
+      padding-left: 1.3rem;
+      color: #2d3e53;
+      font-size: 0.92rem;
+    }
+
+    .consigne-card ol li {
+      margin-bottom: 0.65rem;
+      padding-left: 0.2rem;
+    }
+
+    .consigne-card ol li strong {
+      color: #0b2b4e;
+    }
+
+    .highlight {
+      background: #fff4e0;
+      border-left: 4px solid #f39c12;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      margin: 1rem 0;
+      color: #5e3e0c;
+    }
+
+    /* Bloc inscription finale */
+    .inscription-box {
+      background: linear-gradient(145deg, #e8f3ff 0%, #d9e9ff 100%);
+      border: 2px solid #2b6f9e;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 1.5rem 0 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .inscription-box::before {
+      content: "🎓";
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1rem;
+      font-size: 5rem;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .inscription-box h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #0b2b4e;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+    }
+
+    .inscription-box .intro {
+      font-size: 0.92rem;
+      color: #1e3b5c;
+      margin-bottom: 1.2rem;
+      max-width: 85%;
+    }
+
+    .etapes-finales {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .etape {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: white;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
+      border: 1px solid #c9ddec;
+    }
+
+    .etape .num {
+      background: #2b6f9e;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .etape .contenu-etape {
+      font-size: 0.9rem;
+      color: #1e2b3c;
+      line-height: 1.45;
+    }
+
+    .etape .contenu-etape strong {
+      color: #0b2b4e;
+    }
+
+    .deadline-badge {
+      background: #ff6b6b;
+      color: white;
+      padding: 0.3rem 1.1rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Pied de page */
+    .tp-footer {
+      background: #f2f7fc;
+      padding: 1rem 2rem;
+      border-top: 1px solid #d0e0ed;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      font-size: 0.82rem;
+      color: #4a5e73;
+    }
+
+    .tp-footer .prof {
+      font-weight: 600;
+      color: #0b2b4e;
+    }
+
+    /* Responsive */
+    @media (max-width: 750px) {
+      .tp-header h1 {
+        font-size: 1.2rem;
+        max-width: 100%;
+      }
+
+      .tp-header::after {
+        position: static;
+        display: inline-block;
+        margin-top: 0.6rem;
+      }
+
+      .tp-content {
+        padding: 1.2rem;
+      }
+
+      .consignes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chrono-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .chrono-table tr {
+        display: block;
+        margin-bottom: 0.8rem;
+        border: 1px solid #e2eaf3;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .chrono-table th {
+        display: none;
+      }
+
+      .chrono-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #1a4a73;
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+      }
+
+      .inscription-box .intro {
+        max-width: 100%;
+      }
+
+      .inscription-box::before {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="tp-container">
+    <!-- En-tête compact -->
+    <header class="tp-header">
+      <h1>Découverte du MOOC et autoformation numérique</h1>
+      <div class="subtitle">
+        <span class="badge">BTS SIO</span>
+        <span>Travaux pratiques – 1 heure</span>
+      </div>
+    </header>
+
+    <!-- Contenu -->
+    <main class="tp-content">
+      <!-- Objectifs -->
+      <div class="objectifs-grid">
+        <div class="objectif-card">
+          <strong>🎯 Objectif 1</strong>
+          <p>Comprendre ce qu'est un MOOC et son écosystème.</p>
+        </div>
+        <div class="objectif-card">
+          <strong>🔍 Objectif 2</strong>
+          <p>Rechercher et analyser une offre de MOOC pertinente.</p>
+        </div>
+        <div class="objectif-card">
+          <strong>🤝 Objectif 3</strong>
+          <p>Participer activement (forum, quiz, échanges).</p>
+        </div>
+        <div class="objectif-card">
+          <strong>🎓 Objectif 4</strong>
+          <p>S'engager dans un MOOC à suivre après la séance.</p>
+        </div>
+      </div>
+
+      <!-- Chronogramme compact -->
+      <h2 class="section-title">⏳ Chronogramme de la séance (1h)</h2>
+      <table class="chrono-table">
+        <thead>
+          <tr>
+            <th>Temps</th>
+            <th>Activité</th>
+            <th>Modalité</th>
+            <th>Livrable / Indicateur</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Temps"><span class="temps">0 – 5 min</span></td>
+            <td data-label="Activité"><span class="activite">Lancement & introduction</span><div class="detail">Présentation des objectifs, du rendu et du chronogramme.</div></td>
+            <td data-label="Modalité">Plénière</td>
+            <td data-label="Livrable">Écoute active</td>
+          </tr>
+          <tr>
+            <td data-label="Temps"><span class="temps">5 – 15 min</span></td>
+            <td data-label="Activité"><span class="activite">Recherche guidée</span><div class="detail">Définition du MOOC, identification des plateformes, types de certificats. Présélection de 2-3 MOOCs.</div></td>
+            <td data-label="Modalité">Binômes / individuel</td>
+            <td data-label="Livrable">Notes de recherche + liste de MOOCs</td>
+          </tr>
+          <tr>
+            <td data-label="Temps"><span class="temps">15 – 30 min</span></td>
+            <td data-label="Activité"><span class="activite">Participation active</span><div class="detail">S'inscrire sur une plateforme, explorer un MOOC, répondre à un quiz ou poster sur un forum.</div></td>
+            <td data-label="Modalité">Individuel (compte personnel)</td>
+            <td data-label="Livrable">Captures d'écran / preuve de participation</td>
+          </tr>
+          <tr>
+            <td data-label="Temps"><span class="temps">30 – 42 min</span></td>
+            <td data-label="Activité"><span class="activite">Analyse & synthèse</span><div class="detail">Remplir la fiche d'analyse du MOOC choisi (objectifs, durée, prérequis, évaluation).</div></td>
+            <td data-label="Modalité">Individuel</td>
+            <td data-label="Livrable">Fiche d'analyse complétée</td>
+          </tr>
+          <tr>
+            <td data-label="Temps"><span class="temps">42 – 52 min</span></td>
+            <td data-label="Activité"><span class="activite">Rédaction du rapport</span><div class="detail">Structurer le rapport final présentant la recherche, la participation et l'engagement MOOC.</div></td>
+            <td data-label="Modalité">Individuel</td>
+            <td data-label="Livrable">Rapport final</td>
+          </tr>
+          <tr>
+            <td data-label="Temps"><span class="temps">52 – 60 min</span></td>
+            <td data-label="Activité"><span class="activite">Choix final & inscription</span><div class="detail">Sélectionner le MOOC à suivre et procéder à l'inscription définitive.</div></td>
+            <td data-label="Modalité">Individuel</td>
+            <td data-label="Livrable">Justificatif d'inscription</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Travail à faire -->
+      <h2 class="section-title">📋 Travail à faire</h2>
+      <div class="consignes-grid">
+        <div class="consigne-card">
+          <h3>🔎 Étape 1 – Recherche</h3>
+          <ol>
+            <li><strong>Définir le MOOC</strong> : recherchez l'acronyme et notez sa signification complète, son origine (année, université) et ses 3 principes fondateurs.</li>
+            <li><strong>Identifier 3 plateformes</strong> : listez au minimum 3 plateformes de MOOC en précisant pour chacune son pays d'origine et son public cible.</li>
+            <li><strong>Présélectionner 2 à 3 MOOCs</strong> : choisissez uniquement des MOOCs en lien avec l'informatique ou le numérique. Notez pour chacun : le titre exact, la durée, les prérequis, le mode d'évaluation et l'existence d'un certificat.</li>
+            <li><strong>Compléter la fiche d'analyse</strong> : remplissez la fiche distribuée avec les informations relevées pour chaque MOOC présélectionné.</li>
+          </ol>
+        </div>
+        <div class="consigne-card">
+          <h3>💬 Étape 2 – Participation</h3>
+          <ol>
+            <li><strong>Créer un compte</strong> : inscrivez-vous sur la plateforme du MOOC que vous avez présélectionné (utilisez un compte personnel ou créez-en un).</li>
+            <li><strong>Explorer une semaine</strong> : ouvrez le contenu d'une semaine du MOOC et lisez attentivement les objectifs pédagogiques et les ressources proposées.</li>
+            <li><strong>Réaliser une activité</strong> : effectuez au moins un quiz ou postez un message sur le forum du cours.</li>
+            <li><strong>Conserver une preuve</strong> : faites une capture d'écran du quiz validé, du message posté ou de votre tableau de bord.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="highlight">
+        ⚠️ <strong>Attention :</strong> La participation doit être réelle et vérifiable. Aucune inscription payante n'est exigée. Utilisez des MOOCs gratuits (audit) ou des versions d'essai.
+      </div>
+
+      <!-- Section : choix final et inscription -->
+      <div class="inscription-box">
+        <h3>🎓 Choix final et inscription au MOOC à suivre</h3>
+        <p class="intro">
+          À l'issue de ce TP, vous devez <strong>sélectionner le MOOC que vous vous engagez à suivre</strong> durant les semaines à venir. 
+          Ce choix doit être argumenté dans votre rapport final.
+        </p>
+
+        <div class="etapes-finales">
+          <div class="etape">
+            <div class="num">1</div>
+            <div class="contenu-etape">
+              <strong>Comparer vos options</strong> – Reprenez les 2-3 MOOCs présélectionnés et choisissez celui qui correspond le mieux à vos objectifs, votre niveau et votre disponibilité.
+            </div>
+          </div>
+          <div class="etape">
+            <div class="num">2</div>
+            <div class="contenu-etape">
+              <strong>Procéder à l'inscription définitive</strong> – Créez un compte si nécessaire et inscrivez-vous au MOOC retenu (version gratuite / audit).
+            </div>
+          </div>
+          <div class="etape">
+            <div class="num">3</div>
+            <div class="contenu-etape">
+              <strong>Conserver un justificatif</strong> – Capture d'écran de l'inscription confirmée, e-mail de bienvenue ou tableau de bord du cours.
+            </div>
+          </div>
+          <div class="etape">
+            <div class="num">4</div>
+            <div class="contenu-etape">
+              <strong>Intégrer au rapport final</strong> – Ajoutez une section « Engagement » précisant le MOOC choisi, la date de début, la durée estimée et vos motivations.
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
+          <span class="deadline-badge">📅 À rendre avec le rapport final</span>
+          <span style="font-size: 0.88rem; color: #1e3b5c;">Le suivi effectif du MOOC fera l'objet d'un point d'étape ultérieur.</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="tp-footer">
+      <div class="prof">👨‍🏫 Professeur de BTS SIO</div>
+      <div>TP – Découverte du MOOC · Durée 1h · Année 2025-2026</div>
+    </footer>
+  </div>
+</body>
+</html>
