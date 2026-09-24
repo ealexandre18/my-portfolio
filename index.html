@@ -1296,7 +1296,8 @@
         btnText = p.file.endsWith('.xlsx') ? 'Télécharger (.xlsx)' : 'Télécharger (.xls)';
       }
 
-      const badgeText = isStage ? (p.tag || 'Stage') : p.cat.toUpperCase();
+      let badgeText = isStage ? (p.tag || 'Stage') : p.cat.toUpperCase();
+      if (!isStage && p.cat === 'pro') badgeText = 'ATELIER PRO';
 
       return `
         <div class="col-md-6 col-lg-4 col-xl-3 tp-item reveal" data-name="${p.name.toLowerCase()}" data-desc="${p.description.toLowerCase()}" data-cat="${p.cat || 'stage'}">
