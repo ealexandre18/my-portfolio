@@ -467,32 +467,40 @@
       if (e.key === 'Enter') tryUnlock();
     });
 
-    // --- CONNEXION MQTT ---
+    const BROKERS = [
+      "wss://broker.emqx.io:8084/mqtt",
+      "wss://broker.hivemq.com:8884/mqtt"
+    ];
+    let clients = [];
+
+    // --- CONNEXION MULTI-BROKER ---
     function initMqtt() {
-      if (mqttClient) return;
+      if (clients.length > 0) return;
 
-      const clientId = 'remote_' + Math.random().toString(16).substr(2, 8);
-      mqttClient = mqtt.connect(MQTT_BROKER, {
-        clientId: clientId,
-        keepalive: 30,
-        reconnectPeriod: 2000
-      });
+      BROKERS.forEach((bUrl, idx) => {
+        const cId = 'rem_' + idx + '_' + Math.random().toString(16).substr(2, 6);
+        const cl = mqtt.connect(bUrl, {
+          clientId: cId,
+          keepalive: 30,
+          reconnectPeriod: 2500,
+          connectTimeout: 5000
+        });
 
-      mqttClient.on('connect', () => {
-        isConnected = true;
-        updateStatus(true);
-      });
+        cl.on('connect', () => {
+          console.log('[Remote] Connecté à :', bUrl);
+          updateStatus(true);
+        });
 
-      mqttClient.on('close', () => {
-        isConnected = false;
-        updateStatus(false);
-      });
+        cl.on('close', () => checkAnyOnline());
+        cl.on('error', () => checkAnyOnline());
 
-      mqttClient.on('error', (err) => {
-        console.error("MQTT Error:", err);
-        isConnected = false;
-        updateStatus(false);
+        clients.push(cl);
       });
+    }
+
+    function checkAnyOnline() {
+      const any = clients.some(c => c && c.connected);
+      updateStatus(any);
     }
 
     function updateStatus(online) {
@@ -509,8 +517,9 @@
 
     // --- ENVOI DES ACTIONS ---
     function sendAction(action, extraData = {}) {
-      if (!mqttClient || !isConnected) {
-        showToast("Erreur : Non connecté au serveur !", true);
+      const activeClients = clients.filter(c => c && c.connected);
+      if (activeClients.length === 0) {
+        showToast("Erreur : Non connecté aux serveurs !", true);
         return;
       }
 
@@ -520,14 +529,16 @@
         timestamp: Date.now(),
         ...extraData
       };
+      const strPayload = JSON.stringify(payload);
 
-      mqttClient.publish(MQTT_TOPIC, JSON.stringify(payload), { qos: 0 }, (err) => {
-        if (!err) {
-          showToast(`⚡ Ordre [${action}] envoyé en direct !`);
-        } else {
-          showToast("Erreur d'envoi", true);
-        }
+      let sentCount = 0;
+      activeClients.forEach(c => {
+        c.publish(MQTT_TOPIC, strPayload, { qos: 0 }, (err) => {
+          if (!err) sentCount++;
+        });
       });
+
+      showToast(`⚡ Ordre [${action}] diffusé en direct !`);
     }
 
     function sendCustomAlert() {

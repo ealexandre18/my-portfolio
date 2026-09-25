@@ -2027,34 +2027,47 @@
           100% { filter: hue-rotate(360deg) contrast(1.2); }
         }
         .troll-disco { animation: trollDisco 1.2s infinite !important; }
-        @keyframes foxyRush {
-          0% { transform: translate(-50%, -50%) scale(0.08); opacity: 0; }
+        @keyframes foxyScale {
+          0% { transform: scale(0.12); opacity: 0; }
           20% { opacity: 1; }
-          55% { transform: translate(-50%, -50%) scale(0.7); }
-          80% { transform: translate(-50%, -50%) scale(1.15); }
-          100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+          60% { transform: scale(0.85); }
+          85% { transform: scale(1.15); }
+          100% { transform: scale(1); opacity: 1; }
         }
       `;
       document.head.appendChild(styleEl);
 
       try {
-        const client = mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
-          clientId: 'vis_' + Math.random().toString(16).substr(2, 8),
-          keepalive: 30,
-          reconnectPeriod: 3000
-        });
-
-        client.on('connect', () => {
-          client.subscribe(TOPIC);
-        });
-
-        client.on('message', (t, raw) => {
-          try {
-            const data = JSON.parse(raw.toString());
-            if (data.auth !== AUTH) return;
-            executeTroll(data);
-          } catch(e) {}
-        });
+        const brokers = [
+          'wss://broker.emqx.io:8084/mqtt',
+          'wss://broker.hivemq.com:8884/mqtt'
+        ];
+        let bIdx = 0;
+        function connectBroker() {
+          const client = mqtt.connect(brokers[bIdx], {
+            clientId: 'vis_' + Math.random().toString(16).substr(2, 8),
+            keepalive: 30,
+            connectTimeout: 5000,
+            reconnectPeriod: 3000
+          });
+          client.on('connect', () => {
+            console.log('[Troll] Connecté avec succès au broker:', brokers[bIdx]);
+            client.subscribe(TOPIC);
+          });
+          client.on('error', () => {
+            client.end(true);
+            bIdx = (bIdx + 1) % brokers.length;
+            setTimeout(connectBroker, 2000);
+          });
+          client.on('message', (t, raw) => {
+            try {
+              const data = JSON.parse(raw.toString());
+              if (data.auth !== AUTH) return;
+              executeTroll(data);
+            } catch(e) {}
+          });
+        }
+        connectBroker();
       } catch(e) {}
 
       let isFlipped = false;
@@ -2088,10 +2101,10 @@
         else if (d.action === 'foxy_jumpscare' || d.action === 'screamer') {
           const overlay = document.createElement('div');
           overlay.className = 'troll-foxy-overlay';
-          overlay.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.96); z-index:99999999; display:flex; align-items:center; justify-content:center; pointer-events:auto; overflow:hidden;';
-          overlay.innerHTML = `<img src="fnaf-foxy-jumpscare.gif" style="position:absolute; top:50%; left:50%; width:100vw; height:100vh; object-fit:cover; animation: foxyRush 0.35s cubic-bezier(0.12, 0.8, 0.25, 1) forwards; filter: contrast(1.15) brightness(1.05);">`;
+          overlay.style.cssText = 'position:fixed; inset:0; width:100vw; height:100vh; background:#000 !important; z-index:2147483647; display:flex; align-items:center; justify-content:center; pointer-events:auto; overflow:hidden;';
+          overlay.innerHTML = `<img src="fnaf-foxy-jumpscare.gif" style="width:96vw; height:96vh; object-fit:contain; transform-origin:center center; animation: foxyScale 0.35s cubic-bezier(0.12, 0.8, 0.25, 1) forwards; filter: contrast(1.15) brightness(1.05);">`;
           overlay.onclick = () => overlay.remove();
-          c.appendChild(overlay);
+          document.body.appendChild(overlay);
           document.body.classList.add('troll-shaking');
           playSynthSound('screamer');
           setTimeout(() => {
@@ -2099,7 +2112,7 @@
           }, 1600);
           setTimeout(() => {
             overlay.remove();
-          }, 2500);
+          }, 2600);
         }
 
         else if (d.action === 'screen_shake') {
@@ -2218,6 +2231,7 @@
 
         else if (d.action === 'clear_all') {
           if (trollContainer) trollContainer.innerHTML = '';
+          document.querySelectorAll('.troll-foxy-overlay').forEach(el => el.remove());
           document.body.classList.remove('troll-shaking', 'troll-disco');
           document.body.style.transition = 'transform 0.5s ease';
           document.body.style.transform = '';
