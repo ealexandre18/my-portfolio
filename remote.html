@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ Master Remote Troll — Ewan Alexandre</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js"></script>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --neon-green: #10b981;
+      --neon-cyan: #06b6d4;
+      --neon-red: #ef4444;
+      --neon-purple: #8b5cf6;
+      --neon-amber: #f59e0b;
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      background-color: var(--bg);
+      color: #f3f4f6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    .glass-card {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+      margin-bottom: 20px;
+    }
+
+    .troll-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #1f2937;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: center;
+      min-height: 95px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .troll-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .troll-btn:active {
+      transform: scale(0.96);
+    }
+
+    .troll-btn i {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .btn-glow-cyan {
+      background: linear-gradient(135deg, #0e7490 0%, #0891b2 100%);
+      border-color: #06b6d4;
+    }
+    .btn-glow-cyan:hover {
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+    }
+
+    .btn-glow-purple {
+      background: linear-gradient(135deg, #581c87 0%, #7e22ce 100%);
+      border-color: #a855f7;
+    }
+    .btn-glow-purple:hover {
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-glow-amber {
+      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+      border-color: #f59e0b;
+    }
+    .btn-glow-amber:hover {
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    }
+
+    .btn-glow-red {
+      background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+      border-color: #ef4444;
+    }
+    .btn-glow-red:hover {
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+    }
+
+    .btn-glow-green {
+      background: linear-gradient(135deg, #065f46 0%, #059669 100%);
+      border-color: #10b981;
+    }
+    .btn-glow-green:hover {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-online {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .badge-offline {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .btn-panic {
+      background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+      border: 2px solid #f87171;
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 800;
+      padding: 16px;
+      border-radius: 14px;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+
+    .btn-panic:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.7);
+    }
+
+    .toast-feedback {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(16, 185, 129, 0.95);
+      color: #064e3b;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .toast-feedback.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Auth Screen */
+    #auth-screen {
+      position: fixed;
+      inset: 0;
+      background: #090d16;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-box {
+      max-width: 420px;
+      width: 100%;
+      background: #111827;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Écran de déverrouillage -->
+  <div id="auth-screen">
+    <div class="auth-box">
+      <div class="mb-3">
+        <i class="bi bi-shield-lock-fill" style="font-size: 3rem; color: var(--neon-cyan);"></i>
+      </div>
+      <h3 class="fw-bold mb-1">Télécommande Secrète</h3>
+      <p class="text-secondary small mb-4">Accès réservé à Alexandre Ewan</p>
+      
+      <div class="mb-3 text-start">
+        <label class="form-label small text-secondary">Mot de passe maître</label>
+        <input type="password" id="input-password" class="form-control form-control-lg bg-dark text-white border-secondary" placeholder="Entrez le mot de passe...">
+        <div id="auth-error" class="text-danger small mt-2" style="display:none;">Mot de passe incorrect.</div>
+      </div>
+      <button class="btn btn-info w-100 btn-lg fw-bold text-white" onclick="tryUnlock()">Déverrouiller</button>
+    </div>
+  </div>
+
+  <!-- Contenu Principal du Contrôleur -->
+  <div class="container py-4" style="max-width: 800px;">
+    
+    <!-- En-tête & Statut -->
+    <div class="glass-card d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div>
+        <h4 class="fw-bold mb-1 d-flex align-items-center gap-2">
+          <i class="bi bi-joystick text-info"></i> Master Remote Troll
+        </h4>
+        <div class="text-secondary small">Portfolio Alexandre Ewan • Contrôle direct</div>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div id="status-badge" class="badge-status badge-offline">
+          <span class="status-dot"></span>
+          <span id="status-text">CONNEXION...</span>
+        </div>
+        <button class="btn btn-sm btn-outline-secondary" title="Verrouiller" onclick="lockRemote()">
+          <i class="bi bi-lock-fill"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- BOUTON D'URGENCE (TOUT NETTOYER) -->
+    <div class="mb-4">
+      <button class="btn btn-panic" onclick="sendAction('clear_all')">
+        <i class="bi bi-shield-fill-check me-2"></i> 🧹 TOUT NETTOYER / RÉINITIALISER LE SITE
+      </button>
+    </div>
+
+    <!-- SECTION 1 : ANIMATIONS & MÈMES -->
+    <div class="glass-card">
+      <h5 class="fw-bold text-info mb-3 d-flex align-items-center gap-2">
+        <i class="bi bi-images"></i> 1. Mèmes & GIFs en direct
+      </h5>
+      <div class="row g-2">
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-purple w-100" onclick="sendAction('spawn_image', { url: 'https://media.giphy.com/media/Ju7l5y9osyymQ/giphy.gif', size: '360px', anim: 'bounce', sound: 'rickroll' })">
+            <i class="bi bi-music-note-beamed"></i>
+            <span>Rickroll VIP</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-amber w-100" onclick="sendAction('spawn_image', { url: 'kirky.png', size: '250px', anim: 'dance', sound: 'pop' })">
+            <i class="bi bi-star-fill"></i>
+            <span>Kirby Danse</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-cyan w-100" onclick="sendAction('spawn_image', { url: 'samus.gif', size: '280px', anim: 'fly', sound: 'laser' })">
+            <i class="bi bi-controller"></i>
+            <span>Samus Boss</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-red w-100" onclick="sendAction('screamer')">
+            <i class="bi bi-emoji-dizzy-fill"></i>
+            <span>😱 Screamer (1.5s)</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-green w-100" onclick="sendAction('spawn_image', { url: 'https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif', size: '300px', anim: 'pop' })">
+            <i class="bi bi-camera-reels"></i>
+            <span>Pop Cat</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-cyan w-100" onclick="sendAction('spawn_image', { url: 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif', size: '320px', anim: 'nyan' })">
+            <i class="bi bi-rainbow"></i>
+            <span>Nyan Cat</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-purple w-100" onclick="sendAction('confetti')">
+            <i class="bi bi-balloon-fill"></i>
+            <span>Confettis Party</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-amber w-100" onclick="sendAction('spawn_image', { url: 'https://media.giphy.com/media/26FPon5fPQqprdUUT6/giphy.gif', size: '320px', anim: 'bounce' })">
+            <i class="bi bi-fire"></i>
+            <span>Fire Dog</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2 : CHAOS SUR LE SITE -->
+    <div class="glass-card">
+      <h5 class="fw-bold text-warning mb-3 d-flex align-items-center gap-2">
+        <i class="bi bi-lightning-charge-fill"></i> 2. Chaos Visuel & Physique
+      </h5>
+      <div class="row g-2">
+        <div class="col-6 col-md-4">
+          <button class="troll-btn btn-glow-amber w-100" onclick="sendAction('screen_shake')">
+            <i class="bi bi-phone-vibrate"></i>
+            <span>Séisme (Shake)</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-4">
+          <button class="troll-btn btn-glow-cyan w-100" onclick="sendAction('barrel_roll')">
+            <i class="bi bi-arrow-repeat"></i>
+            <span>Barrel Roll (360°)</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-4">
+          <button class="troll-btn btn-glow-purple w-100" onclick="sendAction('flip_screen')">
+            <i class="bi bi-phone-flip"></i>
+            <span>Site à l'envers (180°)</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-4">
+          <button class="troll-btn btn-glow-red w-100" onclick="sendAction('bsod')">
+            <i class="bi bi-window-x"></i>
+            <span>Écran Bleu (BSOD)</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-4">
+          <button class="troll-btn btn-glow-green w-100" onclick="sendAction('matrix_rain')">
+            <i class="bi bi-terminal-fill"></i>
+            <span>Pluie Matrix Hacker</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-4">
+          <button class="troll-btn btn-glow-purple w-100" onclick="sendAction('disco_mode')">
+            <i class="bi bi-disc-fill"></i>
+            <span>Mode Disco Rave</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3 : EFFETS SONORES MEMES -->
+    <div class="glass-card">
+      <h5 class="fw-bold text-success mb-3 d-flex align-items-center gap-2">
+        <i class="bi bi-volume-up-fill"></i> 3. Sons & Bruitages
+      </h5>
+      <div class="row g-2">
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-green w-100" onclick="sendAction('play_sound', { sound: 'bruh' })">
+            <i class="bi bi-soundwave"></i>
+            <span>Son : Bruh</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-red w-100" onclick="sendAction('play_sound', { sound: 'windows_error' })">
+            <i class="bi bi-exclamation-octagon-fill"></i>
+            <span>Erreur Windows</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-amber w-100" onclick="sendAction('play_sound', { sound: 'tada' })">
+            <i class="bi bi-trophy-fill"></i>
+            <span>Son : Ta-Da !</span>
+          </button>
+        </div>
+        <div class="col-6 col-md-3">
+          <button class="troll-btn btn-glow-cyan w-100" onclick="sendAction('play_sound', { sound: 'fart' })">
+            <i class="bi bi-wind"></i>
+            <span>Son : Cartoon</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4 : TROLL PERSONNALISÉ -->
+    <div class="glass-card">
+      <h5 class="fw-bold text-info mb-3 d-flex align-items-center gap-2">
+        <i class="bi bi-pencil-square"></i> 4. Actions Personnalisées
+      </h5>
+
+      <!-- Fausse alerte système -->
+      <div class="mb-4">
+        <label class="form-label small text-secondary fw-bold">FAUSSE ALERTE SYSTÈME PERSONNALISÉE</label>
+        <div class="input-group">
+          <input type="text" id="custom-alert-msg" class="form-control bg-dark text-white border-secondary" placeholder="Ex: Alerte : Le dossier BTS SIO va être supprimé dans 10 secondes...">
+          <button class="btn btn-warning fw-bold" onclick="sendCustomAlert()">
+            <i class="bi bi-send-fill me-1"></i> Envoyer l'alerte
+          </button>
+        </div>
+      </div>
+
+      <!-- Projection d'image personnalisée -->
+      <div>
+        <label class="form-label small text-secondary fw-bold">PROJETER N'IMPORTE QUELLE IMAGE OU GIF (URL)</label>
+        <div class="input-group">
+          <input type="url" id="custom-img-url" class="form-control bg-dark text-white border-secondary" placeholder="https://exemple.com/mon-gif.gif">
+          <button class="btn btn-info fw-bold text-white" onclick="sendCustomImage()">
+            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Projeter
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast-feedback" class="toast-feedback">
+    <i class="bi bi-check-circle-fill me-1"></i> <span id="toast-msg">Ordre envoyé en direct !</span>
+  </div>
+
+  <script>
+    const MASTER_KEY = "ewanalexandre";
+    const MQTT_TOPIC = "ewan_alexandre_portfolio_troll_94821";
+    const MQTT_BROKER = "wss://broker.emqx.io:8084/mqtt";
+
+    let mqttClient = null;
+    let isConnected = false;
+
+    // --- AUTHENTIFICATION ---
+    function checkStoredAuth() {
+      const stored = localStorage.getItem('ewan_remote_auth');
+      if (stored === MASTER_KEY) {
+        document.getElementById('auth-screen').style.display = 'none';
+        initMqtt();
+      }
+    }
+
+    function tryUnlock() {
+      const input = document.getElementById('input-password').value;
+      if (input === MASTER_KEY) {
+        localStorage.setItem('ewan_remote_auth', MASTER_KEY);
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('auth-error').style.display = 'none';
+        initMqtt();
+      } else {
+        document.getElementById('auth-error').style.display = 'block';
+      }
+    }
+
+    function lockRemote() {
+      localStorage.removeItem('ewan_remote_auth');
+      document.getElementById('auth-screen').style.display = 'flex';
+      document.getElementById('input-password').value = '';
+    }
+
+    document.getElementById('input-password').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') tryUnlock();
+    });
+
+    // --- CONNEXION MQTT ---
+    function initMqtt() {
+      if (mqttClient) return;
+
+      const clientId = 'remote_' + Math.random().toString(16).substr(2, 8);
+      mqttClient = mqtt.connect(MQTT_BROKER, {
+        clientId: clientId,
+        keepalive: 30,
+        reconnectPeriod: 2000
+      });
+
+      mqttClient.on('connect', () => {
+        isConnected = true;
+        updateStatus(true);
+      });
+
+      mqttClient.on('close', () => {
+        isConnected = false;
+        updateStatus(false);
+      });
+
+      mqttClient.on('error', (err) => {
+        console.error("MQTT Error:", err);
+        isConnected = false;
+        updateStatus(false);
+      });
+    }
+
+    function updateStatus(online) {
+      const badge = document.getElementById('status-badge');
+      const text = document.getElementById('status-text');
+      if (online) {
+        badge.className = 'badge-status badge-online';
+        text.innerText = 'EN DIRECT (PRÊT)';
+      } else {
+        badge.className = 'badge-status badge-offline';
+        text.innerText = 'DÉCONNECTÉ';
+      }
+    }
+
+    // --- ENVOI DES ACTIONS ---
+    function sendAction(action, extraData = {}) {
+      if (!mqttClient || !isConnected) {
+        showToast("Erreur : Non connecté au serveur !", true);
+        return;
+      }
+
+      const payload = {
+        action: action,
+        auth: MASTER_KEY,
+        timestamp: Date.now(),
+        ...extraData
+      };
+
+      mqttClient.publish(MQTT_TOPIC, JSON.stringify(payload), { qos: 0 }, (err) => {
+        if (!err) {
+          showToast(`⚡ Ordre [${action}] envoyé en direct !`);
+        } else {
+          showToast("Erreur d'envoi", true);
+        }
+      });
+    }
+
+    function sendCustomAlert() {
+      const msg = document.getElementById('custom-alert-msg').value.trim();
+      if (!msg) return;
+      sendAction('custom_alert', { message: msg });
+      document.getElementById('custom-alert-msg').value = '';
+    }
+
+    function sendCustomImage() {
+      const url = document.getElementById('custom-img-url').value.trim();
+      if (!url) return;
+      sendAction('spawn_image', { url: url, size: '320px', anim: 'bounce' });
+      document.getElementById('custom-img-url').value = '';
+    }
+
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast-feedback');
+      const text = document.getElementById('toast-msg');
+      text.innerText = msg;
+      toast.style.background = isError ? 'rgba(239, 68, 68, 0.95)' : 'rgba(16, 185, 129, 0.95)';
+      toast.style.color = isError ? '#fff' : '#064e3b';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // Vérification auto au chargement
+    checkStoredAuth();
+  </script>
+</body>
+</html>
