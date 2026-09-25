@@ -2027,6 +2027,13 @@
           100% { filter: hue-rotate(360deg) contrast(1.2); }
         }
         .troll-disco { animation: trollDisco 1.2s infinite !important; }
+        @keyframes foxyRush {
+          0% { transform: translate(-50%, -50%) scale(0.08); opacity: 0; }
+          20% { opacity: 1; }
+          55% { transform: translate(-50%, -50%) scale(0.7); }
+          80% { transform: translate(-50%, -50%) scale(1.15); }
+          100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
       `;
       document.head.appendChild(styleEl);
 
@@ -2078,13 +2085,21 @@
           }
         }
 
-        else if (d.action === 'screamer') {
+        else if (d.action === 'foxy_jumpscare' || d.action === 'screamer') {
           const overlay = document.createElement('div');
-          overlay.style.cssText = 'position:fixed; inset:0; background:#000; z-index:99999999; display:flex; align-items:center; justify-content:center; pointer-events:auto;';
-          overlay.innerHTML = `<img src="https://media.giphy.com/media/10rHZ6K9jYvLUc/giphy.gif" style="max-width:90vw; max-height:90vh; object-fit:contain;">`;
+          overlay.className = 'troll-foxy-overlay';
+          overlay.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.96); z-index:99999999; display:flex; align-items:center; justify-content:center; pointer-events:auto; overflow:hidden;';
+          overlay.innerHTML = `<img src="fnaf-foxy-jumpscare.gif" style="position:absolute; top:50%; left:50%; width:100vw; height:100vh; object-fit:cover; animation: foxyRush 0.35s cubic-bezier(0.12, 0.8, 0.25, 1) forwards; filter: contrast(1.15) brightness(1.05);">`;
+          overlay.onclick = () => overlay.remove();
           c.appendChild(overlay);
+          document.body.classList.add('troll-shaking');
           playSynthSound('screamer');
-          setTimeout(() => overlay.remove(), 1600);
+          setTimeout(() => {
+            document.body.classList.remove('troll-shaking');
+          }, 1600);
+          setTimeout(() => {
+            overlay.remove();
+          }, 2500);
         }
 
         else if (d.action === 'screen_shake') {
