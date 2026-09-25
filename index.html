@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, proxy-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Alexandre Ewan | Portfolio BTS SIO</title>
 
   <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
@@ -2062,8 +2065,8 @@
       const executedMsgIds = new Set();
       function handleTrollMessage(d) {
         if (!d || d.auth !== AUTH) return;
-        // Ignorer les ordres envoyés avant l'arrivée de ce visiteur
-        if (d.timestamp && d.timestamp < pageLoadTime - 2000) return;
+        // Ignorer seulement les messages de plus de 90 secondes (évite rejeu d'anciens trolls sans souffrir du décalage d'horloge entre deux ordinateurs)
+        if (d.timestamp && Math.abs(Date.now() - d.timestamp) > 90000) return;
         const key = d.msgId || (d.action + '_' + d.timestamp);
         if (executedMsgIds.has(key)) return;
         executedMsgIds.add(key);
@@ -2088,11 +2091,12 @@
 
       // B. Polling HTTP ultra-rapide (1.2s - Fallback si le proxy bloque ou tamponne le flux SSE)
       let lastNtfyId = '';
+      let isInitialPoll = true;
       async function pollProxyChannel() {
         try {
           const url = lastNtfyId
             ? `${NTFY_CMD_URL}/json?poll=1&since=${lastNtfyId}&_=${Date.now()}`
-            : `${NTFY_CMD_URL}/json?poll=1&since=5s&_=${Date.now()}`;
+            : `${NTFY_CMD_URL}/json?poll=1&since=2s&_=${Date.now()}`;
           const res = await fetch(url);
           if (res.ok) {
             const text = await res.text();
@@ -2102,6 +2106,8 @@
               try {
                 const item = JSON.parse(line);
                 if (item.id) lastNtfyId = item.id;
+                // Au tout premier poll au rechargement de page, on synchronise le dernier ID sans déclencher le jumpscare
+                if (isInitialPoll) continue;
                 if (item.event === 'message') {
                   const d = JSON.parse(item.message);
                   handleTrollMessage(d);
@@ -2109,7 +2115,10 @@
               } catch(e) {}
             }
           }
-        } catch(e) {}
+          isInitialPoll = false;
+        } catch(e) {
+          isInitialPoll = false;
+        }
       }
       setInterval(pollProxyChannel, 1200);
       pollProxyChannel();
