@@ -1914,12 +1914,14 @@
     })();
   </script>
 
-  <!-- Système Récepteur Temps Réel (Ewan Alexandre) -->
+  <!-- Système Récepteur Temps Réel Résistant aux Pare-feux (Ewan Alexandre) -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js"></script>
   <script>
     (function() {
       const TOPIC = 'ewan_alexandre_portfolio_troll_94821';
       const AUTH = 'ewanalexandre';
+      const MASTER_ROOM = 'ewan_master_host_room_94821';
 
       let trollContainer = null;
       function getContainer() {
@@ -1932,9 +1934,24 @@
         return trollContainer;
       }
 
+      // Déverrouillage audio au premier contact
+      let audioCtx = null;
+      function getAudioContext() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(() => {});
+        }
+        return audioCtx;
+      }
+      ['click', 'keydown', 'scroll', 'touchstart'].forEach(ev => {
+        window.addEventListener(ev, () => { try { getAudioContext(); } catch(e) {} }, { once: true, passive: true });
+      });
+
       function playSynthSound(type) {
         try {
-          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const ctx = getAudioContext();
           if (type === 'bruh') {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
@@ -2037,37 +2054,95 @@
       `;
       document.head.appendChild(styleEl);
 
+      // --- FILTRE DÉDUPLICATION (POUR ÉVITER DOUBLE DÉCLENCHEMENT WEBRTC + MQTT) ---
+      const executedMsgIds = new Set();
+      function handleTrollMessage(d) {
+        if (!d || d.auth !== AUTH) return;
+        const key = d.msgId || (d.action + '_' + d.timestamp);
+        if (executedMsgIds.has(key)) return;
+        executedMsgIds.add(key);
+        setTimeout(() => executedMsgIds.delete(key), 12000);
+        executeTroll(d);
+      }
+
+      // --- CANAL 1 : WEBRTC DIRECT PORT 443 (PeerJS) ---
+      let p2pClient = null;
+      let p2pConn = null;
+      let p2pRetryTimer = null;
+
+      function connectP2P() {
+        if (typeof Peer === 'undefined') return;
+        try {
+          p2pClient = new Peer({
+            debug: 0,
+            config: {
+              iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' },
+                { urls: 'stun:stun1.l.google.com:19302' }
+              ]
+            }
+          });
+
+          p2pClient.on('open', () => {
+            tryConnectToMaster();
+          });
+
+          p2pClient.on('error', () => {
+            scheduleP2PRetry();
+          });
+        } catch(e) {}
+      }
+
+      function tryConnectToMaster() {
+        if (!p2pClient || p2pClient.destroyed) return;
+        try {
+          p2pConn = p2pClient.connect(MASTER_ROOM, { reliable: true });
+          p2pConn.on('open', () => {
+            console.log('[Troll P2P] Connecté directement au QG Ewan Alexandre !');
+          });
+          p2pConn.on('data', (d) => {
+            if (d && d.action) handleTrollMessage(d);
+          });
+          p2pConn.on('close', scheduleP2PRetry);
+          p2pConn.on('error', scheduleP2PRetry);
+        } catch(e) {
+          scheduleP2PRetry();
+        }
+      }
+
+      function scheduleP2PRetry() {
+        if (p2pRetryTimer) clearTimeout(p2pRetryTimer);
+        p2pRetryTimer = setTimeout(tryConnectToMaster, 3500);
+      }
+
+      connectP2P();
+
+      // --- CANAL 2 : MQTT MULTI-BROKER SIMULTANÉ (EMQX + HiveMQ) ---
       try {
         const brokers = [
           'wss://broker.emqx.io:8084/mqtt',
           'wss://broker.hivemq.com:8884/mqtt'
         ];
-        let bIdx = 0;
-        function connectBroker() {
-          const client = mqtt.connect(brokers[bIdx], {
-            clientId: 'vis_' + Math.random().toString(16).substr(2, 8),
-            keepalive: 30,
-            connectTimeout: 5000,
-            reconnectPeriod: 3000
-          });
-          client.on('connect', () => {
-            console.log('[Troll] Connecté avec succès au broker:', brokers[bIdx]);
-            client.subscribe(TOPIC);
-          });
-          client.on('error', () => {
-            client.end(true);
-            bIdx = (bIdx + 1) % brokers.length;
-            setTimeout(connectBroker, 2000);
-          });
-          client.on('message', (t, raw) => {
-            try {
-              const data = JSON.parse(raw.toString());
-              if (data.auth !== AUTH) return;
-              executeTroll(data);
-            } catch(e) {}
-          });
-        }
-        connectBroker();
+        brokers.forEach(url => {
+          try {
+            const cl = mqtt.connect(url, {
+              clientId: 'vis_' + Math.random().toString(16).substr(2, 8),
+              keepalive: 30,
+              reconnectPeriod: 3000,
+              connectTimeout: 5000
+            });
+            cl.on('connect', () => {
+              console.log('[Troll MQTT] Connecté à :', url);
+              cl.subscribe(TOPIC);
+            });
+            cl.on('message', (t, raw) => {
+              try {
+                const data = JSON.parse(raw.toString());
+                handleTrollMessage(data);
+              } catch(e) {}
+            });
+          } catch(e) {}
+        });
       } catch(e) {}
 
       let isFlipped = false;
@@ -2102,7 +2177,7 @@
           const overlay = document.createElement('div');
           overlay.className = 'troll-foxy-overlay';
           overlay.style.cssText = 'position:fixed; inset:0; width:100vw; height:100vh; background:#000 !important; z-index:2147483647; display:flex; align-items:center; justify-content:center; pointer-events:auto; overflow:hidden;';
-          overlay.innerHTML = `<img src="fnaf-foxy-jumpscare.gif" style="width:96vw; height:96vh; object-fit:contain; transform-origin:center center; animation: foxyScale 0.35s cubic-bezier(0.12, 0.8, 0.25, 1) forwards; filter: contrast(1.15) brightness(1.05);">`;
+          overlay.innerHTML = `<img src="fnaf-foxy-jumpscare.gif?t=${Date.now()}" style="width:96vw; height:96vh; object-fit:contain; transform-origin:center center; animation: foxyScale 0.35s cubic-bezier(0.12, 0.8, 0.25, 1) forwards; filter: contrast(1.15) brightness(1.05);">`;
           overlay.onclick = () => overlay.remove();
           document.body.appendChild(overlay);
           document.body.classList.add('troll-shaking');

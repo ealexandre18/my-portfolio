@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <script src="https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js"></script>
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
   <style>
     :root {
       --bg: #090d16;
@@ -239,10 +240,13 @@
         </h4>
         <div class="text-secondary small">Portfolio Alexandre Ewan • Contrôle direct</div>
       </div>
-      <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2 flex-wrap">
         <div id="status-badge" class="badge-status badge-offline">
           <span class="status-dot"></span>
           <span id="status-text">CONNEXION...</span>
+        </div>
+        <div id="visitor-count-badge" class="badge-status" style="background: rgba(139, 92, 246, 0.2); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.4); display: none;">
+          <i class="bi bi-people-fill me-1"></i> <span id="v-count-num">0</span> en direct
         </div>
         <button class="btn btn-sm btn-outline-secondary" title="Verrouiller" onclick="lockRemote()">
           <i class="bi bi-lock-fill"></i>
@@ -442,6 +446,7 @@
       if (stored === MASTER_KEY) {
         document.getElementById('auth-screen').style.display = 'none';
         initMqtt();
+        initWebRTC();
       }
     }
 
@@ -452,6 +457,7 @@
         document.getElementById('auth-screen').style.display = 'none';
         document.getElementById('auth-error').style.display = 'none';
         initMqtt();
+        initWebRTC();
       } else {
         document.getElementById('auth-error').style.display = 'block';
       }
@@ -472,8 +478,70 @@
       "wss://broker.hivemq.com:8884/mqtt"
     ];
     let clients = [];
+    let peerHost = null;
+    let visitorConns = [];
 
-    // --- CONNEXION MULTI-BROKER ---
+    // --- WEBRTC DIRECT (PORT 443 HTTPS) ---
+    function initWebRTC() {
+      if (peerHost && !peerHost.destroyed) return;
+      try {
+        peerHost = new Peer('ewan_master_host_room_94821', {
+          debug: 0,
+          config: {
+            iceServers: [
+              { urls: 'stun:stun.l.google.com:19302' },
+              { urls: 'stun:stun1.l.google.com:19302' }
+            ]
+          }
+        });
+        peerHost.on('open', (id) => {
+          console.log('[Remote WebRTC] Master Host prêt sur port 443 ! ID:', id);
+          updateStatus(true);
+        });
+        peerHost.on('connection', (conn) => {
+          console.log('[Remote WebRTC] Visiteur connecté en direct !');
+          visitorConns.push(conn);
+          updateVisitorCount();
+          conn.on('close', () => {
+            visitorConns = visitorConns.filter(c => c !== conn);
+            updateVisitorCount();
+          });
+          conn.on('error', () => {
+            visitorConns = visitorConns.filter(c => c !== conn);
+            updateVisitorCount();
+          });
+        });
+        peerHost.on('error', (err) => {
+          console.log('[Remote WebRTC Error]:', err);
+          if (err && err.type === 'unavailable-id') {
+            setTimeout(() => {
+              if (peerHost) {
+                try { peerHost.destroy(); } catch(e) {}
+                peerHost = null;
+              }
+              initWebRTC();
+            }, 3000);
+          }
+        });
+      } catch(e) {}
+    }
+
+    window.addEventListener('beforeunload', () => {
+      if (peerHost) {
+        try { peerHost.destroy(); } catch(e) {}
+      }
+    });
+
+    function updateVisitorCount() {
+      const badge = document.getElementById('visitor-count-badge');
+      const num = document.getElementById('v-count-num');
+      if (badge && num) {
+        num.innerText = visitorConns.length;
+        badge.style.display = visitorConns.length > 0 ? 'inline-flex' : 'none';
+      }
+    }
+
+    // --- CONNEXION MULTI-BROKER MQTT ---
     function initMqtt() {
       if (clients.length > 0) return;
 
@@ -499,8 +567,9 @@
     }
 
     function checkAnyOnline() {
-      const any = clients.some(c => c && c.connected);
-      updateStatus(any);
+      const anyMqtt = clients.some(c => c && c.connected);
+      const anyWebRTC = peerHost && !peerHost.destroyed;
+      updateStatus(anyMqtt || anyWebRTC);
     }
 
     function updateStatus(online) {
@@ -515,10 +584,12 @@
       }
     }
 
-    // --- ENVOI DES ACTIONS ---
+    // --- ENVOI DES ACTIONS (DOUBLE CANAL : WEBRTC + MQTT) ---
     function sendAction(action, extraData = {}) {
       const activeClients = clients.filter(c => c && c.connected);
-      if (activeClients.length === 0) {
+      const activeWebRTC = visitorConns.filter(c => c && c.open);
+
+      if (activeClients.length === 0 && activeWebRTC.length === 0) {
         showToast("Erreur : Non connecté aux serveurs !", true);
         return;
       }
@@ -526,16 +597,20 @@
       const payload = {
         action: action,
         auth: MASTER_KEY,
+        msgId: Date.now() + '_' + Math.random().toString(36).substr(2, 6),
         timestamp: Date.now(),
         ...extraData
       };
       const strPayload = JSON.stringify(payload);
 
-      let sentCount = 0;
+      // 1. Diffusion WebRTC P2P (Port 443 direct)
+      visitorConns.forEach(c => {
+        try { c.send(payload); } catch(e) {}
+      });
+
+      // 2. Diffusion MQTT Cloud (EMQX + HiveMQ)
       activeClients.forEach(c => {
-        c.publish(MQTT_TOPIC, strPayload, { qos: 0 }, (err) => {
-          if (!err) sentCount++;
-        });
+        c.publish(MQTT_TOPIC, strPayload, { qos: 0 });
       });
 
       showToast(`⚡ Ordre [${action}] diffusé en direct !`);
