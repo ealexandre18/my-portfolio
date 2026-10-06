@@ -1157,6 +1157,14 @@
             file: "TP02_B3_S3_TEST_INTRUSION.pdf",
             cat: "bloc3",
             isDocx: false
+          },
+          {
+            name: "TP2.6 (2ème Année) - Test d'intrusion : Post-Exploitation",
+            description: "Phase IV Post-Exploitation : navigation sous Meterpreter, extraction des hashs SAM locaux et cassage de mots de passe NTLM avec John the Ripper (S3 BEAUVALLET).",
+            image: "tp26_post_exploitation.jpg",
+            file: "TP2.6_INTRUSION_B3_BEAUVALLET.pdf",
+            cat: "bloc3",
+            isDocx: false
           }
         ],
         pro: [
@@ -1411,7 +1419,7 @@
 
       const search = document.getElementById('tp-search').value.toLowerCase().trim();
       const cleanSearch = search.replace(/\s+/g, '');
-      const searchNoLeadingZero = cleanSearch.replace(/td0+/g, 'td');
+      const searchNoLeadingZero = cleanSearch.replace(/td0+/g, 'td').replace(/tp0+/g, 'tp');
 
       const filtered = listToFilter.filter(p => {
         if (!search) return true;
@@ -1420,9 +1428,9 @@
         const catNorm = (p.cat || '').toLowerCase();
         const fileNorm = (p.file || '').toLowerCase();
         const cleanName = nameNorm.replace(/\s+/g, '');
-        const nameNoLeadingZero = cleanName.replace(/td0+/g, 'td');
+        const nameNoLeadingZero = cleanName.replace(/td0+/g, 'td').replace(/tp0+/g, 'tp');
         const cleanFile = fileNorm.replace(/\s+/g, '');
-        const fileNoLeadingZero = cleanFile.replace(/td0+/g, 'td');
+        const fileNoLeadingZero = cleanFile.replace(/td0+/g, 'td').replace(/tp0+/g, 'tp');
 
         return nameNorm.includes(search) || 
           descNorm.includes(search) || 
