@@ -1131,6 +1131,14 @@
             file: "TD6_PL_pgSQL_BEAUVALLET.pdf",
             cat: "bloc2",
             isDocx: false
+          },
+          {
+            name: "TD07 - PL/pgSQL : Les curseurs",
+            description: "Manipulation approfondie des curseurs en PL/pgSQL : boucles (LOOP, WHILE, FOR), attributs (%ISOPEN, %FOUND...), mise à jour avec FOR UPDATE et bilan MediaTek (S3 BEAUVALLET).",
+            image: "thumb_td7_pgsql.png",
+            file: "TD07_B2_S3_BEAUVALLET.pdf",
+            cat: "bloc2",
+            isDocx: false
           }
         ],
         bloc3: [
@@ -1291,6 +1299,7 @@
         { date: "06/01/2025", marque: "NVIDIA", sujet: "NVIDIA Architecture Blackwell : 24 576 cœurs de calcul pour le jeu en 4K fluide", impact: "L'annonce de la puce RTX 5090 contenant 24 576 petits processeurs de calcul graphique, capable d'afficher les jeux les plus gourmands en résolution 4K à plus de 120 images par seconde.", url: "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Blackwell-GeForce-RTX-50-Series-Opens-New-World-of-AI-Computer-Graphics/default.aspx", source: "NVIDIA (Officiel)" }
       ],
       2026: [
+        { date: "01/10/2026", marque: "NVIDIA", sujet: "NVIDIA Sentry (BlueField-4 DPU) : Puce matérielle pour surveiller et sécuriser les agents IA autonomes", impact: "NVIDIA intègre un processeur de contrôle réseau (DPU BlueField-4) agissant comme un garde du corps matériel pour l'IA. Si un agent autonome tente d'exécuter du code anormal ou d'outrepasser ses droits, la puce l'isole instantanément au niveau physique sans solliciter ni ralentir la carte graphique principale.", url: "https://www.tomshardware.com/news/nvidia-open-agent-safety-platform-sentry-bluefield", source: "Tom's Hardware" },
         { date: "27/09/2026", marque: "Intel", sujet: "Intel Substrats de Verre : Remplacer la résine par du verre pour des puces 10 fois plus denses", impact: "Intel franchit une étape majeure dans l'assemblage de processeurs en remplaçant la résine organique par des substrats en verre pur. Insensible aux déformations thermiques, le verre permet de graver des micro-pistes 10 fois plus resserrées pour interconnecter des dizaines de chiplets sur un même boîtier sans perte de signal.", url: "https://www.tomshardware.com/news/intel-glass-substrates-next-gen-packaging", source: "Tom's Hardware" },
         { date: "24/09/2026", marque: "NVIDIA", sujet: "NVIDIA Format NVFP4 : Double mise à l'échelle sur 4 bits pour booster l'IA sans perte de précision", impact: "NVIDIA réinvente le format de calcul des puces Blackwell Ultra en associant des nombres sur 4 bits à un facteur d'échelle FP8 par bloc et FP32 global. Cette avancée double le débit des modèles d'IA et divise par deux la mémoire requise tout en préservant la précision numérique.", url: "https://www.tomshardware.com/pc-components/gpus/nvidia-shares-blackwell-ultras-secrets-nvfp4-boost-detailed-and-pcie-6-0-support", source: "Tom's Hardware" },
         { date: "21/09/2026", marque: "AMD", sujet: "AMD Architecture UDNA : Réunification des cœurs Gaming et IA sous une matrice unique", impact: "AMD fusionne ses deux branches graphiques RDNA (jeux grand public) et CDNA (centres de données) en une seule architecture unifiée nommée UDNA. Les développeurs n'ont plus à concevoir deux programmes séparés, unifiant l'écosystème logiciel face à l'hégémonie de NVIDIA CUDA.", url: "https://www.clubic.com/actualite-544559-clap-de-fin-apres-rnda-4-amd-envisage-une-nouvelle-architecture.html", source: "Clubic" },
@@ -1401,11 +1410,28 @@
       }
 
       const search = document.getElementById('tp-search').value.toLowerCase().trim();
+      const cleanSearch = search.replace(/\s+/g, '');
+      const searchNoLeadingZero = cleanSearch.replace(/td0+/g, 'td');
+
       const filtered = listToFilter.filter(p => {
-        return !search || 
-          p.name.toLowerCase().includes(search) || 
-          p.description.toLowerCase().includes(search) ||
-          p.cat.toLowerCase().includes(search);
+        if (!search) return true;
+        const nameNorm = p.name.toLowerCase();
+        const descNorm = p.description.toLowerCase();
+        const catNorm = (p.cat || '').toLowerCase();
+        const fileNorm = (p.file || '').toLowerCase();
+        const cleanName = nameNorm.replace(/\s+/g, '');
+        const nameNoLeadingZero = cleanName.replace(/td0+/g, 'td');
+        const cleanFile = fileNorm.replace(/\s+/g, '');
+        const fileNoLeadingZero = cleanFile.replace(/td0+/g, 'td');
+
+        return nameNorm.includes(search) || 
+          descNorm.includes(search) || 
+          catNorm.includes(search) ||
+          fileNorm.includes(search) ||
+          cleanName.includes(cleanSearch) ||
+          cleanFile.includes(cleanSearch) ||
+          nameNoLeadingZero.includes(searchNoLeadingZero) ||
+          fileNoLeadingZero.includes(searchNoLeadingZero);
       });
 
       if (filtered.length === 0) {
