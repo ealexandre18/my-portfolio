@@ -1252,7 +1252,7 @@
             name: "Atelier GSB Frais — Application Symfony & Livrables",
             description: "Modernisation de l'application GSB Frais : bundle Symfony GsbFraisBundle, compte rendu d'atelier (18 p.), notice utilisateur (12 p.) et cahier des charges (9 p.) (S3 BEAUVALLET).",
             image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
-            file: "gsb-frais.html",
+            file: "https://github.com/ealexandre18/GSB-Frais",
             cat: "pro",
             isDocx: false
           }
@@ -1433,6 +1433,13 @@
       let btnIcon = isDocx ? 'bi-file-earmark-word' : 'bi-file-earmark-pdf';
       let btnText = isDocx ? 'Télécharger (.docx)' : 'Consulter le PDF';
       
+      // Ajout de gestion des liens externes GitHub / Web
+      const isExternal = p.file && p.file.startsWith('http');
+      if (isExternal) {
+        btnIcon = 'bi-github';
+        btnText = 'Voir le projet GitHub';
+      }
+
       // Ajout de gestion des fichiers html
       const isHtml = p.file && p.file.endsWith('.html');
       if (isHtml) {
