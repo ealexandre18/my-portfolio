@@ -1247,6 +1247,14 @@
             file: "Compte_rendu_TP02_TP03_MOOC_SOTOCA.pdf",
             cat: "pro",
             isDocx: false
+          },
+          {
+            name: "Atelier GSB Frais — Application Symfony & Livrables",
+            description: "Modernisation de l'application GSB Frais : bundle Symfony GsbFraisBundle, compte rendu d'atelier (18 p.), notice utilisateur (12 p.) et cahier des charges (9 p.) (S3 BEAUVALLET).",
+            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
+            file: "gsb-frais.html",
+            cat: "pro",
+            isDocx: false
           }
         ]
       },
@@ -1428,8 +1436,8 @@
       // Ajout de gestion des fichiers html
       const isHtml = p.file && p.file.endsWith('.html');
       if (isHtml) {
-        btnIcon = 'bi-file-earmark-code';
-        btnText = 'Consulter le TP (Web)';
+        btnIcon = p.file.includes('gsb') ? 'bi-box-arrow-up-right' : 'bi-file-earmark-code';
+        btnText = p.file.includes('gsb') ? 'Accéder aux livrables GSB' : 'Consulter le TP (Web)';
       }
 
       // Ajout de gestion des fichiers xls
