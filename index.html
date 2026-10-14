@@ -1255,6 +1255,14 @@
             file: "https://github.com/ealexandre18/GSB-Frais",
             cat: "pro",
             isDocx: false
+          },
+          {
+            name: "TP05 (2ème Année) - Portfolio de Certification (PCC)",
+            description: "Parcours de certification complémentaire (PCC) : fiche d'identité MOOC OpenClassrooms Vibe Coding & IA, journal de bord, preuves d'obtention et auto-évaluation (S3).",
+            image: "tp05_portfolio_certification.jpg",
+            file: "TP05_Portfolio_Certification_etudiant.html",
+            cat: "pro",
+            isDocx: false
           }
         ]
       },
@@ -1444,7 +1452,13 @@
       const isHtml = p.file && p.file.endsWith('.html');
       if (isHtml) {
         btnIcon = p.file.includes('gsb') ? 'bi-box-arrow-up-right' : 'bi-file-earmark-code';
-        btnText = p.file.includes('gsb') ? 'Accéder aux livrables GSB' : 'Consulter le TP (Web)';
+        if (p.file.includes('gsb')) {
+          btnText = 'Accéder aux livrables GSB';
+        } else if (p.file.toLowerCase().includes('portfolio') || p.file.toLowerCase().includes('tp05')) {
+          btnText = 'Consulter le Portfolio (HTML)';
+        } else {
+          btnText = 'Consulter le TP (Web)';
+        }
       }
 
       // Ajout de gestion des fichiers xls
