@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1329"/>
+      <stop offset="50%" stop-color="#0f224a"/>
+      <stop offset="100%" stop-color="#050a18"/>
+    </linearGradient>
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#132347" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0a1428" stop-opacity="0.98"/>
+    </linearGradient>
+    <filter id="shadow2" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bgGrad2)"/>
+  
+  <circle cx="100" cy="70" r="130" fill="#0284c7" opacity="0.15" filter="blur(40px)"/>
+  <circle cx="700" cy="380" r="150" fill="#f59e0b" opacity="0.12" filter="blur(40px)"/>
+
+  <!-- Main Card -->
+  <g transform="translate(60, 45)" filter="url(#shadow2)">
+    <rect width="680" height="360" rx="16" fill="url(#cardGrad2)" stroke="#1e3a8a" stroke-width="1.5"/>
+    
+    <!-- Top badge -->
+    <rect x="36" y="28" width="220" height="28" rx="14" fill="#1e3a8a" stroke="#38bdf8" stroke-width="1"/>
+    <text x="146" y="47" font-family="'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="700" fill="#7dd3fc" text-anchor="middle" letter-spacing="0.5">⚡ BASES DE DONNÉES &amp; SQL</text>
+
+    <!-- Title -->
+    <text x="36" y="98" font-family="'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif" font-size="28" font-weight="800" fill="#ffffff">TP 5 : SQL et Triggers</text>
+    <text x="36" y="125" font-family="'Segoe UI', system-ui, sans-serif" font-size="15" fill="#94a3b8">Déclencheurs MySQL • Événements BEFORE &amp; AFTER • Intégrité &amp; Calculs</text>
+
+    <!-- 3 Exercices Blocks -->
+    <g transform="translate(36, 155)">
+      <!-- Ex 1 : Parc immobilier -->
+      <rect x="0" y="0" width="190" height="110" rx="12" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+      <text x="95" y="42" font-size="30" text-anchor="middle">🏢</text>
+      <text x="95" y="72" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">Parc Immobilier</text>
+      <text x="95" y="92" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8" text-anchor="middle">Superficie &amp; Parking</text>
+
+      <!-- Ex 2 : Commandes & Produits -->
+      <rect x="210" y="0" width="190" height="110" rx="12" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="305" y="42" font-size="30" text-anchor="middle">📦</text>
+      <text x="305" y="72" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">Commandes &amp; Frais</text>
+      <text x="305" y="92" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fbbf24" text-anchor="middle">Recalcul Prix Total</text>
+
+      <!-- Ex 3 : Location Véhicules -->
+      <rect x="420" y="0" width="190" height="110" rx="12" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+      <text x="515" y="42" font-size="30" text-anchor="middle">🚗</text>
+      <text x="515" y="72" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="700" fill="#f8fafc" text-anchor="middle">Location Véhicules</text>
+      <text x="515" y="92" font-family="'JetBrains Mono', monospace" font-size="11" fill="#34d399" text-anchor="middle">Contrôle de Permis</text>
+    </g>
+
+    <!-- Bottom Status Bar -->
+    <rect x="36" y="295" width="610" height="40" rx="8" fill="#172554" stroke="#2563eb" stroke-width="1"/>
+    <text x="52" y="320" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" fill="#93c5fd">SIGNAL SQLSTATE '45000' • NEW &amp; OLD • MariaDB / MySQL</text>
+    <text x="630" y="320" font-family="'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="600" fill="#60a5fa" text-anchor="end">BTS SIO SLAM 2</text>
+  </g>
+</svg>

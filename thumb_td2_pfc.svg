@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#0b0f19"/>
+    </linearGradient>
+    <linearGradient id="primaryGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle tech circles in background -->
+  <circle cx="120" cy="80" r="140" fill="#6366f1" opacity="0.12" filter="blur(40px)"/>
+  <circle cx="680" cy="380" r="160" fill="#38bdf8" opacity="0.12" filter="blur(40px)"/>
+
+  <!-- Main Card -->
+  <g transform="translate(60, 45)" filter="url(#shadow)">
+    <rect width="680" height="360" rx="16" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5"/>
+    
+    <!-- Top badge -->
+    <rect x="36" y="28" width="220" height="28" rx="14" fill="#312e81" stroke="#4f46e5" stroke-width="1"/>
+    <text x="146" y="47" font-family="'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="700" fill="#a5b4fc" text-anchor="middle" letter-spacing="0.5">⚡ TESTS UNITAIRES &amp; TDD</text>
+
+    <!-- Title -->
+    <text x="36" y="98" font-family="'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif" font-size="28" font-weight="800" fill="#ffffff">TD 2 : Pierre Feuille Ciseaux</text>
+    <text x="36" y="125" font-family="'Segoe UI', system-ui, sans-serif" font-size="15" fill="#94a3b8">Conception TDD avec PHPUnit • Classe PFCGame &amp; Refactoring</text>
+
+    <!-- Visual PFC Icons & Flow -->
+    <g transform="translate(36, 155)">
+      <!-- Box Pierre -->
+      <rect x="0" y="0" width="180" height="110" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="90" y="45" font-size="34" text-anchor="middle">🪨</text>
+      <text x="90" y="75" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc" text-anchor="middle">Pierre</text>
+      <text x="90" y="95" font-family="'JetBrains Mono', monospace" font-size="11" fill="#60a5fa" text-anchor="middle">const PIERRE = 'P'</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 195 55 L 215 55" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Box Feuille -->
+      <rect x="215" y="0" width="180" height="110" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <text x="305" y="45" font-size="34" text-anchor="middle">📄</text>
+      <text x="305" y="75" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc" text-anchor="middle">Feuille</text>
+      <text x="305" y="95" font-family="'JetBrains Mono', monospace" font-size="11" fill="#34d399" text-anchor="middle">const FEUILLE = 'F'</text>
+
+      <!-- Box Ciseaux -->
+      <rect x="430" y="0" width="180" height="110" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="520" y="45" font-size="34" text-anchor="middle">✂️</text>
+      <text x="520" y="75" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="700" fill="#f8fafc" text-anchor="middle">Ciseaux</text>
+      <text x="520" y="95" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fbbf24" text-anchor="middle">const CISEAUX = 'C'</text>
+    </g>
+
+    <!-- Bottom Status Bar -->
+    <rect x="36" y="295" width="610" height="40" rx="8" fill="#022c22" stroke="#059669" stroke-width="1"/>
+    <circle cx="58" cy="315" r="7" fill="#10b981"/>
+    <text x="76" y="320" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" fill="#34d399">PHPUnit 13.4.1 : OK (4 tests, 4 assertions) • Red-Green-Refactor</text>
+    <text x="630" y="320" font-family="'Segoe UI', system-ui, sans-serif" font-size="12" font-weight="600" fill="#6ee7b7" text-anchor="end">BTS SIO SLAM 2</text>
+  </g>
+</svg>
