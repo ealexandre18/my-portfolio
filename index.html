@@ -8,40 +8,30 @@
   <meta http-equiv="Expires" content="0" />
   <title>Alexandre Ewan | Portfolio BTS SIO</title>
 
-  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Bootstrap 5 & Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <style>
-    /* =========================================
-       THÈME FRUTIGER AERO CLAIR (LIGHT AERO)
-       ========================================= */
+    /* =========================================================
+       FRUTIGER AQUA V3 — FLUIDE, LÉGER & INTERACTIF
+       ========================================================= */
     :root {
-      --bg-sky-top: #b9e3fd;
-      --bg-sky-mid: #e0f2fe;
-      --bg-sky-bottom: #f8fafc;
-      
-      --aero-blue: #0284c7;
-      --aero-cyan: #00b4d8;
-      --aero-light-cyan: #38bdf8;
-      --aero-green: #10b981;
-      
-      --glass-card-bg: rgba(255, 255, 255, 0.75);
-      --glass-card-hover: rgba(255, 255, 255, 0.92);
-      --glass-border: rgba(255, 255, 255, 0.85);
-      --glass-shadow: 0 10px 30px rgba(2, 132, 199, 0.12);
-      --glass-shadow-hover: 0 16px 36px rgba(2, 132, 199, 0.25);
+      --aqua-deep: #004e7c;
+      --aqua-primary: #0096c7;
+      --aqua-bright: #00b4d8;
+      --aqua-cyan: #48cae4;
+      --aqua-teal: #06d6a0;
 
-      /* Typographie à très fort contraste pour lecture parfaite */
-      --text-main: #0f172a;
-      --text-sub: #1e293b;
-      --text-muted: #475569;
-      --text-dim: #64748b;
+      --glass-border: rgba(255, 255, 255, 0.92);
+      --aqua-shadow: 0 10px 26px rgba(0, 119, 182, 0.14);
+      --aqua-shadow-hover: 0 18px 36px rgba(0, 119, 182, 0.24), 0 0 0 2px rgba(72, 202, 228, 0.45);
+
+      --text-main: #06283d;
+      --text-sub: #0f4c75;
+      --text-muted: #3b5b75;
 
       --font-heading: 'Outfit', sans-serif;
       --font-body: 'Plus Jakarta Sans', sans-serif;
@@ -50,7 +40,10 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: linear-gradient(180deg, var(--bg-sky-top) 0%, var(--bg-sky-mid) 28%, #ecfeff 65%, var(--bg-sky-bottom) 100%);
+      background:
+        radial-gradient(ellipse at 18% 0%, rgba(144, 224, 239, 0.88) 0%, transparent 48%),
+        radial-gradient(ellipse at 85% 14%, rgba(6, 214, 160, 0.24) 0%, transparent 42%),
+        linear-gradient(180deg, #4cc9f0 0%, #7be0f6 22%, #c9f6ff 55%, #e8fbff 85%, #f4fcff 100%);
       background-attachment: fixed;
       color: var(--text-main);
       font-family: var(--font-body);
@@ -59,688 +52,496 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Reflet supérieur Frutiger Aero */
-    .aero-gloss-sky {
+    .scroll-water-bar {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 280px;
-      background: radial-gradient(ellipse at 50% -30%, rgba(255, 255, 255, 0.9) 0%, rgba(186, 230, 253, 0.4) 60%, transparent 85%);
+      top: 0; left: 0;
+      height: 4px;
+      width: 0%;
+      z-index: 2000;
+      background: linear-gradient(90deg, #0077b6, #00b4d8, #06d6a0, #90e0ef);
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.7);
+    }
+
+    #aqua-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
       z-index: -1;
     }
 
-    /* =========================================
-       Glass Panels & Cards (Clair & Brillant)
-       ========================================= */
+    /* =========================================================
+       NAVBAR CENTRÉE SANS LOGO GAUCHE
+       ========================================================= */
+    .navbar-container {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 94%;
+      max-width: 780px;
+    }
+    .navbar-pill {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(202, 240, 248, 0.82) 55%, rgba(173, 232, 244, 0.86) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255, 255, 255, 0.96);
+      border-radius: 999px;
+      padding: 7px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 28px rgba(0, 119, 182, 0.18), inset 0 2px 1px #fff;
+      flex-wrap: wrap;
+    }
+    .nav-item-aero {
+      color: var(--text-sub);
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 7px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-item-aero:hover, .nav-item-aero.active {
+      color: #fff;
+      transform: translateY(-2px);
+      background: linear-gradient(180deg, #48cae4 0%, #0096c7 52%, #0077b6 100%);
+      box-shadow: 0 4px 12px rgba(0, 150, 199, 0.34), inset 0 1px 1px rgba(255, 255, 255, 0.85);
+    }
+
+    /* =========================================================
+       HERO AQUA
+       ========================================================= */
+    .hero {
+      padding: 128px 0 44px;
+      text-align: center;
+    }
+    .hero-glass-stage {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(212, 244, 252, 0.76) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255, 255, 255, 0.96);
+      border-radius: 32px;
+      padding: 46px 28px 42px;
+      box-shadow: 0 20px 50px rgba(0, 119, 182, 0.18), inset 0 2px 2px #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glass-stage::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 46%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.03) 100%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(202,240,248,0.92) 100%);
+      border: 1.5px solid rgba(0, 180, 216, 0.55);
+      border-radius: 999px;
+      color: var(--aqua-deep);
+      font-weight: 700;
+      font-size: 0.84rem;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 16px rgba(0, 150, 199, 0.14), inset 0 1px 1px #fff;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.6rem, 5.6vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      background: linear-gradient(120deg, #023e8a 0%, #0096c7 45%, #06d6a0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-subtitle {
+      font-size: 1.08rem;
+      color: var(--text-sub);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      font-weight: 500;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Boutons Gel avec reflet glissant (GPU-friendly) */
+    .btn-aqua-gloss {
+      position: relative;
+      overflow: hidden;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 26px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.92);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+      z-index: 2;
+    }
+    .btn-aqua-gloss::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -120%;
+      width: 65%; height: 100%;
+      background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+      transition: transform 0.5s ease;
+    }
+    .btn-aqua-gloss:hover::after { transform: translateX(350%); }
+    .btn-aqua-gloss:hover { transform: translateY(-3px) scale(1.02); }
+
+    .btn-aero-primary {
+      background: linear-gradient(180deg, #48cae4 0%, #0096c7 52%, #0077b6 100%);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(0, 150, 199, 0.34), inset 0 2px 2px rgba(255, 255, 255, 0.85);
+    }
+    .btn-aero-primary:hover { color: #fff; }
+    .btn-aero-teal {
+      background: linear-gradient(180deg, #2ec4b6 0%, #06d6a0 52%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(6, 214, 160, 0.3), inset 0 2px 2px rgba(255, 255, 255, 0.85);
+    }
+    .btn-aero-teal:hover { color: #fff; }
+    .btn-aero-secondary {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(202,240,248,0.88) 100%);
+      color: var(--text-main);
+      box-shadow: 0 8px 18px rgba(0, 119, 182, 0.14), inset 0 1px 1px #fff;
+    }
+    .btn-aero-secondary:hover { color: var(--aqua-primary); }
+
+    /* Vague animée GPU-only */
+    .wave-divider { width: 100%; overflow: hidden; line-height: 0; margin: -6px 0; opacity: 0.65; }
+    .wave-divider svg { display: block; width: 200%; height: 42px; will-change: transform; animation: waveSlide 16s linear infinite; }
+    @keyframes waveSlide {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    /* =========================================================
+       SECTIONS & CARTES LÉGÈRES HAUTE FLUIDITÉ
+       ========================================================= */
+    section { padding: 54px 0; }
+    .section-label {
+      display: inline-block; padding: 5px 14px; border-radius: 999px;
+      background: linear-gradient(180deg, rgba(224,247,250,0.96) 0%, rgba(173,232,244,0.82) 100%);
+      border: 1px solid rgba(0,180,216,0.45); color: var(--aqua-deep);
+      font-weight: 800; font-size: 0.76rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3.5vw, 2.45rem);
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 14px;
+    }
+
+    .glass-panel {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(228, 248, 252, 0.84) 100%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 26px;
+      box-shadow: var(--aqua-shadow), inset 0 2px 2px #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Pas de backdrop-filter sur les 50+ cartes TP pour fluidité 60 FPS même sur PC modestes */
     .glass-card {
-      background: var(--glass-card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      box-shadow: var(--glass-shadow), inset 0 1px 2px rgba(255, 255, 255, 1);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(230, 248, 253, 0.88) 100%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 22px;
+      box-shadow: var(--aqua-shadow), inset 0 1.5px 1px #fff;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
       height: 100%;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
+      will-change: transform;
     }
     .glass-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 40%;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.05) 100%);
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.02) 100%);
       pointer-events: none;
       z-index: 1;
     }
     .glass-card:hover {
-      background: var(--glass-card-hover);
-      border-color: rgba(2, 132, 199, 0.45);
-      transform: translateY(-5px);
-      box-shadow: var(--glass-shadow-hover), inset 0 1px 2px #ffffff;
+      transform: translateY(-6px);
+      box-shadow: var(--aqua-shadow-hover), inset 0 2px 2px #fff;
     }
 
-    .glass-panel {
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 24px;
-      box-shadow: 0 12px 35px rgba(2, 132, 199, 0.12), inset 0 1px 2px #ffffff;
-      position: relative;
+    .reveal-item {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .reveal-item.visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
 
-    /* =========================================
-       Navbar (Centrée, Thème Clair)
-       ========================================= */
-    .navbar-container {
-      position: fixed;
-      top: 16px;
-      left: 0;
-      width: 100%;
-      z-index: 1050;
-      display: flex;
-      justify-content: center;
-      padding: 0 15px;
-    }
-    .navbar-pill {
-      background: rgba(255, 255, 255, 0.82);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 980px;
-      box-shadow: 0 8px 30px rgba(2, 132, 199, 0.16), inset 0 1px 1px #ffffff;
-      padding: 6px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-    .nav-item-aero {
-      color: #034b7f;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 700;
-      padding: 8px 16px;
-      border-radius: 980px;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .nav-item-aero:hover, .nav-item-aero.active {
-      color: #ffffff;
-      background: linear-gradient(135deg, #0284c7 0%, #00b4d8 100%);
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-    }
-
-    /* =========================================
-       Hero Section
-       ========================================= */
-    .hero {
-      min-height: 75vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding-top: 120px;
-      padding-bottom: 50px;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.85);
-      border: 1px solid rgba(2, 132, 199, 0.35);
-      color: #0284c7;
-      padding: 7px 20px;
-      border-radius: 980px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.15);
-    }
-    .hero-title {
-      font-family: var(--font-heading);
-      font-size: clamp(2.8rem, 6.5vw, 5.2rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 1.3rem;
-      color: #0c4a6e;
-      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
-    }
-    .hero-subtitle {
-      color: #334155;
-      font-size: clamp(1.05rem, 2vw, 1.3rem);
-      max-width: 680px;
-      margin: 0 auto 2.5rem auto;
-      font-weight: 500;
-      line-height: 1.6;
-    }
-
-    /* Buttons Glossy */
-    .btn-aero-primary {
-      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 50%, #0369a1 100%);
-      color: #fff;
-      font-weight: 700;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 980px;
-      padding: 12px 28px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35), inset 0 1px 2px #ffffff;
-      transition: all 0.25s ease;
-    }
-    .btn-aero-primary:hover {
-      background: linear-gradient(180deg, #7dd3fc 0%, #0ea5e9 50%, #0284c7 100%);
-      transform: translateY(-2px);
-      color: #fff;
-      box-shadow: 0 10px 24px rgba(2, 132, 199, 0.45);
-    }
-    .btn-aero-secondary {
-      background: rgba(255, 255, 255, 0.85);
-      color: #0c4a6e;
-      font-weight: 700;
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 980px;
-      padding: 12px 28px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08), inset 0 1px 2px #ffffff;
-      transition: all 0.25s ease;
-    }
-    .btn-aero-secondary:hover {
-      background: #ffffff;
-      color: #0284c7;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.2);
-    }
-
-    /* Badges */
     .badge-aero {
-      background: rgba(2, 132, 199, 0.1);
-      color: #0369a1;
-      border: 1px solid rgba(2, 132, 199, 0.25);
-      border-radius: 8px;
-      font-weight: 700;
-      padding: 5px 12px;
-      font-size: 0.8rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .badge-intel {
-      background: #e0f2fe;
-      color: #0369a1;
-      border: 1px solid #7dd3fc;
-      font-weight: 700;
-    }
-    .badge-nvidia {
-      background: #ecfccb;
-      color: #3f6212;
-      border: 1px solid #a3e635;
-      font-weight: 700;
-    }
-    .badge-amd {
-      background: #fee2e2;
-      color: #991b1b;
-      border: 1px solid #fca5a5;
-      font-weight: 700;
+      display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 999px;
+      font-size: 0.76rem; font-weight: 700;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(202,240,248,0.88) 100%);
+      border: 1px solid rgba(0, 180, 216, 0.45); color: var(--aqua-deep); box-shadow: inset 0 1px 1px #fff;
     }
 
-    /* Sections */
-    section { padding: 80px 0; }
-    .section-label {
-      color: #0284c7;
-      font-weight: 800;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      margin-bottom: 0.6rem;
-      display: inline-block;
-    }
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: clamp(2rem, 4vw, 2.7rem);
-      font-weight: 800;
-      color: #0c4a6e;
-      margin-bottom: 2rem;
-      letter-spacing: -0.02em;
-    }
-    .content-text {
-      color: #334155;
-      font-size: 1.05rem;
-      line-height: 1.7;
-    }
-
-    /* Switcher Années & Filtres Blocs */
+    /* Contrôles TPs */
     .year-switch-bar {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 980px;
-      padding: 6px;
-      display: inline-flex;
-      gap: 8px;
-      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.12), inset 0 1px 2px #fff;
-      margin-bottom: 2rem;
+      display: inline-flex; background: rgba(255, 255, 255, 0.88);
+      padding: 6px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.96);
+      box-shadow: 0 8px 20px rgba(0, 119, 182, 0.12), inset 0 1px 1px #fff; gap: 6px;
     }
     .year-btn {
-      background: transparent;
-      border: none;
-      color: #034b7f;
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 10px 24px;
-      border-radius: 980px;
-      transition: all 0.22s ease;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      border: none; background: transparent; color: var(--text-sub); font-weight: 700; font-size: 0.92rem;
+      padding: 9px 22px; border-radius: 999px; cursor: pointer; transition: all 0.2s ease;
     }
-    .year-btn:hover { color: #0284c7; }
     .year-btn.active {
-      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35), inset 0 1px 2px #ffffff;
+      color: #fff; background: linear-gradient(180deg, #48cae4 0%, #0096c7 55%, #0077b6 100%);
+      box-shadow: 0 6px 14px rgba(0, 150, 199, 0.34), inset 0 1px 1px rgba(255,255,255,0.85);
     }
 
-    .block-filter-bar {
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      border-radius: 16px;
-      padding: 6px;
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.08);
-    }
+    .block-filter-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
     .block-btn {
-      background: transparent;
-      border: none;
-      color: #034b7f;
-      font-size: 0.9rem;
-      font-weight: 700;
-      padding: 8px 20px;
-      border-radius: 12px;
-      transition: all 0.2s ease;
-      cursor: pointer;
+      background: linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(202,240,248,0.8) 100%);
+      border: 1.5px solid rgba(255,255,255,0.96); color: var(--text-sub);
+      font-weight: 700; font-size: 0.86rem; padding: 8px 18px; border-radius: 999px; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,119,182,0.1), inset 0 1px 1px #fff; transition: all 0.2s ease;
     }
-    .block-btn:hover {
-      color: #0284c7;
-      background: rgba(255, 255, 255, 0.6);
-    }
-    .block-btn.active {
-      background: linear-gradient(180deg, #10b981 0%, #059669 100%);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35), inset 0 1px 1px #fff;
+    .block-btn:hover, .block-btn.active {
+      color: #fff; transform: translateY(-2px);
+      background: linear-gradient(180deg, #2ec4b6 0%, #06b6d4 55%, #0284c7 100%);
+      box-shadow: 0 6px 16px rgba(0,180,216,0.32), inset 0 1px 1px rgba(255,255,255,0.85);
     }
 
-    .search-wrapper {
-      max-width: 380px;
-      margin: 0 auto 2.8rem auto;
-      position: relative;
-    }
+    .search-wrapper { position: relative; max-width: 460px; margin: 0 auto 30px; }
+    .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--aqua-primary); font-size: 1rem; }
     .search-box {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.85);
-      border: 1px solid rgba(2, 132, 199, 0.3);
-      border-radius: 980px;
-      padding: 10px 18px 10px 45px;
-      color: #0f172a;
-      font-size: 0.92rem;
-      backdrop-filter: blur(14px);
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
-      transition: all 0.2s ease;
+      width: 100%; padding: 12px 20px 12px 44px; border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.96); background: rgba(255,255,255,0.92);
+      box-shadow: 0 6px 18px rgba(0,119,182,0.1); font-size: 0.94rem; color: var(--text-main); outline: none;
     }
-    .search-box:focus {
-      outline: none;
-      border-color: #0284c7;
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
-    }
-    .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #0284c7;
-      font-size: 1.05rem;
-    }
+    .search-box:focus { border-color: var(--aqua-cyan); box-shadow: 0 8px 22px rgba(0,150,199,0.2), 0 0 0 3px rgba(72,202,228,0.25); }
 
-    /* =========================================
-       Cartes TP & Documents (Images Préservées)
-       ========================================= */
-    .tp-img-wrapper {
-      width: 100%;
-      height: 165px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-    }
-    .tp-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-    .glass-card:hover .tp-img {
-      transform: scale(1.05);
-    }
-    .tp-body {
-      padding: 1.35rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      position: relative;
-      z-index: 2;
-    }
-    .tp-title {
-      color: #0f172a;
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      line-height: 1.3;
-    }
-    .tp-desc {
-      color: #475569;
-      font-size: 0.88rem;
-      line-height: 1.5;
-      margin-bottom: 1.2rem;
-      flex-grow: 1;
-    }
+    /* Cartes TP */
+    .tp-img-wrapper { height: 175px; overflow: hidden; border-bottom: 1.5px solid rgba(255,255,255,0.92); background: #06283d; }
+    .tp-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+    .glass-card:hover .tp-img { transform: scale(1.04); }
+    .tp-body { padding: 18px; display: flex; flex-direction: column; flex: 1; position: relative; z-index: 2; }
+    .tp-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.02rem; color: var(--text-main); margin-bottom: 8px; }
+    .tp-desc { font-size: 0.85rem; color: var(--text-muted); flex: 1; margin-bottom: 14px; }
     .btn-tp-open {
-      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
-      color: #0369a1;
-      font-size: 0.85rem;
-      font-weight: 700;
-      border: 1px solid rgba(2, 132, 199, 0.25);
-      border-radius: 12px;
-      padding: 9px 14px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.1);
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px; width: 100%;
+      padding: 9px 14px; border-radius: 999px;
+      background: linear-gradient(180deg, #48cae4 0%, #0096c7 55%, #0077b6 100%);
+      color: #fff; font-weight: 700; font-size: 0.84rem; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.85);
+      box-shadow: 0 5px 12px rgba(0,150,199,0.26), inset 0 1px 1px rgba(255,255,255,0.85);
+      transition: transform 0.2s ease;
     }
-    .btn-tp-open:hover {
-      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
-      border-color: #0284c7;
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-    }
-
-    /* =========================================
-       Outils de Veille (4 Outils Ciblés)
-       ========================================= */
-    .veille-tool-card {
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      padding: 1.6rem;
-      height: 100%;
-      box-shadow: 0 8px 25px rgba(2, 132, 199, 0.1), inset 0 1px 2px #fff;
-      transition: all 0.25s ease;
-    }
-    .veille-tool-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(2, 132, 199, 0.4);
-      box-shadow: 0 14px 32px rgba(2, 132, 199, 0.2);
-    }
-    .veille-tool-icon {
-      font-size: 2.3rem;
-      margin-bottom: 0.8rem;
-      display: inline-block;
-    }
-
-    /* =========================================
-       Tableau de Veille (Drop-Down & Contraste)
-       ========================================= */
-    .veille-panel-light {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 12px 35px rgba(2, 132, 199, 0.12), inset 0 1px 2px #ffffff;
-    }
-    .table-veille-aero {
-      color: #0f172a !important;
-      margin-bottom: 0;
-      border-collapse: separate;
-      border-spacing: 0;
-    }
-    .table-veille-aero thead th {
-      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%) !important;
-      color: #034b7f !important;
-      font-weight: 800;
-      padding: 16px 20px;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border-bottom: 2px solid #7dd3fc !important;
-    }
-    .table-veille-aero tbody td {
-      padding: 16px 20px;
-      vertical-align: middle;
-      color: #1e293b !important;
-      font-size: 0.94rem;
-      border-bottom: 1px solid #e2e8f0 !important;
-      background: transparent;
-    }
-    .table-veille-aero tbody tr:hover td {
-      background: rgba(224, 242, 254, 0.45) !important;
-    }
-
-    .btn-source-link {
-      display: inline-flex;
-      align-items: center;
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #0284c7 !important;
-      background: rgba(2, 132, 199, 0.08);
-      border: 1px solid rgba(2, 132, 199, 0.28);
-      text-decoration: none;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.08);
-    }
-    .btn-source-link:hover {
-      background: linear-gradient(135deg, #0284c7, #00b4d8);
-      color: #ffffff !important;
-      border-color: #0284c7;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .btn-aero-more {
-      background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 50%, #e0f2fe 100%);
-      color: #0369a1;
-      font-weight: 800;
-      border: 1px solid #7dd3fc;
-      border-radius: 980px;
-      padding: 12px 30px;
-      font-size: 0.92rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.18), inset 0 1px 2px #fff;
-      transition: all 0.22s ease;
-    }
-    .btn-aero-more:hover {
-      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.3);
-    }
+    .btn-tp-open:hover { color: #fff; transform: translateY(-2px); }
 
     /* Timeline Parcours */
-    .timeline {
-      position: relative;
-      padding-left: 30px;
-      border-left: 3px solid #7dd3fc;
-    }
-    .timeline-item {
-      position: relative;
-      margin-bottom: 38px;
-    }
+    .timeline { position: relative; padding-left: 28px; border-left: 3px solid rgba(0, 180, 216, 0.5); }
+    .timeline-item { position: relative; margin-bottom: 24px; }
     .timeline-item:last-child { margin-bottom: 0; }
     .timeline-dot {
-      position: absolute;
-      left: -39px;
-      top: 4px;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #0284c7;
-      border: 3px solid #ffffff;
-      box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+      position: absolute; left: -38px; top: 4px; width: 18px; height: 18px; border-radius: 50%;
+      background: linear-gradient(180deg, #48cae4 0%, #0077b6 100%);
+      border: 2.5px solid #fff; box-shadow: 0 0 0 3px rgba(72, 202, 228, 0.35);
     }
     .timeline-date {
-      color: #0284c7;
-      font-weight: 800;
-      font-size: 0.88rem;
-      margin-bottom: 4px;
-      display: inline-block;
+      display: inline-block; font-size: 0.78rem; font-weight: 700; color: var(--aqua-deep);
+      background: rgba(202,240,248,0.9); padding: 2px 10px; border-radius: 999px; margin-bottom: 6px;
     }
 
-    /* Footer */
-    footer {
-      padding: 45px 0;
-      border-top: 1px solid rgba(2, 132, 199, 0.15);
-      color: #64748b;
-      font-size: 0.88rem;
-      background: rgba(255, 255, 255, 0.75);
+    /* Veille + Dropdowns Aero épurés */
+    .veille-tool-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(212,244,252,0.86) 100%);
+      border: 1.5px solid rgba(255,255,255,0.96); border-radius: 22px; padding: 22px 18px;
+      text-align: center; height: 100%; box-shadow: var(--aqua-shadow), inset 0 1px 1px #fff;
+      transition: transform 0.25s ease;
     }
-    .btn-github-link {
+    .veille-tool-card:hover { transform: translateY(-5px); }
+    .veille-tool-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+
+    .veille-dropdown-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .aero-select-wrap {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
-      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
-      color: #0f172a;
+      gap: 8px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(212,244,252,0.88) 100%);
+      border: 1.5px solid rgba(255,255,255,0.98);
+      border-radius: 999px;
+      padding: 6px 16px;
+      box-shadow: 0 6px 18px rgba(0, 119, 182, 0.14), inset 0 1px 1px #fff;
+    }
+    .aero-select-wrap label {
+      font-size: 0.82rem;
       font-weight: 700;
-      font-size: 0.95rem;
-      padding: 9px 22px;
-      border-radius: 980px;
-      border: 1px solid rgba(15, 23, 42, 0.18);
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08), inset 0 1px 2px #ffffff;
-      text-decoration: none;
-      transition: all 0.22s ease;
-      margin-bottom: 1.25rem;
+      color: var(--aqua-deep);
+      margin: 0;
     }
-    .btn-github-link i {
-      font-size: 1.25rem;
-      transition: transform 0.22s ease;
-    }
-    .btn-github-link:hover {
-      background: #0f172a;
-      color: #ffffff;
-      border-color: #0f172a;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
-    }
-    .btn-github-link:hover i {
-      transform: scale(1.15);
+    .aero-select {
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      outline: none;
+      cursor: pointer;
+      padding-right: 6px;
     }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+    .veille-panel-light {
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 24px; border: 1.5px solid rgba(255, 255, 255, 0.96);
+      box-shadow: var(--aqua-shadow); overflow: hidden;
     }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
+    .table-veille-aero thead th {
+      background: linear-gradient(180deg, #00b4d8 0%, #0077b6 100%);
+      color: #fff; font-weight: 700; border: none; padding: 14px 16px;
+    }
+    .table-veille-aero tbody td { padding: 14px 16px; border-color: rgba(173, 232, 244, 0.7); vertical-align: middle; }
+    .table-veille-aero tbody tr:hover { background: rgba(202, 240, 248, 0.35); }
+    .badge-intel { background: #e0f2fe; color: #0369a1; border-radius: 999px; font-weight: 700; display: inline-block; }
+    .badge-nvidia { background: #dcfce7; color: #15803d; border-radius: 999px; font-weight: 700; display: inline-block; }
+    .badge-amd { background: #fee2e2; color: #b91c1c; border-radius: 999px; font-weight: 700; display: inline-block; }
+    .btn-source-link {
+      display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 999px;
+      background: linear-gradient(180deg, #ffffff 0%, #caf0f8 100%);
+      border: 1px solid #90e0ef; color: var(--aqua-deep); font-weight: 700; font-size: 0.8rem; text-decoration: none;
+    }
+    .btn-source-link:hover { background: #0096c7; color: #fff; }
+    .btn-aero-more {
+      background: linear-gradient(180deg, #48cae4 0%, #0077b6 100%);
+      color: #fff; font-weight: 700; border: 1.5px solid rgba(255,255,255,0.88); border-radius: 999px;
+      padding: 10px 24px; box-shadow: 0 8px 20px rgba(0,119,182,0.26); cursor: pointer;
     }
 
-    @media (max-width: 768px) {
-      .navbar-pill { border-radius: 24px; padding: 10px; }
-      .nav-item-aero { padding: 6px 12px; font-size: 0.82rem; }
-      .hero { min-height: 70vh; }
-      #bottom-peeker { width: 125px !important; right: 15px !important; }
-    }
+    footer { padding: 28px 0 42px; text-align: center; color: var(--text-sub); font-weight: 600; font-size: 0.9rem; }
   </style>
 </head>
 <body>
+  <div class="scroll-water-bar" id="scroll-water-bar"></div>
+  <canvas id="aqua-canvas"></canvas>
 
-  <!-- Lueur Frutiger Aero en haut -->
-  <div class="aero-gloss-sky"></div>
-
-  <!-- Navbar Centrée (Sans logo à gauche) -->
   <div class="navbar-container">
     <nav class="navbar-pill">
-      <a class="nav-item-aero" href="#accueil"><i class="bi bi-house-door"></i> Accueil</a>
-      <a class="nav-item-aero" href="#apropos"><i class="bi bi-person"></i> À Propos</a>
+      <a class="nav-item-aero active" href="#accueil"><i class="bi bi-house-door"></i> Accueil</a>
+      <a class="nav-item-aero" href="#apropos"><i class="bi bi-person"></i> Profil</a>
       <a class="nav-item-aero" href="#projets"><i class="bi bi-folder"></i> Travaux & TP</a>
       <a class="nav-item-aero" href="#stage1"><i class="bi bi-briefcase"></i> Stages</a>
-      <a class="nav-item-aero" href="#outils-veille"><i class="bi bi-search"></i> Outils de Veille</a>
-      <a class="nav-item-aero" href="#parcours"><i class="bi bi-mortarboard"></i> Parcours</a>
       <a class="nav-item-aero" href="#veille"><i class="bi bi-cpu"></i> Veille Tech</a>
     </nav>
   </div>
 
-  <!-- Hero Section -->
   <section id="accueil" class="hero">
-    <div class="container reveal">
-      <div class="hero-badge">
-        <i class="bi bi-stars text-info"></i> BTS SIO • Option SLAM
-      </div>
-      <h1 class="hero-title">Alexandre E<span id="ewan-w">w</span>an</h1>
-      <p class="hero-subtitle">
-        Portfolio d'études en développement logiciel, gestion de patrimoine informatique, virtualisation et veille technologique.
-      </p>
-      <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="#projets" class="btn-aero-primary">
-          <i class="bi bi-folder-check"></i> Découvrir mes réalisations
-        </a>
-        <a href="CVSIO.pdf" target="_blank" class="btn-aero-secondary">
-          <i class="bi bi-file-earmark-person"></i> Consulter mon CV
-        </a>
-        <a href="https://github.com/ealexandre18" target="_blank" rel="noopener noreferrer" class="btn-aero-secondary">
-          <i class="bi bi-github"></i> GitHub
-        </a>
+    <div class="container">
+      <div class="hero-glass-stage">
+        <div class="hero-badge">
+          <i class="bi bi-stars"></i> BTS SIO - OPTION SLAM
+        </div>
+        <h1 class="hero-title">Alexandre Ewan</h1>
+        <p class="hero-subtitle">
+          Portfolio d'études en développement logiciel, gestion du patrimoine informatique, cybersécurité et veille technologique.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <a href="#projets" class="btn-aqua-gloss btn-aero-primary">
+            <i class="bi bi-folder-check"></i> Explorer mes TP
+          </a>
+          <a href="CVSIO.pdf" target="_blank" class="btn-aqua-gloss btn-aero-teal">
+            <i class="bi bi-file-earmark-person"></i> Consulter mon CV
+          </a>
+          <a href="https://github.com/ealexandre18" target="_blank" rel="noopener noreferrer" class="btn-aqua-gloss btn-aero-secondary">
+            <i class="bi bi-github"></i> GitHub
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- A Propos Section -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+      <path d="M0,30 C150,55 350,5 600,30 C850,55 1050,5 1200,30 L1200,60 L0,60 Z" fill="rgba(255,255,255,0.45)"></path>
+    </svg>
+  </div>
+
   <section id="apropos">
     <div class="container">
-      <div class="row align-items-center g-4">
-        <div class="col-lg-6 reveal">
-          <span class="section-label">Profil</span>
-          <h2 class="section-title">Développement & Solutions Logicielles</h2>
-          <p class="content-text mb-4">
-            Actuellement en <strong class="text-primary">2ème année de BTS SIO (option SLAM)</strong> au Lycée Pierre-Gilles de Gennes à Digne-les-Bains, je développe des compétences avancées en programmation orientée objet, gestion et sauvegarde de bases de données, cybersécurité et administration système.
-          </p>
-          <div class="d-flex flex-wrap gap-2 mb-4">
-            <span class="badge-aero"><i class="bi bi-code-slash text-info"></i> Java / JavaFX</span>
-            <span class="badge-aero"><i class="bi bi-filetype-php text-primary"></i> PHP & MySQL</span>
-            <span class="badge-aero"><i class="bi bi-filetype-js text-warning"></i> JavaScript</span>
-            <span class="badge-aero"><i class="bi bi-database text-info"></i> SQL</span>
-            <span class="badge-aero"><i class="bi bi-shield-check text-success"></i> RGPD & Cybersécurité</span>
-            <span class="badge-aero"><i class="bi bi-hdd-network text-info"></i> Proxmox / Linux</span>
+      <div class="row align-items-stretch g-4">
+        <div class="col-lg-6 reveal-item">
+          <div class="glass-panel p-4 p-md-5 h-100">
+            <span class="section-label">Profil</span>
+            <h2 class="section-title">Développement & Solutions Logicielles</h2>
+            <p class="mb-4 text-muted">
+              Actuellement en <strong class="text-primary">2ème année de BTS SIO (option SLAM)</strong> au Lycée Dominique Villars à Gap, je maîtrise la création de sites web, la conception de bases de données ainsi que le développement d'applications.
+            </p>
+            <div class="row g-3 pt-3 border-top border-white">
+              <div class="col-sm-6">
+                <small class="text-muted d-block">Identité</small>
+                <strong>Alexandre Ewan (19 ans)</strong>
+              </div>
+              <div class="col-sm-6">
+                <small class="text-muted d-block">Contact</small>
+                <a href="mailto:ealexandre2804@gmail.com" class="fw-bold text-decoration-none">ealexandre2804@gmail.com</a>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-lg-6 reveal">
-          <div class="glass-panel p-4 p-md-5">
-            <h5 class="text-dark mb-4 fw-bold"><i class="bi bi-info-circle text-primary me-2"></i>Informations Personnelles</h5>
-            <div class="row g-3">
-              <div class="col-sm-6">
-                <span class="text-dim small d-block">Nom & Prénom</span>
-                <span class="text-dark fw-bold fs-6">Alexandre Ewan</span>
+
+        <div class="col-lg-6 reveal-item">
+          <div class="glass-panel p-4 p-md-5 h-100">
+            <span class="section-label">Scolarité</span>
+            <h2 class="section-title">Mon Parcours</h2>
+            <div class="timeline mt-3">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="timeline-date">2025 – 2027 (En cours)</span>
+                <h5 class="fw-bold mb-1">BTS SIO (Option SLAM)</h5>
+                <p class="small text-primary fw-bold mb-1">Lycée Dominique Villars, Gap</p>
+                <p class="small text-muted mb-0">Création de sites web, bases de données, développement d'applications et cybersécurité.</p>
               </div>
-              <div class="col-sm-6">
-                <span class="text-dim small d-block">Âge</span>
-                <span class="text-dark fw-bold fs-6">19 ans</span>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="timeline-date">2022 – 2025</span>
+                <h5 class="fw-bold mb-1">Baccalauréat STI2D — Spécialité SIN</h5>
+                <p class="small text-primary fw-bold mb-0">Mention Assez Bien • Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
               </div>
-              <div class="col-12">
-                <span class="text-dim small d-block">Formation</span>
-                <span class="text-dark fw-bold fs-6">BTS SIO (SLAM) — 2ème Année (2025-2027)</span>
-              </div>
-              <div class="col-12">
-                <span class="text-dim small d-block">Email de contact</span>
-                <a href="mailto:ealexandre2804@gmail.com" class="text-primary text-decoration-none fw-bold fs-6">
-                  <i class="bi bi-envelope me-1"></i> ealexandre2804@gmail.com
-                </a>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <span class="timeline-date">2018 – 2022</span>
+                <h5 class="fw-bold mb-1">Diplôme National du Brevet</h5>
+                <p class="small text-muted mb-0">Collège JMG Itard, Oraison • Mention Assez Bien</p>
               </div>
             </div>
           </div>
@@ -749,231 +550,136 @@
     </div>
   </section>
 
-  <!-- Section Projets / TPs avec bascule 1ère Année / 2ème Année -->
   <section id="projets">
     <div class="container text-center">
-      <span class="section-label">Travaux Réalisés</span>
+      <span class="section-label">Réalisations</span>
       <h2 class="section-title">Comptes-Rendus & Travaux Pratiques</h2>
 
-      <!-- Année Switcher (2ème Année par défaut) -->
-      <div class="text-center mb-3">
+      <div class="mb-3">
         <div class="year-switch-bar" id="year-switchers">
-          <button class="year-btn active" data-year="annee2">
-            <i class="bi bi-award"></i> 2ème Année (Actuelle)
-          </button>
-          <button class="year-btn" data-year="annee1">
-            <i class="bi bi-archive"></i> 1ère Année
-          </button>
+          <button class="year-btn active" data-year="annee2"><i class="bi bi-award"></i> 2ème Année (Actuelle)</button>
+          <button class="year-btn" data-year="annee1"><i class="bi bi-archive"></i> 1ère Année</button>
         </div>
       </div>
 
-      <!-- Filtres de Blocs (simples : Bloc 1, Bloc 2, Bloc 3, Atelier Pro) -->
       <div class="block-filter-bar" id="block-filters">
-        <button class="block-btn active" data-block="all">Tous</button>
-        <button class="block-btn" data-block="bloc1">Bloc 1</button>
-        <button class="block-btn" data-block="bloc2">Bloc 2</button>
-        <button class="block-btn" data-block="bloc3">Bloc 3</button>
-        <button class="block-btn" data-block="pro">Atelier Pro et PCC</button>
+        <button class="block-btn active" data-block="all">Tous (<span id="cnt-all">0</span>)</button>
+        <button class="block-btn" data-block="bloc1">Bloc 1 (<span id="cnt-bloc1">0</span>)</button>
+        <button class="block-btn" data-block="bloc2">Bloc 2 (<span id="cnt-bloc2">0</span>)</button>
+        <button class="block-btn" data-block="bloc3">Bloc 3 (<span id="cnt-bloc3">0</span>)</button>
+        <button class="block-btn" data-block="pro">Atelier Pro & PCC (<span id="cnt-pro">0</span>)</button>
       </div>
 
-      <!-- Recherche instantanée -->
       <div class="search-wrapper">
         <i class="bi bi-search search-icon"></i>
-        <input type="text" id="tp-search" class="search-box" placeholder="Rechercher un TP ou mot-clé...">
+        <input type="text" id="tp-search" class="search-box" placeholder="Rechercher un TP, GLPI, Git, SQL...">
       </div>
 
-      <!-- Grille des TPs -->
-      <div class="row g-4 text-start" id="tps-container">
-        <!-- Rendu dynamique via JavaScript avec conservation de toutes les images -->
-      </div>
+      <div class="row g-4 text-start" id="tps-container"></div>
     </div>
   </section>
 
-  <!-- Stage Section -->
   <section id="stage1">
     <div class="container">
       <div class="text-center mb-5">
         <span class="section-label">Immersion Professionnelle</span>
         <h2 class="section-title">Stages & Livrables</h2>
-        <p class="content-text mx-auto" style="max-width: 680px;">
-          Documentation technique, mise en production, supervision et virtualisation réalisées lors de mes expériences en entreprise.
-        </p>
       </div>
-
-      <div class="row g-4" id="stage-container">
-        <!-- Rendu dynamique via JavaScript -->
-      </div>
+      <div class="row g-4" id="stage-container"></div>
     </div>
   </section>
 
-  <!-- Outils Utilisés pour la Veille (Les 4 outils demandés par l'utilisateur) -->
-  <section id="outils-veille">
-    <div class="container">
-      <div class="text-center mb-5">
-        <span class="section-label">Méthodologie & Sourçage</span>
-        <h2 class="section-title">Outils Utilisés pour la Veille</h2>
-        <p class="content-text mx-auto" style="max-width: 680px;">
-          Dispositif d'alerte, de collecte et d'analyse mis en place pour assurer le suivi hebdomadaire des innovations GPU, CPU et IA.
-        </p>
-      </div>
-
-      <!-- Grille des 4 Outils de Veille -->
-      <div class="row g-4 justify-content-center">
-        <!-- Google Alertes -->
-        <div class="col-md-6 col-lg-3 reveal">
-          <div class="veille-tool-card">
-            <span class="veille-tool-icon text-warning"><i class="bi bi-bell-fill"></i></span>
-            <h5 class="text-dark fw-bold mb-2">Google Alertes</h5>
-            <span class="badge-aero mb-3">Automatisation</span>
-            <p class="text-sub small mb-2"><strong>Utilité :</strong> Surveillance automatisée du web avec notification e-mail dès qu'un article ou communiqué paraît.</p>
-            <p class="text-dim small mb-0"><strong>Mots-clés :</strong> AMD, Nvidia, Intel, Processeur, Carte Graphique.</p>
-          </div>
-        </div>
-
-        <!-- Google News -->
-        <div class="col-md-6 col-lg-3 reveal">
-          <div class="veille-tool-card">
-            <span class="veille-tool-icon text-primary"><i class="bi bi-newspaper"></i></span>
-            <h5 class="text-dark fw-bold mb-2">Google News</h5>
-            <span class="badge-aero mb-3">Agrégation en direct</span>
-            <p class="text-sub small mb-2"><strong>Utilité :</strong> Algorithme qui propose des articles ciblés par rapport aux recherches quotidiennes effectuées sur Google.</p>
-            <p class="text-dim small mb-0"><strong>Recherches :</strong> amd nouveauté, nvidia nouveauté, intel nouveauté, leak amd, leak nvidia, leak intel.</p>
-          </div>
-        </div>
-
-        <!-- X.com (Twitter) -->
-        <div class="col-md-6 col-lg-3 reveal">
-          <div class="veille-tool-card">
-            <span class="veille-tool-icon text-dark"><i class="bi bi-twitter-x"></i></span>
-            <h5 class="text-dark fw-bold mb-2">X.com (Twitter)</h5>
-            <span class="badge-aero mb-3">Annonces & Leaks</span>
-            <p class="text-sub small mb-2"><strong>Utilité :</strong> Suivi instantané des annonces officielles, fuites (leaks) et actualités des analystes hardware.</p>
-            <p class="text-dim small mb-0"><strong>Comptes :</strong> @VideoCardz, @kopite7kimi, @momomo_us, @harukaze5719, @AMD, @NVIDIA, @Intel.</p>
-          </div>
-        </div>
-
-        <!-- YouTube -->
-        <div class="col-md-6 col-lg-3 reveal">
-          <div class="veille-tool-card">
-            <span class="veille-tool-icon text-danger"><i class="bi bi-youtube"></i></span>
-            <h5 class="text-dark fw-bold mb-2">YouTube</h5>
-            <span class="badge-aero mb-3">Benchmarks & Tests</span>
-            <p class="text-sub small mb-2"><strong>Utilité :</strong> Visionnage de revues d'actualités hardware, benchmarks complets et analyses de nouvelles architectures.</p>
-            <p class="text-dim small mb-0"><strong>Chaînes :</strong> Gamers Nexus, Hardware Unboxed, Moore's Law Is Dead, Der8auer.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Parcours Section -->
-  <section id="parcours">
-    <div class="container">
-      <div class="text-center mb-5">
-        <span class="section-label">Scolarité</span>
-        <h2 class="section-title">Mon Parcours</h2>
-      </div>
-      
-      <div class="row justify-content-center">
-        <div class="col-lg-8 reveal">
-          <div class="glass-panel p-4 p-md-5">
-            <div class="timeline">
-              
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <span class="timeline-date">2025 - 2027 (En cours)</span>
-                <h4 class="text-dark fw-bold">BTS SIO (Option SLAM)</h4>
-                <p class="text-primary small mb-1 fw-bold">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
-                <p class="content-text small">Formation approfondie en Solutions Logicielles et Applications Métier : développement orienté objet, bases de données relationnelles, sécurité logicielle et intégration continue.</p>
-              </div>
-
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <span class="timeline-date">2022 - 2025</span>
-                <h4 class="text-dark fw-bold">Baccalauréat STI2D — Spécialité SIN</h4>
-                <p class="text-primary small mb-1 fw-bold">Lycée Pierre-Gilles de Gennes, Digne-les-Bains</p>
-                <p class="content-text small">Systèmes d'Information et Numérique. <strong class="text-dark">Mention Assez Bien.</strong></p>
-              </div>
-
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <span class="timeline-date">2018 - 2022</span>
-                <h4 class="text-dark fw-bold">Diplôme National du Brevet</h4>
-                <p class="text-primary small mb-1 fw-bold">Collège JMG Itard, Oraison</p>
-                <p class="content-text small"><strong class="text-dark">Mention Assez Bien.</strong></p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Veille Technologique Section (Avec Système Dropdown / Pagination) -->
   <section id="veille">
     <div class="container">
       <div class="text-center mb-4">
         <span class="section-label">Veille Technologique</span>
-        <h2 class="section-title">Innovations Hardware : NVIDIA, AMD & INTEL</h2>
-        <p class="content-text mx-auto mb-4" style="max-width: 680px;">
-          Suivi des avancées majeures réparties équitablement entre <strong>Intel</strong>, <strong>NVIDIA</strong> et <strong>AMD</strong>.
-        </p>
+        <h2 class="section-title">Innovations des grandes entreprises du Hardware</h2>
+      </div>
 
-        <!-- Sélecteur d'Année de Veille -->
-        <div class="block-filter-bar" id="veille-year-filters">
-          <button class="block-btn active" data-vyear="2026">
-            <i class="bi bi-calendar3 me-1"></i> Année 2026 (<span id="count-v-2026">0</span>)
-          </button>
-          <button class="block-btn" data-vyear="2025">
-            <i class="bi bi-calendar3 me-1"></i> Année 2025 (<span id="count-v-2025">0</span>)
-          </button>
+      <div class="row g-4 justify-content-center mb-5">
+        <div class="col-md-6 col-lg-3 reveal-item">
+          <div class="veille-tool-card">
+            <span class="veille-tool-icon text-warning"><i class="bi bi-bell-fill"></i></span>
+            <h5 class="fw-bold mb-2">Google Alertes</h5>
+            <span class="badge-aero mb-2">Automatisation</span>
+            <p class="small text-muted mb-0"><strong>Mots-clés :</strong> AMD, Nvidia, Intel, Processeur, Carte Graphique.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal-item">
+          <div class="veille-tool-card">
+            <span class="veille-tool-icon text-primary"><i class="bi bi-newspaper"></i></span>
+            <h5 class="fw-bold mb-2">Google News</h5>
+            <span class="badge-aero mb-2">Agrégation</span>
+            <p class="small text-muted mb-0">Algorithme ciblé sur les innovations par rapport aux recherches faites sur le navigateur Google.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal-item">
+          <div class="veille-tool-card">
+            <span class="veille-tool-icon text-dark"><i class="bi bi-twitter-x"></i></span>
+            <h5 class="fw-bold mb-2">X.com (Twitter)</h5>
+            <span class="badge-aero mb-2">Leaks & Annonces</span>
+            <p class="small text-muted mb-0"><strong>Comptes connus :</strong> @VideoCardz, @kopite7kimi, @momomo_us, @AMD, @NVIDIA, @Intel.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 reveal-item">
+          <div class="veille-tool-card">
+            <span class="veille-tool-icon text-danger"><i class="bi bi-youtube"></i></span>
+            <h5 class="fw-bold mb-2">YouTube</h5>
+            <span class="badge-aero mb-2">Tests & Analyses</span>
+            <p class="small text-muted mb-0"><strong>Chaînes connues :</strong> Gamers Nexus, Hardware Unboxed, Der8auer, Level1Techs.</p>
+          </div>
         </div>
       </div>
 
-      <!-- Table de Veille (Style Frutiger Aero Clair & Dropdown) -->
-      <div class="veille-panel-light reveal mb-4">
+      <!-- Barre de filtres simplifiée avec Dropdowns -->
+      <div class="veille-dropdown-bar">
+        <div class="aero-select-wrap">
+          <label for="select-veille-year"><i class="bi bi-calendar3 me-1"></i> Année :</label>
+          <select id="select-veille-year" class="aero-select">
+            <option value="2026" selected>2026 (<span id="opt-2026">26</span>)</option>
+            <option value="2025">2025 (<span id="opt-2025">21</span>)</option>
+          </select>
+        </div>
+        <div class="aero-select-wrap">
+          <label for="select-veille-brand"><i class="bi bi-cpu me-1"></i> Marque :</label>
+          <select id="select-veille-brand" class="aero-select">
+            <option value="ALL" selected>Toutes les marques</option>
+            <option value="Intel">Intel</option>
+            <option value="NVIDIA">NVIDIA</option>
+            <option value="AMD">AMD</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="veille-panel-light mb-4">
         <div class="table-responsive">
-          <table class="table table-veille-aero">
+          <table class="table table-veille-aero mb-0">
             <thead>
               <tr>
-                <th style="width: 14%"><i class="bi bi-clock me-1"></i> Date</th>
-                <th style="width: 25%"><i class="bi bi-cpu me-1"></i> Innovation</th>
-                <th><i class="bi bi-journal-text me-1"></i> Analyse & Impact</th>
-                <th style="width: 16%"><i class="bi bi-link-45deg me-1"></i> Source</th>
+                <th style="width: 13%">Date</th>
+                <th style="width: 26%">Innovation</th>
+                <th>Détails</th>
+                <th style="width: 16%">Source</th>
               </tr>
             </thead>
-            <tbody id="veille-table-body">
-              <!-- Rendu dynamique via JavaScript -->
-            </tbody>
+            <tbody id="veille-table-body"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Bouton Déroulant pour voir plus d'innovations -->
       <div class="text-center" id="veille-more-container">
         <button id="btn-toggle-veille" class="btn-aero-more">
-          <i class="bi bi-chevron-down" id="more-icon"></i> <span id="more-text">Afficher plus d'innovations</span>
+          <i class="bi bi-chevron-down" id="more-icon"></i> <span id="more-text">Afficher plus</span>
         </button>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="text-center">
-    <div class="container">
-      <p class="mb-1 text-dark fw-bold">Alexandre Ewan • Portfolio BTS SIO</p>
-      <p class="text-dim mb-0">&copy; 2026 Tous droits réservés.</p>
-    </div>
+  <footer>
+    © 2026 Alexandre Ewan — BTS SIO SLAM
   </footer>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
-    // ====================================================
-    // DONNÉES DES TRAVAUX (TOUS LES THUMBNAILS D'ORIGINE RESTAURÉS)
-    // ====================================================
     const projectsData = {
       // 2ème Année (Par défaut) avec thumbnail de Patrimoine Informatique
       annee2: {
@@ -1004,7 +710,7 @@
           },
           {
             name: "TD Restaurant - Modélisation & Bilan",
-            description: "Modélisation budgétaire, calcul de marges, simulation fiscale et bilan sous tableur (S3 BEAUVALLET).",
+            description: "Calcul de marges, budget et bilan comptable d'un restaurant sous tableur.",
             image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=800",
             file: "TD_RESTAURANT_BEAUVALLET_B1.pdf",
             cat: "bloc1",
@@ -1036,7 +742,7 @@
           },
           {
             name: "TP04 - Travaux post installation de GLPI",
-            description: "Configuration post-installation de GLPI : validation réseau, inventaire du parc matériel et gestion des utilisateurs (S3).",
+            description: "Configuration de GLPI, inventaire matériel et gestion des utilisateurs.",
             image: "glpi_post_installation.jpg",
             file: "Compte rendu TP04 - Travaux post installation de GLPI.pdf",
             cat: "bloc1",
@@ -1044,7 +750,7 @@
           },
           {
             name: "TP05 - GLPI Gestion des incidents (Helpdesk)",
-            description: "Cycle de vie complet d'un ticket d'incident sous GLPI : déclaration utilisateur, prise en charge technicien, résolution et clôture (S3).",
+            description: "Création, prise en charge et clôture de tickets d'incident sous GLPI.",
             image: "glpi_gestion_incidents.jpg",
             file: "Compte rendu TP05 - GLPI Gestion des incidents (Helpdesk).pdf",
             cat: "bloc1",
@@ -1052,7 +758,7 @@
           },
           {
             name: "TP06 - GLPI Déploiement de logiciel",
-            description: "Télédistribution et déploiement automatisé de logiciels à distance avec GLPI Inventory et GLPI Agent : création de paquet (PeaZip), audits, commandes silencieuses et contrôle d'installation (S3).",
+            description: "Déploiement à distance du logiciel PeaZip avec GLPI Inventory et l'agent.",
             image: "thumb_glpi_06.jpg",
             file: "Compte rendu TP 06 - GLPI - Déploiement de logiciel.pdf",
             cat: "bloc1",
@@ -1060,7 +766,7 @@
           },
           {
             name: "TP Git - Boutique FleurDeLyon",
-            description: "Gestion de version collaborative sous Git et GitHub en équipe : comparaison manuelle vs Git, initialisation, branches de fonctionnalités, git blame/revert, résolution de conflits de merge, relecture PR et release v1.0 (S3).",
+            description: "Travail en équipe sur Git et GitHub avec gestion de branches et conflits.",
             image: "thumb_git_fleurdelyon.jpg",
             file: "TP_GIT_FLEURDELYON_ALEXANDRE_Ewan_V2.pdf",
             cat: "bloc1",
@@ -1068,7 +774,7 @@
           },
           {
             name: "TP Hackropole - Challenges de Cybersécurité (CTF)",
-            description: "Résolution de 3 épreuves de cryptographie et stéganographie sur la plateforme Hackropole (FCSC / ANSSI) : déchiffrement de Vigenère sous dCode, cryptanalyse ROT13 et extraction de flag depuis un QR Code (S3 SOTOCA).",
+            description: "Résolution de 3 épreuves de décryptage et QR Code sur Hackropole.",
             image: "thumb_hackropole.jpg",
             file: "TP_HACKROPOLE_B1_SOTOCA.pdf",
             cat: "bloc1",
@@ -1076,7 +782,7 @@
           },
           {
             name: "TP08 - Bloc 1 et préparation au CCF E5",
-            description: "Préparation complète de l'épreuve orale E5 : 5 fiches de révision par compétence (6 compétences du Bloc 1), check-list des réalisations du portfolio, tableau de synthèse E5 (centre scolaire) et support de présentation orale (10 min).",
+            description: "Fiches de révision E5, check-list, tableau de synthèse et trame orale.",
             image: "thumb_tp08_e5.jpg",
             file: "TP08_B1_CCF_E5_ALEXANDRE_Ewan.pdf",
             cat: "bloc1",
@@ -1086,7 +792,7 @@
         bloc2: [
           {
             name: "TP01 - Installation et prise en main de React",
-            description: "Découverte de la bibliothèque JavaScript React avec Vite : architecture en composants JSX (Header, Ticket), passage de props, rendu conditionnel de statuts et affichage dynamique de listes (S3 BEAUVALLET).",
+            description: "Découverte des bases de React avec Vite, composants JSX et props.",
             image: "thumb_react_tp01.jpg",
             file: "TP01_React_BEAUVALLET_ALEXANDRE_Ewan.pdf",
             cat: "bloc2",
@@ -1094,7 +800,7 @@
           },
           {
             name: "TP02 - Gestion d'état, formulaires et API avec React",
-            description: "Approfondissement de React : remontée d'état (Lifting State Up), formulaires contrôlés avec validation, filtrage/recherche/tri dynamique, persistance REST via useEffect & json-server et routage SPA avec React Router (S3 BEAUVALLET).",
+            description: "Gestion d'état, formulaires, filtres et appels API avec React Router.",
             image: "thumb_react_tp02.jpg",
             file: "TP02_React_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1102,7 +808,7 @@
           },
           {
             name: "TP03 - React : authentification, performance et tests",
-            description: "Architecture avancée React : gestion d'état avec useReducer, authentification JWT/bcrypt et contrôle d'accès RBAC côté Express & React (AuthContext), optimisation React.memo/useCallback/lazy et tests unitaires sous Vitest (S3 BEAUVALLET).",
+            description: "Connexion sécurisée JWT, optimisation et tests unitaires sous Vitest.",
             image: "thumb_react_tp03.jpg",
             file: "TP03_React_BEAUVALLET_ALEXANDRE_Ewan_V2.pdf",
             cat: "bloc2",
@@ -1110,7 +816,7 @@
           },
           {
             name: "TP Symfony - Application Web",
-            description: "Création d'une application web avec le framework PHP Symfony (S3 BEAUVALLET).",
+            description: "Création d'une application web structurée avec le framework Symfony.",
             image: "https://upload.wikimedia.org/wikipedia/commons/6/60/Symfony2.svg",
             file: "TP_B2_S3_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1118,7 +824,7 @@
           },
           {
             name: "TP Flutter - Application Mobile",
-            description: "Conception et développement d'une application mobile avec Flutter et Dart (S3 BEAUVALLET).",
+            description: "Développement d'une interface d'application mobile avec Flutter.",
             image: "thumb_flutter.png",
             file: "TP02_B2_S3_FLUTTER_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1126,7 +832,7 @@
           },
           {
             name: "TP Flutter & Supabase - Backend Temps Réel",
-            description: "Connexion d'une application Flutter à Supabase, synchronisation en temps réel (StreamBuilder) et persistance cloud (S3 BEAUVALLET).",
+            description: "Connexion d'une application Flutter à une base de données Supabase.",
             image: "thumb_supabase.png",
             file: "TP_SUPABASE_S3_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1134,7 +840,7 @@
           },
           {
             name: "Projet Colocation - Application Mobile Flutter & Supabase",
-            description: "Projet complet de gestion de colocation sous Flutter et Supabase : modélisation BDD, politiques de sécurité RLS, gestion des dépenses et soldes, rotation des tâches ménagères, liste de courses et tests automatisés (S3 BEAUVALLET).",
+            description: "Application mobile de gestion de colocation avec Flutter et Supabase.",
             image: "thumb_projet_collocation.jpg",
             file: "PROJET_COLLOCATION_B2_S3_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1142,7 +848,7 @@
           },
           {
             name: "TD02 - Persistance PHP PDO",
-            description: "Gestion de la persistance objet en base de données avec PHP, PDO et MySQL (S3 BEAUVALLET).",
+            description: "Connexion à une base de données et requêtes SQL en PHP avec PDO.",
             image: "php_pdo_td02.jpeg",
             file: "TD2_B2_S3_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1150,7 +856,7 @@
           },
           {
             name: "TD03 - Requêtes préparées & PDO",
-            description: "Sécurisation par requêtes préparées, insertion save(), association de classes et formulaires HTML (S3 BEAUVALLET).",
+            description: "Sécurisation des requêtes SQL en PHP contre les injections avec PDO.",
             image: "requete_prepare_et_pdo.jpg",
             file: "TD3_B2_S3_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1158,7 +864,7 @@
           },
           {
             name: "TD04 - Architecture MVC en PHP",
-            description: "Implémentation du patron de conception MVC en PHP : séparation Modèle, Vue, Contrôleur et routage (S3 BEAUVALLET).",
+            description: "Découverte et mise en place du modèle MVC en PHP.",
             image: "architecture_mvc.png",
             file: "TD04_B2_S2_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1166,7 +872,7 @@
           },
           {
             name: "TD05 - Architecture MVC Avancée (1/2)",
-            description: "Point d'entrée unique index.php, passage de paramètres en GET, sécurisation et échappement des vues (S3 BEAUVALLET).",
+            description: "Séparation des contrôleurs, modèles et vues dans une appli PHP MVC.",
             image: "mvc_avance_1.png",
             file: "TD05_B2_S3_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1174,7 +880,7 @@
           },
           {
             name: "TD06 - Architecture MVC Avancée (2/2)",
-            description: "Contrôleur générique, vérification dynamique des actions, factorisation et routage MVC complet (S3 BEAUVALLET).",
+            description: "Finalisation des routes et vues dynamiques en PHP MVC.",
             image: "mvc_avance_2.png",
             file: "TD06_B2_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1182,7 +888,7 @@
           },
           {
             name: "TD07 - Cookies & Sessions (Panier & Préférences)",
-            description: "Gestion de l'état HTTP avec cookies et sessions PHP : persistance des préférences, sérialisation et panier sécurisé (S3 BEAUVALLET).",
+            description: "Gestion d'un panier et de préférences avec les cookies et sessions PHP.",
             image: "cookies_sessions_td07.png",
             file: "TD07_B2_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1190,7 +896,7 @@
           },
           {
             name: "TD08 - Authentification & Validation par Email",
-            description: "Sécurisation MVC : hachage SHA-256 avec salage, gestion des rôles (admin), protection des actions et validation de compte par email (S3 BEAUVALLET).",
+            description: "Système d'inscription, connexion et vérification par email en PHP.",
             image: "php_auth_email_td08.jpg",
             file: "TD08_B2_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1198,7 +904,7 @@
           },
           {
             name: "TD - Tests Unitaires et TDD en PHP (PHPUnit & Pest)",
-            description: "Démarche TDD en PHP : installation de PHPUnit et Pest via Composer, cycle Red-Green-Refactor sur la Potion de Foudre, tests automatisés et non-régression (S3 BEAUVALLET).",
+            description: "Écriture de tests unitaires automatisés en PHP avec PHPUnit et Pest.",
             image: "php_tests_unitaires_pest.jpg",
             file: "TD_Test_Unitaire_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1206,7 +912,7 @@
           },
           {
             name: "TD02 - Tests Unitaires TDD : Pierre Feuille Ciseaux",
-            description: "Démarche TDD avec PHPUnit : classe métier PFCGame, implémentation des règles du jeu Pierre-Feuille-Ciseaux, refactoring avec constantes de classe et méthode party (S3 BEAUVALLET).",
+            description: "Développement d'un jeu Pierre-Feuille-Ciseaux guidé par les tests.",
             image: "thumb_td2_pfc.svg",
             file: "TD2_PIERRE_FEUILLE_CISEAUX_ALEXANDRE_Ewan.pdf",
             cat: "bloc2",
@@ -1214,7 +920,7 @@
           },
           {
             name: "TP - Programmation en PgSQL",
-            description: "Apprentissage et création de fonctions en langage PL/pgSQL avec PostgreSQL (S3 BEAUVALLET).",
+            description: "Premiers scripts et fonctions en langage PL/pgSQL sous PostgreSQL.",
             image: "thumb_pgsql.png",
             file: "TP_B2_S3_PGSQL_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1222,7 +928,7 @@
           },
           {
             name: "TD06 - Langage PL/pgSQL",
-            description: "Suite PL/pgSQL : manipulation de données, curseurs, enregistrements (record) et fonctions avancées (S3 BEAUVALLET).",
+            description: "Création de fonctions et procédures stockées en PL/pgSQL.",
             image: "langagePL-pgsql.png",
             file: "TD6_PL_pgSQL_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1230,7 +936,7 @@
           },
           {
             name: "TD07 - PL/pgSQL : Les curseurs",
-            description: "Manipulation approfondie des curseurs en PL/pgSQL : boucles (LOOP, WHILE, FOR), attributs (%ISOPEN, %FOUND...), mise à jour avec FOR UPDATE et bilan MediaTek (S3 BEAUVALLET).",
+            description: "Parcours et traitement de résultats SQL avec des curseurs PL/pgSQL.",
             image: "thumb_td7_pgsql.png",
             file: "TD07_B2_S3_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1238,7 +944,7 @@
           },
           {
             name: "TD08 - PL/pgSQL : Les Triggers",
-            description: "Mise en place de déclencheurs (triggers) sous PostgreSQL : automatisation des soldes de virement, génération de login client et contrôle de cohérence de dates (S3 BEAUVALLET).",
+            description: "Création de déclencheurs automatiques (triggers) sous PostgreSQL.",
             image: "thumb_td8_pgsql.png",
             file: "TD8_TRIGGERS_S3_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1246,7 +952,7 @@
           },
           {
             name: "TP05 - SQL et Triggers (MySQL)",
-            description: "Mise en place de déclencheurs sous MySQL : intégrité du parc immobilier, exclusion mutuelle et calcul automatique du montant de commande, contrôle de permis de location (S3 BEAUVALLET).",
+            description: "Mise en place de triggers de contrôle sur une base MySQL.",
             image: "thumb_tp5_triggers.svg",
             file: "TP5_SQL_TRIGGERS_ALEXANDRE_Ewan.pdf",
             cat: "bloc2",
@@ -1254,7 +960,7 @@
           },
           {
             name: "TD / TP05 - SQL et Triggers 2 (MySQL)",
-            description: "Approfondissement des déclencheurs MySQL : intégrité du parc immobilier, synchronisation des superficies d'appartements (UPDATE & DELETE pièces), exclusion mutuelle et calcul automatique des commandes (S3 BEAUVALLET).",
+            description: "Création de triggers avancés pour la gestion de données sous MySQL.",
             image: "thumb_tp5_triggers_2.jpg",
             file: "TP5_TRIGGERS_2_BEAUVALLET.pdf",
             cat: "bloc2",
@@ -1264,7 +970,7 @@
         bloc3: [
           {
             name: "TP01 (2ème Année) - Installation de Kali Linux",
-            description: "Installation et configuration d'une machine virtuelle Kali Linux sous VirtualBox avec les Additions Invité (S3 BEAUVALLET).",
+            description: "Installation et configuration d'une machine virtuelle Kali Linux.",
             image: "installation_kali_linux.jpg",
             file: "TP_B3_S3_BEAUVALLET.pdf",
             cat: "bloc3",
@@ -1272,7 +978,7 @@
           },
           {
             name: "TP02 (2ème Année) - Test d'intrusion",
-            description: "Phase de reconnaissance active et passive, interconnexion de VMs Kali/Windows et structuration sous CherryTree (S3 BEAUVALLET).",
+            description: "Reconnaissance réseau et scan de vulnérabilités avec Nmap.",
             image: "test_intrusion_kali_linux.jpg",
             file: "TP02_B3_S3_TEST_INTRUSION.pdf",
             cat: "bloc3",
@@ -1280,7 +986,7 @@
           },
           {
             name: "TP2.6 (2ème Année) - Test d'intrusion : Post-Exploitation",
-            description: "Phase IV Post-Exploitation : navigation sous Meterpreter, extraction des hashs SAM locaux et cassage de mots de passe NTLM avec John the Ripper (S3 BEAUVALLET).",
+            description: "Collecte d'informations système après accès sur une machine cible.",
             image: "tp26_post_exploitation.jpg",
             file: "TP2.6_INTRUSION_B3_BEAUVALLET.pdf",
             cat: "bloc3",
@@ -1288,7 +994,7 @@
           },
           {
             name: "TP2.7 (2ème Année) - Test d'intrusion : Maintien d'accès",
-            description: "Phase V Maintien d'accès : création de la charge utile msfvenom (persistence.exe), configuration du listener Meterpreter et persistance système (S3 BEAUVALLET).",
+            description: "Étude des techniques de persistance lors d'un test d'intrusion.",
             image: "tp27_maintien_acces.jpg",
             file: "TP2.7_INTRUSION_B3_BEAUVALLET.pdf",
             cat: "bloc3",
@@ -1296,7 +1002,7 @@
           },
           {
             name: "TP2.8 (2ème Année) - Test d'intrusion : Effacement de traces",
-            description: "Phase VI Effacement de traces : observateur d'événements Windows, purge complète des journaux avec Meterpreter (clearev) et suppression d'artefacts (S3 BEAUVALLET).",
+            description: "Analyse des journaux système et gestion des traces lors d'un audit.",
             image: "tp28_effacement_traces.jpg",
             file: "TP2.8_INTRUSION_B3_BEAUVALLET.pdf",
             cat: "bloc3",
@@ -1304,7 +1010,7 @@
           },
           {
             name: "TP2.9 (2ème Année) - Test d'intrusion : Rapport d'audit",
-            description: "Phase VII Rapport d'audit : synthèse managériale, évaluation CVSS des vulnérabilités, matrice de criticité et plan de remédiation sécurisé (S3 BEAUVALLET).",
+            description: "Rédaction du rapport final d'audit et des recommandations de sécurité.",
             image: "tp29_rapport_audit.jpg",
             file: "TP2.9_INTRUSION_B3_BEAUVALLET.pdf",
             cat: "bloc3",
@@ -1312,7 +1018,7 @@
           },
           {
             name: "TP Hacksain 1 - Hacking sans installation : Les bases",
-            description: "Initiation au piratage éthique sans installation : décomposition d'URL, analyse et manipulation de Query Strings HTTP (? et &), observation des réponses serveur et altération de paramètres (S3 BEAUVALLET).",
+            description: "Découverte des URL et manipulation de paramètres HTTP dans le navigateur.",
             image: "tp_hacksain_1.jpg",
             file: "TP_Hacksain_1_B3.pdf",
             cat: "bloc3",
@@ -1320,7 +1026,7 @@
           },
           {
             name: "TP Hacksain 2 - Divulgation de fichiers sensibles",
-            description: "Cybersécurité sans installation : analyse du fichier robots.txt (directives User-agent & Disallow), découverte d'arborescences cachées, exploitation de sauvegardes (.bak) et fuite d'informations sensibles sur pages de debug (S3 BEAUVALLET).",
+            description: "Analyse de fichiers robots.txt et recherche de fichiers sensibles exposés.",
             image: "tp_hacksain_2.jpg",
             file: "TP_Hacksain_2_B3.pdf",
             cat: "bloc3",
@@ -1328,7 +1034,7 @@
           },
           {
             name: "TP Hacksain 3 - Injection HTML et vulnérabilités XSS",
-            description: "Cybersécurité sans installation : injection de balises HTML et phishing via liens piégés (<a>), exploitation de failles Cross-Site Scripting réfléchi (Reflected XSS) et stocké (Stored XSS) sur Pentest-Ground et labs PortSwigger (S3 BEAUVALLET).",
+            description: "Tests d'injections HTML et failles XSS sur des environnements de test.",
             image: "tp_hacksain_3.jpg",
             file: "TP_Hacksain_3_B3.pdf",
             cat: "bloc3",
@@ -1336,7 +1042,7 @@
           },
           {
             name: "TP Hacksain 4 - Injections SQL et contournement d'authentification",
-            description: "Cybersécurité sans installation : manipulation de requêtes SQL sur Programiz, neutralisation de filtres avec commentaires (--), injection booléenne (' OR 1=1--), login bypass sur lab PortSwigger et requêtes préparées (S3 BEAUVALLET).",
+            description: "Tests d'injections SQL et sécurisation avec les requêtes préparées.",
             image: "tp_hacksain_4.jpg",
             file: "TP_Hacksain_4_B3.pdf",
             cat: "bloc3",
@@ -1344,7 +1050,7 @@
           },
           {
             name: "TP HACKIP01 - Grabify : Analyse d'IP Grabber",
-            description: "Cybersécurité et ingénierie sociale : génération d'URL raccourcie piégée sous Grabify, activation du Smart Logger, simulation d'accès victime via Tor et analyse des métadonnées de connexion (S3 BEAUVALLET).",
+            description: "Création d'un lien de test avec Grabify et analyse de logs via Tor.",
             image: "tp_hackip01.jpg",
             file: "TP_HACKIP01_B3_BEAUVALLET.pdf",
             cat: "bloc3",
@@ -1354,7 +1060,7 @@
         pro: [
           {
             name: "TP MOOC - Autoformation en Ligne",
-            description: "Étude et analyse comparative de plateformes de MOOC (FUN MOOC, Coursera, OpenClassrooms) et suivi d'un cours en ligne (S3 SOTOCA).",
+            description: "Comparatif de plateformes de MOOC et suivi d'une formation en ligne.",
             image: "thumb_mooc.png",
             file: "mooc_tp_sotoca.pdf",
             cat: "pro",
@@ -1362,7 +1068,7 @@
           },
           {
             name: "Bilan TP1 - Mon Portrait de Compétences (PCC)",
-            description: "Bilan d'auto-évaluation et portrait de compétences BTS SIO (Blocs 1, 2 SLAM, 3 Cybersécurité, Soft skills) et plan d'action professionnel (S3).",
+            description: "Auto-évaluation de mes compétences BTS SIO et bilan personnel.",
             image: "pcc_portrait_competences.jpg",
             file: "BILAN_TP1_PCC.pdf",
             cat: "pro",
@@ -1370,7 +1076,7 @@
           },
           {
             name: "TP02 & TP03 MOOC - Planification et Suivi de Formation",
-            description: "Construction du planning de formation, suivi d'avancement et bilan de complétion à 100 % du cours OpenClassrooms sur les agents IA (S3 SOTOCA).",
+            description: "Planification et suivi de mon cours OpenClassrooms sur les agents IA.",
             image: "mooc_completion_openclassrooms.jpg",
             file: "Compte_rendu_TP02_TP03_MOOC_SOTOCA.pdf",
             cat: "pro",
@@ -1378,7 +1084,7 @@
           },
           {
             name: "Atelier GSB Frais — Application Symfony & Livrables",
-            description: "Modernisation de l'application GSB Frais : bundle Symfony GsbFraisBundle, compte rendu d'atelier (18 p.), notice utilisateur (12 p.) et cahier des charges (9 p.) (S3 BEAUVALLET).",
+            description: "Application web de gestion de frais sous Symfony et livrables projet.",
             image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
             file: "https://github.com/ealexandre18/GSB-Frais",
             cat: "pro",
@@ -1386,7 +1092,7 @@
           },
           {
             name: "TP05 (2ème Année) - Portfolio de Certification (PCC)",
-            description: "Parcours de certification complémentaire (PCC) : fiche d'identité MOOC OpenClassrooms Vibe Coding & IA, journal de bord, preuves d'obtention et auto-évaluation (S3).",
+            description: "Création de mon portfolio de compétences pour le BTS SIO.",
             image: "tp05_portfolio_certification.jpg",
             file: "TP05_Portfolio_Certification_etudiant.html",
             cat: "pro",
@@ -1489,117 +1195,214 @@
       ]
     };
 
-    // ====================================================
-    // DONNÉES DE VEILLE ÉQUILIBRÉES (INTEL, NVIDIA, AMD)
-    // ====================================================
     const veilleData = {
       2025: [
         { date: "12/11/2025", marque: "AMD", sujet: "AMD Ryzen 9000X3D : Démontage confirmant le cache mémoire placé sous les cœurs", impact: "En démontant le processeur (delidding), l'expert Der8auer montre qu'AMD a glissé le bloc de mémoire cache sous le processeur. Résultat : le processeur chauffe presque deux fois moins en jeu.", url: "https://www.youtube.com/watch?v=E-dvUE3wAiQ", source: "YouTube (Der8auer)" },
         { date: "21/10/2025", marque: "AMD", sujet: "AMD Krackan Point : Deux types de cœurs dans une même puce pour PC portable", impact: "Cette puce associe des gros cœurs pour les jeux exigeants et des petits cœurs miniatures pour les tâches simples, afin de garder une autonomie de batterie record sur ordinateur portable.", url: "https://www.tomshardware.com/pc-components/cpus/amds-krackan-point-apus-tipped-to-arrive-for-desktop-soon-as-ryzen-9000g-series-new-agesa-code-adds-support-for-ryzen-ai-300-series-in-bios-update", source: "Tom's Hardware" },
-        { date: "09/10/2025", marque: "Intel", sujet: "Intel Panther Lake (Core Ultra Série 3) : Premiers SoC client sur le nœud Intel 18A", impact: "Panther Lake introduit une architecture multi-chiplets sur Intel 18A avec transistors RibbonFET et alimentation arrière PowerVia. Il vise jusqu'à 180 TOPS de plateforme et 15 % de performance par watt en plus.", url: "https://www.intel.com/content/www/us/en/newsroom/news/client-computing/intel-unveils-panther-lake-architecture-first-ai-pc-platform-built-on-18a.html", source: "Intel Newsroom" },
-        { date: "09/10/2025", marque: "Intel", sujet: "Intel Xeon 6+ Clearwater Forest : Premier processeur serveur 18A avec Foveros Direct", impact: "Intel dévoile Clearwater Forest, un processeur serveur multi-chiplets jusqu'à 288 cœurs sur Intel 18A combinant 12 canaux DDR5-8000 et packaging 3D Foveros Direct.", url: "https://www.tomshardware.com/pc-components/cpus/intels-make-or-break-18a-process-node-debuts-for-data-center-with-288-core-xeon-6-cpu-multi-chip-monster-sports-12-channels-of-ddr5-8000-foveros-direct-3d-packaging-tech", source: "Tom's Hardware" },
-        { date: "18/09/2025", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72 : Architecture rack-scale pour l'inférence IA à très grande échelle", impact: "NVIDIA détaille le GB200 NVL72 comme un superordinateur de rack agissant comme un GPU virtuel massif. Son spine NVLink relie 72 GPU via plus de 5 000 câbles cuivre pour déplacer les données à 130 To/s.", url: "https://blogs.nvidia.com/blog/blackwell-ai-inference/", source: "NVIDIA Blog" },
+        { date: "09/10/2025", marque: "Intel", sujet: "Intel Panther Lake : Lancement de la gravure 18A pour PC", impact: "Panther Lake introduit une architecture multi-chiplets sur Intel 18A avec transistors RibbonFET et alimentation arrière PowerVia. Il vise jusqu'à 180 TOPS de plateforme et 15 % de performance par watt en plus.", url: "https://www.intel.com/content/www/us/en/newsroom/news/client-computing/intel-unveils-panther-lake-architecture-first-ai-pc-platform-built-on-18a.html", source: "Intel Newsroom" },
+        { date: "09/10/2025", marque: "Intel", sujet: "Intel Clearwater Forest : Processeur serveur 288 cœurs en 18A", impact: "Intel dévoile Clearwater Forest, un processeur serveur multi-chiplets jusqu'à 288 cœurs sur Intel 18A combinant 12 canaux DDR5-8000 et packaging 3D Foveros Direct.", url: "https://www.tomshardware.com/pc-components/cpus/intels-make-or-break-18a-process-node-debuts-for-data-center-with-288-core-xeon-6-cpu-multi-chip-monster-sports-12-channels-of-ddr5-8000-foveros-direct-3d-packaging-tech", source: "Tom's Hardware" },
+        { date: "18/09/2025", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72 : Serveur IA reliant 72 cartes graphiques", impact: "NVIDIA détaille le GB200 NVL72 comme un superordinateur de rack agissant comme un GPU virtuel massif. Son spine NVLink relie 72 GPU via plus de 5 000 câbles cuivre pour déplacer les données à 130 To/s.", url: "https://blogs.nvidia.com/blog/blackwell-ai-inference/", source: "NVIDIA Blog" },
         { date: "26/08/2025", marque: "NVIDIA", sujet: "NVIDIA Blackwell Ultra : Deux puces assemblées avec un pont en silicium (CoWoS-L)", impact: "NVIDIA pose deux puces géantes côte à côte sur une fine couche de silicium qui contient des milliers de micro-fils invisibles. Elles échangent des données à 10 000 Go par seconde comme si elles ne faisaient qu'une.", url: "https://next.ink/196887/dans-les-entrailles-du-gpu-blackwell-ultra-de-nvidia/", source: "Next INpact" },
         { date: "11/08/2025", marque: "AMD", sujet: "AMD RDNA 3.5 : Graphismes plus rapides pour les puces de PC portables", impact: "Une mise à jour des cœurs graphiques qui double la vitesse d'affichage des textures tout en consommant très peu, idéale pour jouer à des jeux sur console portable ou ordinateur fin.", url: "https://www.tomshardware.com/pc-components/cpus/amd-deep-dives-zen-5-ryzen-9000-and-strix-point-cpu-rdna-35-gpu-and-xdna-2-architectures/5", source: "Tom's Hardware" },
         { date: "17/07/2025", marque: "AMD", sujet: "AMD Threadripper PRO 9000 : Processeur de travail avec 96 cœurs de calcul", impact: "Un monstre de puissance conçu pour les studios d'animation et les ingénieurs : 96 cœurs capables d'effectuer 192 tâches en même temps pour créer des effets spéciaux de cinéma.", url: "https://www.amd.com/en/blogs/2025/amd-introduces-new-zen-5-based-ryzen-threadripper-pro.html", source: "AMD Blog" },
-        { date: "12/06/2025", marque: "AMD", sujet: "AMD Instinct MI350 (CDNA 4) : Accélérateurs IA MI350X/MI355X et infrastructure rack ouverte", impact: "AMD dévoile les accélérateurs Instinct MI350X et MI355X fondés sur CDNA 4, associés aux CPU EPYC et cartes réseau Pensando Pollara. L'entreprise annonce jusqu'à 3,9x plus de calcul IA par génération.", url: "https://www.amd.com/en/newsroom/press-releases/2025-6-12-amd-unveils-vision-for-an-open-ai-ecosystem-detai.html", source: "AMD Newsroom" },
+        { date: "12/06/2025", marque: "AMD", sujet: "AMD Instinct MI350 : Nouvelles cartes serveur pour l'IA", impact: "AMD dévoile les accélérateurs Instinct MI350X et MI355X fondés sur CDNA 4, associés aux CPU EPYC et cartes réseau Pensando Pollara. L'entreprise annonce jusqu'à 3,9x plus de calcul IA par génération.", url: "https://www.amd.com/en/newsroom/press-releases/2025-6-12-amd-unveils-vision-for-an-open-ai-ecosystem-detai.html", source: "AMD Newsroom" },
         { date: "03/06/2025", marque: "AMD", sujet: "AMD Architecture Zen 5 : Double décodeur pour anticiper les ordres du processeur", impact: "Le processeur possède désormais deux guichets au lieu d'un seul pour lire et comprendre les ordres des logiciels, ce qui lui permet de traiter plus de travail à chaque seconde.", url: "https://www.youtube.com/watch?v=Y1yubL0h46U", source: "YouTube (Gamers Nexus)" },
-        { date: "27/05/2025", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72 : Livraison du premier rack QCT à 1,4 exaFLOPS IA", impact: "QCT annonce la livraison de son premier système GB200 NVL72. Le rack revendique 1,4 exaFLOPS de performance IA, jusqu'à 13,4 To de HBM3E partagée et une bande passante de 576 To/s.", url: "https://qct.io/Press-Releases/index/PR/Server/QCT-Announces-First-Shipment-of-its-NVIDIA-GB200-NVL72-System", source: "Quanta Cloud Technology" },
+        { date: "27/05/2025", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72 : Premier serveur QCT livré", impact: "QCT annonce la livraison de son premier système GB200 NVL72. Le rack revendique 1,4 exaFLOPS de performance IA, jusqu'à 13,4 To de HBM3E partagée et une bande passante de 576 To/s.", url: "https://qct.io/Press-Releases/index/PR/Server/QCT-Announces-First-Shipment-of-its-NVIDIA-GB200-NVL72-System", source: "Quanta Cloud Technology" },
         { date: "20/05/2025", marque: "AMD", sujet: "AMD Computex 2025 : Radeon RX 9060 XT, Radeon AI PRO R9700 et Threadripper 9000", impact: "AMD lance les GPU Radeon RX 9060 XT et Radeon AI PRO R9700 pour les charges professionnelles, tout en dévoilant les processeurs Ryzen Threadripper 9000 pour stations de travail.", url: "https://www.amd.com/en/newsroom/press-releases/2025-5-20-amd-introduces-new-radeon-graphics-cards-and-ryzen.html", source: "AMD Newsroom" },
         { date: "26/03/2025", marque: "AMD", sujet: "AMD XDNA 2 : Format Block FP16 pour faire tourner l'IA sans perdre en précision", impact: "AMD a inventé un nouveau format de calcul pour les puces IA. Il est aussi petit et léger qu'un format économique mais reste aussi précis qu'un format lourd, pour des réponses d'IA sans erreur.", url: "https://www.tomshardware.com/pc-components/cpus/amd-deep-dives-zen-5-ryzen-9000-and-strix-point-cpu-rdna-35-gpu-and-xdna-2-architectures/6", source: "Tom's Hardware" },
-        { date: "18/03/2025", marque: "NVIDIA", sujet: "NVIDIA Blackwell Ultra : Solutions serveurs GB300 NVL72 et HGX B300 chez Supermicro", impact: "Dans la foulée du GTC 2025, les systèmes Blackwell Ultra (GB300 NVL72 et HGX B300) arrivent avec 1,5 fois plus de performance IA que GB200 NVL72 pour les usines IA.", url: "https://www.techpowerup.com/334348/supermicro-adds-portfolio-for-next-wave-of-ai-with-nvidia-blackwell-ultra-solutions", source: "TechPowerUp" },
+        { date: "18/03/2025", marque: "NVIDIA", sujet: "NVIDIA Blackwell Ultra : Nouveaux serveurs IA GB300", impact: "Dans la foulée du GTC 2025, les systèmes Blackwell Ultra (GB300 NVL72 et HGX B300) arrivent avec 1,5 fois plus de performance IA que GB200 NVL72 pour les usines IA.", url: "https://www.techpowerup.com/334348/supermicro-adds-portfolio-for-next-wave-of-ai-with-nvidia-blackwell-ultra-solutions", source: "TechPowerUp" },
         { date: "28/02/2025", marque: "AMD", sujet: "AMD RDNA 4 : Lancement de l'architecture graphique et des Radeon RX 9070 XT / RX 9070", impact: "AMD officialise son architecture graphique RDNA 4 avec les Radeon RX 9070 XT et RX 9070, améliorant nettement le Ray Tracing et l'upscaling IA FSR 4 pour les joueurs.", url: "https://videocardz.com/newz/amd-launches-radeon-rx-9070-xt-and-rx-9070-graphics-cards", source: "VideoCardz" },
         { date: "19/02/2025", marque: "Intel", sujet: "Intel Arrow Lake : Processeur découpé en quatre petites tuiles empilées en 3D", impact: "Au lieu de faire un processeur monolithique d'un seul bloc, Intel sépare le calcul, les graphismes et les connexions sur 4 petites tuiles fabriquées sur mesure, puis les empile en 3D.", url: "https://www.01net.com/actualites/jusqua-52-coeurs-cpu-pour-la-prochaine-generation-de-processeurs-intel.html", source: "01net" },
-        { date: "13/02/2025", marque: "NVIDIA", sujet: "NVIDIA Grace Blackwell : Première livraison HPE d'un système GB200 NVL72 refroidi par liquide", impact: "HPE livre son premier système GB200 NVL72 refroidi par liquide, combinant 72 GPU Blackwell et 36 CPU Grace via NVLink avec jusqu'à 13,5 To de mémoire HBM3E.", url: "https://www.hpe.com/us/en/newsroom/press-release/2025/02/hpe-announces-shipment-of-its-first-nvidia-grace-blackwell-system.html", source: "HPE Newsroom" },
-        { date: "04/02/2025", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72 : Disponibilité des instances cloud Blackwell (FP4 & NVLink 130 To/s)", impact: "Les premières instances cloud GB200 NVL72 deviennent accessibles, apportant 130 To/s de bande passante NVLink et le moteur Transformer de 2e génération avec précision FP4.", url: "https://blogs.nvidia.com/blog/blackwell-coreweave-gb200-nvl72-instances-cloud/", source: "NVIDIA Blog" },
-        { date: "09/01/2025", marque: "Intel", sujet: "Intel 18A : Panther Lake et Clearwater Forest sortent de fabrique et démarrent sous OS", impact: "Intel confirme que ses deux produits phares sur le nœud 18A ont été fabriqués, alimentés et ont démarré un système d'exploitation, validant la montée en production du procédé 18A.", url: "https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry-achieves-major-milestones.html", source: "Intel Newsroom" },
+        { date: "13/02/2025", marque: "NVIDIA", sujet: "NVIDIA Grace Blackwell : Serveur refroidi par liquide chez HPE", impact: "HPE livre son premier système GB200 NVL72 refroidi par liquide, combinant 72 GPU Blackwell et 36 CPU Grace via NVLink avec jusqu'à 13,5 To de mémoire HBM3E.", url: "https://www.hpe.com/us/en/newsroom/press-release/2025/02/hpe-announces-shipment-of-its-first-nvidia-grace-blackwell-system.html", source: "HPE Newsroom" },
+        { date: "04/02/2025", marque: "NVIDIA", sujet: "NVIDIA GB200 NVL72 : Arrivée des serveurs Blackwell dans le cloud", impact: "Les premières instances cloud GB200 NVL72 deviennent accessibles, apportant 130 To/s de bande passante NVLink et le moteur Transformer de 2e génération avec précision FP4.", url: "https://blogs.nvidia.com/blog/blackwell-coreweave-gb200-nvl72-instances-cloud/", source: "NVIDIA Blog" },
+        { date: "09/01/2025", marque: "Intel", sujet: "Intel 18A : Premiers processeurs fonctionnels sortis d'usine", impact: "Intel confirme que ses deux produits phares sur le nœud 18A ont été fabriqués, alimentés et ont démarré un système d'exploitation, validant la montée en production du procédé 18A.", url: "https://www.intel.com/content/www/us/en/newsroom/news/intel-foundry-achieves-major-milestones.html", source: "Intel Newsroom" },
         { date: "07/01/2025", marque: "Intel", sujet: "Intel Arrow Lake Mobile : Suppression de l'Hyper-Threading pour économiser l'énergie", impact: "Intel a supprimé la vieille technologie qui dédoublait les cœurs virtuellement. À la place, il utilise des cœurs physiques plus simples et efficaces, ce qui évite la surchauffe dans les PC portables.", url: "https://aecmag.com/workstations/intel-core-ultra-200hx-and-200h-processors-launch/", source: "AEC Magazine" },
-        { date: "06/01/2025", marque: "AMD", sujet: "AMD Ryzen AI Max : APU mobile jusqu'à 16 cœurs Zen 5, RDNA 3.5 et 128 Go de mémoire unifiée", impact: "AMD annonce les Ryzen AI Max destinés aux PC fins offrant des performances de station de travail, intégrant jusqu'à 40 unités RDNA 3.5, 50 TOPS de NPU XDNA 2 et 128 Go de mémoire unifiée.", url: "https://www.amd.com/en/blogs/2025/amd-ryzen-ai-max-395-processor-breakthrough-ai-.html", source: "AMD Blog" }
+        { date: "06/01/2025", marque: "AMD", sujet: "AMD Ryzen AI Max : Puce portable avec 128 Go de mémoire partagée", impact: "AMD annonce les Ryzen AI Max destinés aux PC fins offrant des performances de station de travail, intégrant jusqu'à 40 unités RDNA 3.5, 50 TOPS de NPU XDNA 2 et 128 Go de mémoire unifiée.", url: "https://www.amd.com/en/blogs/2025/amd-ryzen-ai-max-395-processor-breakthrough-ai-.html", source: "AMD Blog" }
       ],
       2026: [
-        { date: "16/11/2026", marque: "Intel", sujet: "Intel GPU D270 : Accélérateur HPC hétérogène Xe3P avec 480 Go de LPDDR5X", impact: "Intel dévoile la carte GPU D270 (issue de Crescent Island) intégrant calcul double précision, accélération IA et jusqu'à 480 Go de LPDDR5X au format PCIe refroidi par air.", url: "https://videocardz.com/newz/intel-gpu-d270-is-xe3p-crescent-island-card-with-480gb-lpddr5x-memory", source: "VideoCardz" },
-        { date: "05/11/2026", marque: "NVIDIA", sujet: "NVIDIA Vera Rubin NVL72 : Interconnexion NVLink-C2C à 1,8 To/s et 1,5 To de LPDDR5X", impact: "Dans Vera Rubin NVL72, NVLink-C2C relie de façon cohérente le CPU Vera au GPU Rubin à 1,8 To/s. Chaque CPU embarque jusqu'à 1,5 To de LPDDR5X pour servir de mémoire de contexte à l'IA agentique.", url: "https://developer.nvidia.com/blog/five-ways-nvidia-co-design-maximizes-the-value-of-every-byte-in-the-ai-factory", source: "NVIDIA Technical Blog" },
-        { date: "12/10/2026", marque: "Intel", sujet: "Intel Crescent Island : GPU Xe3P refroidi par air avec 480 Go de LPDDR5X pour l'IA", impact: "Intel présente l'accélérateur d'inférence Crescent Island doté de 32 cœurs Xe3P et jusqu'à 480 Go de LPDDR5X pour contourner les pénuries de mémoire HBM.", url: "https://wccftech.com/intel-crescent-island-gpus-32-xe3p-cores-for-agentic-ai-low-cost-lpddr5x-up-to-480-gb", source: "Wccftech" },
-        { date: "24/09/2026", marque: "NVIDIA", sujet: "NVIDIA Format NVFP4 : Double mise à l'échelle sur 4 bits pour booster l'IA sans perte de précision", impact: "NVIDIA réinvente le format de calcul des puces Blackwell Ultra en associant des nombres sur 4 bits à un facteur d'échelle FP8 par bloc et FP32 global. Cette avancée double le débit des modèles d'IA et divise par deux la mémoire requise.", url: "https://www.tomshardware.com/pc-components/gpus/nvidia-shares-blackwell-ultras-secrets-nvfp4-boost-detailed-and-pcie-6-0-support", source: "Tom's Hardware" },
-        { date: "21/09/2026", marque: "AMD", sujet: "AMD Architecture UDNA : Réunification des cœurs Gaming et IA sous une matrice unique", impact: "AMD fusionne ses deux branches graphiques RDNA (jeux grand public) et CDNA (centres de données) en une seule architecture unifiée nommée UDNA pour simplifier le développement face à CUDA.", url: "https://www.clubic.com/actualite-544559-clap-de-fin-apres-rnda-4-amd-envisage-une-nouvelle-architecture.html", source: "Clubic" },
-        { date: "15/09/2026", marque: "AMD", sujet: "AMD RDNA 4 (Leak) : Nouveaux circuits matériels dédiés au Ray Tracing", impact: "Des fuites révèlent que l'architecture RDNA 4 ajoute des moteurs matériels dédiés (double intersection de rayons, compression BVH) qui doublent la vitesse des reflets et ombres en jeu.", url: "https://www.techpowerup.com/324767/several-amd-rdna-4-architecture-ray-tracing-hardware-features-leaked", source: "TechPowerUp" },
+        { date: "16/11/2026", marque: "Intel", sujet: "Intel GPU D270 : Nouvelle carte IA avec 480 Go de mémoire", impact: "Intel dévoile la carte GPU D270 (issue de Crescent Island) intégrant calcul double précision, accélération IA et jusqu'à 480 Go de LPDDR5X au format PCIe refroidi par air.", url: "https://videocardz.com/newz/intel-gpu-d270-is-xe3p-crescent-island-card-with-480gb-lpddr5x-memory", source: "VideoCardz" },
+        { date: "05/11/2026", marque: "NVIDIA", sujet: "NVIDIA Vera Rubin NVL72 : Supercalculateur IA reliant CPU et GPU", impact: "Dans Vera Rubin NVL72, NVLink-C2C relie de façon cohérente le CPU Vera au GPU Rubin à 1,8 To/s. Chaque CPU embarque jusqu'à 1,5 To de LPDDR5X pour servir de mémoire de contexte à l'IA agentique.", url: "https://developer.nvidia.com/blog/five-ways-nvidia-co-design-maximizes-the-value-of-every-byte-in-the-ai-factory", source: "NVIDIA Technical Blog" },
+        { date: "12/10/2026", marque: "Intel", sujet: "Intel Crescent Island : Carte graphique IA avec 480 Go de mémoire", impact: "Intel présente l'accélérateur d'inférence Crescent Island doté de 32 cœurs Xe3P et jusqu'à 480 Go de LPDDR5X pour contourner les pénuries de mémoire HBM.", url: "https://wccftech.com/intel-crescent-island-gpus-32-xe3p-cores-for-agentic-ai-low-cost-lpddr5x-up-to-480-gb", source: "Wccftech" },
+        { date: "24/09/2026", marque: "NVIDIA", sujet: "NVIDIA Format NVFP4 : Calculs d'IA sur 4 bits plus rapides", impact: "NVIDIA réinvente le format de calcul des puces Blackwell Ultra en associant des nombres sur 4 bits à un facteur d'échelle FP8 par bloc et FP32 global. Cette avancée double le débit des modèles d'IA et divise par deux la mémoire requise.", url: "https://www.tomshardware.com/pc-components/gpus/nvidia-shares-blackwell-ultras-secrets-nvfp4-boost-detailed-and-pcie-6-0-support", source: "Tom's Hardware" },
+        { date: "21/09/2026", marque: "AMD", sujet: "AMD Architecture UDNA : Une seule architecture pour le jeu et l'IA", impact: "AMD fusionne ses deux branches graphiques RDNA (jeux grand public) et CDNA (centres de données) en une seule architecture unifiée nommée UDNA pour simplifier le développement face à CUDA.", url: "https://www.clubic.com/actualite-544559-clap-de-fin-apres-rnda-4-amd-envisage-une-nouvelle-architecture.html", source: "Clubic" },
+        { date: "15/09/2026", marque: "AMD", sujet: "AMD RDNA 4 (Leak) : Nouveaux moteurs pour la lumière réaliste (Ray Tracing)", impact: "Des fuites révèlent que l'architecture RDNA 4 ajoute des moteurs matériels dédiés (double intersection de rayons, compression BVH) qui doublent la vitesse des reflets et ombres en jeu.", url: "https://www.techpowerup.com/324767/several-amd-rdna-4-architecture-ray-tracing-hardware-features-leaked", source: "TechPowerUp" },
         { date: "12/09/2026", marque: "NVIDIA", sujet: "NVIDIA DLSS 5 : L'intelligence artificielle qui recrée des scènes 3D en direct", impact: "Au lieu de calculer chaque pixel d'un jeu de manière classique, une IA analyse l'image et recrée instantanément les détails et la profondeur manquants pour que le jeu tourne de façon ultra-fluide.", url: "https://www.youtube.com/watch?v=FxvuvZI6Vjg", source: "YouTube (Hardware Unboxed)" },
         { date: "03/09/2026", marque: "Intel", sujet: "Intel Arrow Lake Refresh : Optimisation de l'autoroute interne du processeur", impact: "Intel a réorganisé la boucle de communication interne (le Ring Bus) qui relie les cœurs puissants et les cœurs économiques des Core Ultra 200 Plus. L'information voyage plus vite entre eux.", url: "https://www.hardwarecooking.fr/intel-core-ultra-5-250k-plus-et-core-ultra-7-270k-plus-11-mars/", source: "HardwareCooking" },
-        { date: "24/08/2026", marque: "Intel", sujet: "Intel Xeon 7 Diamond Rapids : Jusqu'à 256 P-cores sur 18A-P et interconnexion UCIe-S", impact: "À Hot Chips 2026, Intel détaille Diamond Rapids (Xeon 7) gravé en Intel 18A-P, avec jusqu'à 256 P-cores, 1,28 Go de cache L3, AVX 10.2 et des chiplets reliés par UCIe-S.", url: "https://assets.theregister.com/2026/08/25/202620/", source: "The Register" },
-        { date: "24/08/2026", marque: "AMD", sujet: "AMD Medusa Point (Zen 6) : Firmware graphique et chiplets gravés en 2 nm", impact: "AMD publie le firmware graphique de Medusa Point (Zen 6), confirmant l'assemblage modulaire de mini-puces gravées en 2 nanomètres pour les futurs PC portables haute performance.", url: "https://www.ginjfo.com/actualites/composants/cartes-graphiques/zen-6-amd-publie-le-firmware-graphique-de-medusa-point-20260824", source: "GinjFo" },
-        { date: "06/08/2026", marque: "AMD", sujet: "AMD Instinct MI455X : 432 Go de mémoire HBM4 et 23,3 To/s de bande passante", impact: "L'accélérateur Instinct MI455X embarque 432 Go de mémoire HBM4 et atteint 23,3 To/s de bande passante mémoire avec packaging 3D chip-stack pour la plateforme AMD Helios.", url: "https://videocardz.com/newz/amd-instinct-mi455x-gpu-features-432gb-hbm4-and-23-3-tb-s-memory-bandwidth", source: "VideoCardz" },
-        { date: "03/08/2026", marque: "NVIDIA", sujet: "NVIDIA Blackwell GB202 (RTX PRO 5500) : 84 Go de GDDR7 et architecture multi-puces", impact: "La carte professionnelle RTX PRO 5500 Blackwell exploite le GPU GB202 avec 84 Go de mémoire GDDR7 ECC ultra-rapide pour les stations de travail IA et le rendu 3D lourd.", url: "https://pausehardware.com/rtx-pro-5500-blackwell/", source: "Pause Hardware" },
+        { date: "24/08/2026", marque: "Intel", sujet: "Intel Xeon 7 Diamond Rapids : Processeur serveur jusqu'à 256 cœurs", impact: "À Hot Chips 2026, Intel détaille Diamond Rapids (Xeon 7) gravé en Intel 18A-P, avec jusqu'à 256 P-cores, 1,28 Go de cache L3, AVX 10.2 et des chiplets reliés par UCIe-S.", url: "https://assets.theregister.com/2026/08/25/202620/", source: "The Register" },
+        { date: "24/08/2026", marque: "AMD", sujet: "AMD Medusa Point (Zen 6) : Puces pour PC portables gravées en 2 nm", impact: "AMD publie le firmware graphique de Medusa Point (Zen 6), confirmant l'assemblage modulaire de mini-puces gravées en 2 nanomètres pour les futurs PC portables haute performance.", url: "https://www.ginjfo.com/actualites/composants/cartes-graphiques/zen-6-amd-publie-le-firmware-graphique-de-medusa-point-20260824", source: "GinjFo" },
+        { date: "06/08/2026", marque: "AMD", sujet: "AMD Instinct MI455X : Carte IA avec 432 Go de mémoire HBM4", impact: "L'accélérateur Instinct MI455X embarque 432 Go de mémoire HBM4 et atteint 23,3 To/s de bande passante mémoire avec packaging 3D chip-stack pour la plateforme AMD Helios.", url: "https://videocardz.com/newz/amd-instinct-mi455x-gpu-features-432gb-hbm4-and-23-3-tb-s-memory-bandwidth", source: "VideoCardz" },
+        { date: "03/08/2026", marque: "NVIDIA", sujet: "NVIDIA RTX PRO 5500 Blackwell : Carte pro avec 84 Go de GDDR7", impact: "La carte professionnelle RTX PRO 5500 Blackwell exploite le GPU GB202 avec 84 Go de mémoire GDDR7 ECC ultra-rapide pour les stations de travail IA et le rendu 3D lourd.", url: "https://pausehardware.com/rtx-pro-5500-blackwell/", source: "Pause Hardware" },
         { date: "27/07/2026", marque: "AMD", sujet: "AMD Socket AM6 (Leak) : Préparation de la mémoire DDR6 et des connexions PCIe 6.0", impact: "Les premières informations sur le futur socket AM6 (Zen 8) indiquent le passage à la mémoire vive DDR6 et aux ports PCIe 6.0 deux fois plus rapides pour les futures cartes graphiques.", url: "https://www.tomshardware.fr/amd-sapprete-a-tourner-la-page-am5-avec-larrivee-de-zen-8-sur-am6/", source: "Tom's Hardware" },
-        { date: "23/07/2026", marque: "AMD", sujet: "AMD Instinct MI400 à Hot Chips 2026 : Architecture IA rack-scale et mémoire HBM4", impact: "ServeTheHome analyse les annonces AMD Instinct MI400 à Hot Chips 2026, détaillant le packaging multi-chiplets, la mémoire HBM4 et l'intégration rack-scale Helios.", url: "https://www.servethehome.com/amd-mi400-gpu-at-hot-chips-2026/", source: "ServeTheHome" },
-        { date: "21/07/2026", marque: "NVIDIA", sujet: "NVIDIA Rubin GPU (Leak / Specs) : Ajustement HBM4 et bande passante NVLink 6", impact: "VideoCardz révèle l'évolution des spécifications du GPU Rubin : mémoire HBM4 jusqu'à 288 Go (19,2 à 22 To/s) et interconnexion NVLink 6 optimisée pour les clusters IA.", url: "https://videocardz.com/newz/nvidia-quietly-cuts-vera-rubin-specs-hbm4-bandwidth-and-nvlink-6-speeds-now-lower", source: "VideoCardz" },
+        { date: "23/07/2026", marque: "AMD", sujet: "AMD Instinct MI400 : Nouveaux GPU serveur avec mémoire HBM4", impact: "ServeTheHome analyse les annonces AMD Instinct MI400 à Hot Chips 2026, détaillant le packaging multi-chiplets, la mémoire HBM4 et l'intégration rack-scale Helios.", url: "https://www.servethehome.com/amd-mi400-gpu-at-hot-chips-2026/", source: "ServeTheHome" },
+        { date: "21/07/2026", marque: "NVIDIA", sujet: "NVIDIA Rubin GPU (Leak) : Détails sur la mémoire HBM4 et NVLink 6", impact: "VideoCardz révèle l'évolution des spécifications du GPU Rubin : mémoire HBM4 jusqu'à 288 Go (19,2 à 22 To/s) et interconnexion NVLink 6 optimisée pour les clusters IA.", url: "https://videocardz.com/newz/nvidia-quietly-cuts-vera-rubin-specs-hbm4-bandwidth-and-nvlink-6-speeds-now-lower", source: "VideoCardz" },
         { date: "02/06/2026", marque: "NVIDIA", sujet: "NVIDIA SER 2.0 : Ranger les rayons de lumière pour accélérer les calculs 3D", impact: "Dans un jeu vidéo, les rayons de lumière partent dans tous les sens. Le Shader Execution Reordering (SER) les regroupe par paquets similaires pour accélérer le calcul graphique jusqu'à 80 % sur GPU Blackwell.", url: "https://www.techpowerup.com/346921/microsoft-shader-execution-reordering-brings-90-performance-increase-on-intel-arc-b-series-80-on-nvidia-blackwell-gpus", source: "TechPowerUp" },
-        { date: "01/06/2026", marque: "Intel", sujet: "Intel Xeon 6+ : Premier processeur serveur Intel gravé en 18A avec 288 cœurs", impact: "Phoronix teste et analyse le Xeon 6+ (Clearwater Forest) gravé sur Intel 18A avec 288 E-cores, confirmant le gain d'efficacité énergétique et la densité pour les datacenters.", url: "https://www.phoronix.com/review/intel-xeon-6-plus-cri-e835", source: "Phoronix" },
-        { date: "20/05/2026", marque: "Intel", sujet: "Intel Core Ultra 300 (Panther Lake) : Lancement des SoC 18A avec GPU Xe3 Arc", impact: "Intel déploie sa gamme Core Ultra 300 (Panther Lake) gravée en 18A avec cœurs graphiques Xe3 Arc et NPU intégré, marquant sa contre-attaque sur l'autonomie x86 et l'IA embarquée.", url: "https://www.frandroid.com/marques/2930197_le-roi-de-lautonomie-sur-x86-intel-lance-sa-contre-attaque-massive-avec-ses-processeurs-panther-lake", source: "Frandroid" },
+        { date: "01/06/2026", marque: "Intel", sujet: "Intel Xeon 6+ : Processeur serveur 288 cœurs gravé en 18A", impact: "Phoronix teste et analyse le Xeon 6+ (Clearwater Forest) gravé sur Intel 18A avec 288 E-cores, confirmant le gain d'efficacité énergétique et la densité pour les datacenters.", url: "https://www.phoronix.com/review/intel-xeon-6-plus-cri-e835", source: "Phoronix" },
+        { date: "20/05/2026", marque: "Intel", sujet: "Intel Core Ultra 300 (Panther Lake) : Processeurs portables gravés en 18A", impact: "Intel déploie sa gamme Core Ultra 300 (Panther Lake) gravée en 18A avec cœurs graphiques Xe3 Arc et NPU intégré, marquant sa contre-attaque sur l'autonomie x86 et l'IA embarquée.", url: "https://www.frandroid.com/marques/2930197_le-roi-de-lautonomie-sur-x86-intel-lance-sa-contre-attaque-massive-avec-ses-processeurs-panther-lake", source: "Frandroid" },
         { date: "28/04/2026", marque: "AMD", sujet: "AMD Strix Halo : Processeur portable avec mémoire unifiée géante de 128 Go", impact: "C'est une puce portable qui intègre un gros processeur et une vraie carte graphique puissante. Les deux se partagent directement une même mémoire géante sans jamais avoir besoin de se copier les données.", url: "https://www.youtube.com/watch?v=RfkeZ0HciA0", source: "YouTube (Level1Techs)" },
         { date: "25/03/2026", marque: "AMD", sujet: "AMD RDNA 4m (Leak) : Les graphismes modernes adaptés aux PC portables très fins", impact: "Des fuites confirment qu'AMD adapte son architecture graphique RDNA 4m aux processeurs mobiles Medusa Point (Zen 6) en optimisant l'efficacité énergétique pour les PC portables ultrafins.", url: "https://hardwareand.co/actualites/breves/les-gpu-integres-rdna-4m-semblent-se-confirmer-pour-medusa-point-le-processeur-mobile-zen-6-d-amd", source: "Hardware & Co" },
-        { date: "18/03/2026", marque: "AMD", sujet: "AMD & Samsung HBM4 : Protocole d'approvisionnement mémoire pour Instinct", impact: "AMD et Samsung étendent leur coopération pour fournir la mémoire HBM4 destinée aux GPU Instinct MI455X, avec base die logique gravé en 4 nm.", url: "https://www.techpowerup.com/353518/amd-ceo-visits-samsung-for-hbm-samsung-wants-foundry-orders-in-return", source: "TechPowerUp" },
-        { date: "12/03/2026", marque: "Intel", sujet: "Intel Core Ultra 200S Plus : Contrôleur mémoire optimisé pour la DDR5 ultra-rapide", impact: "Le composant interne chargé de parler avec la mémoire vive (RAM) a été optimisé pour gérer la mémoire DDR5 très rapide sans ralentissement et sans créer de décalage avec le processeur.", url: "https://www.generation-nt.com/actualites/intel-arrow-lake-refresh-cpu-core-ultra-amd-2072323", source: "Génération NT" },
-        { date: "02/03/2026", marque: "NVIDIA", sujet: "NVIDIA & Coherent : Développement de la photonique silicium pour les datacenters IA", impact: "NVIDIA investit 2 milliards de dollars dans Coherent pour développer des composants optiques avancés permettant d'interconnecter les futurs datacenters IA par la lumière plutôt que par le cuivre.", url: "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Coherent-Announce-Strategic-Partnership-to-Develop-Optics-Technology-to-Scale-Next-Generation-Data-Center-Architecture/default.aspx", source: "NVIDIA (Officiel)" },
+        { date: "18/03/2026", marque: "AMD", sujet: "AMD & Samsung : Partenariat pour produire la mémoire HBM4", impact: "AMD et Samsung étendent leur coopération pour fournir la mémoire HBM4 destinée aux GPU Instinct MI455X, avec base die logique gravé en 4 nm.", url: "https://www.techpowerup.com/353518/amd-ceo-visits-samsung-for-hbm-samsung-wants-foundry-orders-in-return", source: "TechPowerUp" },
+        { date: "12/03/2026", marque: "Intel", sujet: "Intel Core Ultra 200S Plus : Meilleure gestion de la mémoire DDR5", impact: "Le composant interne chargé de parler avec la mémoire vive (RAM) a été optimisé pour gérer la mémoire DDR5 très rapide sans ralentissement et sans créer de décalage avec le processeur.", url: "https://www.generation-nt.com/actualites/intel-arrow-lake-refresh-cpu-core-ultra-amd-2072323", source: "Génération NT" },
+        { date: "02/03/2026", marque: "NVIDIA", sujet: "NVIDIA & Coherent : Connexions optiques par laser pour serveurs IA", impact: "NVIDIA investit 2 milliards de dollars dans Coherent pour développer des composants optiques avancés permettant d'interconnecter les futurs datacenters IA par la lumière plutôt que par le cuivre.", url: "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Coherent-Announce-Strategic-Partnership-to-Develop-Optics-Technology-to-Scale-Next-Generation-Data-Center-Architecture/default.aspx", source: "NVIDIA (Officiel)" },
         { date: "22/01/2026", marque: "AMD", sujet: "AMD RDNA 4 (Radeon RX 9000) : Séparation du dessin 3D et des calculs de lumière", impact: "L'architecture RDNA 4 sépare le travail en deux chaînes : une équipe construit la géométrie des objets 3D et une autre calcule les reflets lumineux, pour doubler le nombre d'images par seconde.", url: "https://www.youtube.com/watch?v=DhQecal2kE8", source: "YouTube (AMD / Tech Reveal)" },
         { date: "06/01/2026", marque: "NVIDIA", sujet: "NVIDIA DLSS 4.5 : Génération de plusieurs images par IA sans flou de mouvement", impact: "L'intelligence artificielle crée des images intermédiaires complètes entre deux vraies images de jeu. La version 4.5 supprime les tremblements et les effets de flou pour une fluidité parfaite.", url: "https://www.tomshardware.com/pc-components/cpus/nvidia-introduces-dlss-4-5-and-multi-frame-generation-6x-at-ces-2026-updated-models-can-generate-higher-quality-upscaled-frames-and-more-of-them-dynamically", source: "Tom's Hardware" },
-        { date: "05/01/2026", marque: "Intel", sujet: "Intel Core Ultra Series 3 : Première plateforme AI PC gravée en Intel 18A au CES 2026", impact: "Intel lance les Core Ultra Series 3, première plateforme PC IA grand public fabriquée avec son procédé 18A, combinant nouveaux cœurs CPU, NPU intégré et optimisation énergétique.", url: "https://www.intel.com/content/www/us/en/newsroom/press-hub/press-kit/artificial-intelligence/press-kit-intel-at-ces-2026.html", source: "Intel Newsroom" }
+        { date: "05/01/2026", marque: "Intel", sujet: "Intel Core Ultra Series 3 : Premiers PC portables gravés en 18A", impact: "Intel lance les Core Ultra Series 3, première plateforme PC IA grand public fabriquée avec son procédé 18A, combinant nouveaux cœurs CPU, NPU intégré et optimisation énergétique.", url: "https://www.intel.com/content/www/us/en/newsroom/press-hub/press-kit/artificial-intelligence/press-kit-intel-at-ces-2026.html", source: "Intel Newsroom" }
       ]
     };
 
-    // ====================================================
-    // CRÉATION DES CARTES TP (THUMBNAILS D'ORIGINE)
-    // ====================================================
-    function createTPCard(p, isStage = false) {
+    /* =========================================================
+       CANVAS AQUA LÉGER (FLUIDE SUR TOUS LES PC)
+       ========================================================= */
+    (function initAquaCanvas() {
+      const canvas = document.getElementById('aqua-canvas');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let W, H;
+      let animId = null;
+      const mouse = { x: -999, y: -999 };
+      const ripples = [];
+      const bubbles = [];
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // 16 bulles légères (très rapide sur CPU sans GPU dédié)
+      for (let i = 0; i < 16; i++) {
+        bubbles.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: 10 + Math.random() * 24,
+          vy: 0.4 + Math.random() * 0.7,
+          wobble: Math.random() * Math.PI * 2,
+          alpha: 0.28 + Math.random() * 0.3
+        });
+      }
+
+      let lastRipple = 0;
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        const now = performance.now();
+        if (now - lastRipple > 110 && ripples.length < 6) {
+          ripples.push({ x: e.clientX, y: e.clientY, r: 5, maxR: 55, alpha: 0.4 });
+          lastRipple = now;
+        }
+      }, { passive: true });
+
+      window.addEventListener('click', (e) => {
+        if (ripples.length < 8) {
+          ripples.push({ x: e.clientX, y: e.clientY, r: 6, maxR: 105, alpha: 0.6 });
+        }
+      }, { passive: true });
+
+      function animate() {
+        if (document.hidden) return;
+        ctx.clearRect(0, 0, W, H);
+
+        for (const b of bubbles) {
+          b.wobble += 0.02;
+          b.y -= b.vy;
+          b.x += Math.sin(b.wobble) * 0.3;
+
+          const dx = b.x - mouse.x;
+          const dy = b.y - mouse.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 14400 && distSq > 1) {
+            const dist = Math.sqrt(distSq);
+            const f = (120 - dist) / 120;
+            b.x += (dx / dist) * f * 2;
+            b.y += (dy / dist) * f * 2;
+          }
+
+          if (b.y < -b.r * 2) {
+            b.y = H + b.r * 2;
+            b.x = Math.random() * W;
+          }
+
+          // Dessin léger sans recréer de gradients lourds à chaque frame
+          ctx.fillStyle = `rgba(255, 255, 255, ${b.alpha * 0.45})`;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${b.alpha * 0.9})`;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          // Petit reflet blanc en haut à gauche
+          ctx.fillStyle = `rgba(255, 255, 255, ${b.alpha + 0.3})`;
+          ctx.beginPath();
+          ctx.arc(b.x - b.r * 0.32, b.y - b.r * 0.32, b.r * 0.22, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (let i = ripples.length - 1; i >= 0; i--) {
+          const rp = ripples[i];
+          rp.r += 2.4;
+          rp.alpha *= 0.94;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${rp.alpha})`;
+          ctx.lineWidth = 1.4;
+          ctx.beginPath();
+          ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+          ctx.stroke();
+          if (rp.r >= rp.maxR || rp.alpha < 0.04) ripples.splice(i, 1);
+        }
+
+        animId = requestAnimationFrame(animate);
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) animId = requestAnimationFrame(animate);
+        else if (animId) cancelAnimationFrame(animId);
+      });
+      animId = requestAnimationFrame(animate);
+    })();
+
+    /* Barre de progression d'eau au scroll (throttled rAF) */
+    let scrollTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!scrollTicking) {
+        requestAnimationFrame(() => {
+          const h = document.documentElement;
+          const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+          document.getElementById('scroll-water-bar').style.width = pct + '%';
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }, { passive: true });
+
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    function observeReveals() {
+      document.querySelectorAll('.reveal-item:not(.visible)').forEach(el => revealObs.observe(el));
+    }
+
+    function createTPCard(p, isStage = false, idx = 0) {
       const isDocx = p.isDocx || (p.file && p.file.endsWith('.docx'));
-      
-      // CORRECTION ICI : passage de "const" à "let" pour pouvoir modifier ces variables ensuite.
       let btnIcon = isDocx ? 'bi-file-earmark-word' : 'bi-file-earmark-pdf';
       let btnText = isDocx ? 'Télécharger (.docx)' : 'Consulter le PDF';
-      
-      // Ajout de gestion des liens externes GitHub / Web
-      const isExternal = p.file && p.file.startsWith('http');
-      if (isExternal) {
-        btnIcon = 'bi-github';
-        btnText = 'Voir le projet GitHub';
-      }
+      if (p.file && p.file.startsWith('http')) { btnIcon = 'bi-github'; btnText = 'Voir le projet GitHub'; }
+      else if (p.file && p.file.endsWith('.html')) { btnIcon = 'bi-file-earmark-code'; btnText = 'Consulter (Web)'; }
+      else if (p.file && (p.file.endsWith('.xls') || p.file.endsWith('.xlsx'))) { btnIcon = 'bi-file-earmark-excel'; btnText = 'Télécharger Excel'; }
 
-      // Ajout de gestion des fichiers html
-      const isHtml = p.file && p.file.endsWith('.html');
-      if (isHtml) {
-        btnIcon = p.file.includes('gsb') ? 'bi-box-arrow-up-right' : 'bi-file-earmark-code';
-        if (p.file.includes('gsb')) {
-          btnText = 'Accéder aux livrables GSB';
-        } else if (p.file.toLowerCase().includes('portfolio') || p.file.toLowerCase().includes('tp05')) {
-          btnText = 'Consulter le Portfolio (HTML)';
-        } else {
-          btnText = 'Consulter le TP (Web)';
-        }
-      }
-
-      // Ajout de gestion des fichiers xls
-      const isXls = p.file && (p.file.endsWith('.xls') || p.file.endsWith('.xlsx'));
-      if (isXls) {
-        btnIcon = 'bi-file-earmark-excel';
-        btnText = p.file.endsWith('.xlsx') ? 'Télécharger (.xlsx)' : 'Télécharger (.xls)';
-      }
-
-      let badgeText = isStage ? (p.tag || 'Stage') : p.cat.toUpperCase();
-      if (!isStage && p.cat === 'pro') badgeText = 'ATELIER PRO ET PCC';
-
+      let badgeText = isStage ? (p.tag || 'Stage') : (p.cat === 'pro' ? 'ATELIER PRO / PCC' : p.cat.toUpperCase());
+      const delay = Math.min((idx % 4) * 35, 140);
       return `
-        <div class="col-md-6 col-lg-4 col-xl-3 tp-item reveal" data-name="${p.name.toLowerCase()}" data-desc="${p.description.toLowerCase()}" data-cat="${p.cat || 'stage'}">
+        <div class="col-md-6 col-lg-4 col-xl-3 tp-item reveal-item" style="transition-delay:${delay}ms;">
           <div class="glass-card">
             <div class="tp-img-wrapper">
-              <img src="${p.image}" 
-                   class="tp-img" 
-                   alt="${p.name}" 
-                   loading="lazy" 
-                   onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800';">
+              <img src="${p.image}" class="tp-img" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800';">
             </div>
             <div class="tp-body">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="badge-aero" style="font-size:0.75rem; padding: 3px 8px;">${badgeText}</span>
-              </div>
+              <div class="mb-2"><span class="badge-aero">${badgeText}</span></div>
               <h6 class="tp-title">${p.name}</h6>
               <p class="tp-desc">${p.description}</p>
               <a href="${p.file}" target="_blank" class="btn-tp-open">
@@ -1610,179 +1413,90 @@
         </div>`;
     }
 
-    // ====================================================
-    // GESTION DES TPS ET RECHERCHE
-    // ====================================================
-    let activeYear = 'annee2'; // 2ème année par défaut
+    let activeYear = 'annee2';
     let activeBlock = 'all';
+
+    function updateBlockCounts() {
+      const yr = projectsData[activeYear] || {};
+      const b1 = (yr.bloc1 || []).length;
+      const b2 = (yr.bloc2 || []).length;
+      const b3 = (yr.bloc3 || []).length;
+      const pr = (yr.pro || []).length;
+      document.getElementById('cnt-all').innerText = b1 + b2 + b3 + pr;
+      document.getElementById('cnt-bloc1').innerText = b1;
+      document.getElementById('cnt-bloc2').innerText = b2;
+      document.getElementById('cnt-bloc3').innerText = b3;
+      document.getElementById('cnt-pro').innerText = pr;
+    }
 
     function renderTPs() {
       const container = document.getElementById('tps-container');
-      container.innerHTML = '';
-
-      const currentYearObj = projectsData[activeYear] || {};
-      let listToFilter = [];
-
-      if (activeBlock === 'all') {
-        listToFilter = [
-          ...(currentYearObj.bloc1 || []),
-          ...(currentYearObj.bloc2 || []),
-          ...(currentYearObj.bloc3 || []),
-          ...(currentYearObj.pro || [])
-        ];
-      } else {
-        listToFilter = currentYearObj[activeBlock] || [];
-      }
-
-      const search = document.getElementById('tp-search').value.toLowerCase().trim();
-      const cleanSearch = search.replace(/\s+/g, '');
-      const searchNoLeadingZero = cleanSearch.replace(/td0+/g, 'td').replace(/tp0+/g, 'tp');
-
-      const filtered = listToFilter.filter(p => {
-        if (!search) return true;
-        const nameNorm = p.name.toLowerCase();
-        const descNorm = p.description.toLowerCase();
-        const catNorm = (p.cat || '').toLowerCase();
-        const fileNorm = (p.file || '').toLowerCase();
-        const cleanName = nameNorm.replace(/\s+/g, '');
-        const nameNoLeadingZero = cleanName.replace(/td0+/g, 'td').replace(/tp0+/g, 'tp');
-        const cleanFile = fileNorm.replace(/\s+/g, '');
-        const fileNoLeadingZero = cleanFile.replace(/td0+/g, 'td').replace(/tp0+/g, 'tp');
-
-        return nameNorm.includes(search) || 
-          descNorm.includes(search) || 
-          catNorm.includes(search) ||
-          fileNorm.includes(search) ||
-          cleanName.includes(cleanSearch) ||
-          cleanFile.includes(cleanSearch) ||
-          nameNoLeadingZero.includes(searchNoLeadingZero) ||
-          fileNoLeadingZero.includes(searchNoLeadingZero);
-      });
-
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="col-12 text-center py-5">
-            <div class="glass-panel p-5 d-inline-block">
-              <i class="bi bi-folder2-open fs-1 text-primary mb-3 d-block"></i>
-              <h5 class="text-dark">Aucun document dans cette catégorie pour le moment.</h5>
-              <p class="text-dim small">Les prochains travaux pratiques de la 2ème année seront ajoutés au fil des cours.</p>
-            </div>
-          </div>`;
-      } else {
-        filtered.forEach(p => {
-          container.innerHTML += createTPCard(p, false);
-        });
-      }
-
-      initObserver();
+      const yr = projectsData[activeYear] || {};
+      let list = activeBlock === 'all'
+        ? [...(yr.bloc1 || []), ...(yr.bloc2 || []), ...(yr.bloc3 || []), ...(yr.pro || [])]
+        : (yr[activeBlock] || []);
+      const q = document.getElementById('tp-search').value.toLowerCase().trim();
+      if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q));
+      container.innerHTML = list.length
+        ? list.map((p, i) => createTPCard(p, false, i)).join('')
+        : '<div class="col-12 text-center py-4 text-muted">Aucun résultat trouvé.</div>';
+      updateBlockCounts();
+      observeReveals();
     }
 
-    function renderStage() {
-      const container = document.getElementById('stage-container');
-      container.innerHTML = '';
-      projectsData.stage1.forEach(p => {
-        container.innerHTML += createTPCard(p, true);
-      });
-      initObserver();
+    function renderStages() {
+      document.getElementById('stage-container').innerHTML = (projectsData.stage1 || []).map((s, i) => createTPCard(s, true, i)).join('');
+      observeReveals();
     }
 
-    // ====================================================
-    // ====================================================
-    // GESTION DU TABLEAU DE VEILLE AVEC CHARGEMENT PROGRESSIF (+10)
-    // ====================================================
     const VEILLE_STEP = 10;
     let visibleVeilleCount = VEILLE_STEP;
     let currentVeilleYear = 2026;
+    let currentVeilleBrand = 'ALL';
 
-    function renderVeille(year) {
-      currentVeilleYear = year;
+    function renderVeille() {
       const tbody = document.getElementById('veille-table-body');
-      tbody.innerHTML = '';
-      const items = veilleData[year] || [];
+      let items = veilleData[currentVeilleYear] || [];
+      if (currentVeilleBrand !== 'ALL') items = items.filter(v => v.marque === currentVeilleBrand);
+      const visible = items.slice(0, visibleVeilleCount);
+      tbody.innerHTML = visible.map(v => {
+        const tagClass = v.marque === 'Intel' ? 'badge-intel' : v.marque === 'NVIDIA' ? 'badge-nvidia' : 'badge-amd';
+        return `<tr>
+          <td class="text-primary fw-bold" style="white-space:nowrap;">${v.date}</td>
+          <td><span class="fw-bold d-block mb-1">${v.sujet}</span><span class="${tagClass}" style="font-size:0.75rem;padding:2px 9px;">${v.marque}</span></td>
+          <td>${v.impact}</td>
+          <td style="white-space:nowrap;"><a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn-source-link"><i class="bi bi-box-arrow-up-right me-1"></i>${v.source}</a></td>
+        </tr>`;
+      }).join('');
 
-      const visibleItems = items.slice(0, visibleVeilleCount);
-
-      visibleItems.forEach(v => {
-        let tagClass = 'badge-aero';
-        if (v.marque === 'Intel') tagClass = 'badge-intel';
-        else if (v.marque === 'NVIDIA') tagClass = 'badge-nvidia';
-        else if (v.marque === 'AMD') tagClass = 'badge-amd';
-
-        let sourceIcon = 'bi-box-arrow-up-right';
-        const sLower = (v.source || '').toLowerCase();
-        if (sLower.includes('youtube')) sourceIcon = 'bi-youtube text-danger';
-        else if (sLower.includes('x.com') || sLower.includes('twitter')) sourceIcon = 'bi-twitter-x text-dark';
-        else if (sLower.includes('reddit')) sourceIcon = 'bi-reddit text-warning';
-        else if (sLower.includes('officiel') || sLower.includes('newsroom') || sLower.includes('developer')) sourceIcon = 'bi-patch-check-fill text-success';
-        else if (sLower.includes('alertes') || sLower.includes('google')) sourceIcon = 'bi-google text-primary';
-        else sourceIcon = 'bi-newspaper text-info';
-
-        tbody.innerHTML += `
-          <tr class="reveal active">
-            <td class="text-primary fw-bold" style="white-space: nowrap;"><i class="bi bi-calendar2-check me-1"></i>${v.date}</td>
-            <td>
-              <span class="text-dark fw-bold d-block mb-1">${v.sujet}</span>
-              <span class="${tagClass}" style="font-size:0.75rem; padding: 3px 8px;">${v.marque || 'Tech'}</span>
-            </td>
-            <td style="color:#1e293b !important;">${v.impact}</td>
-            <td style="vertical-align: middle; white-space: nowrap;">
-              <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="btn-source-link" title="Consulter la source (${v.source}) datée du ${v.date}">
-                <i class="bi ${sourceIcon} me-1"></i> ${v.source || 'Consulter'}
-              </a>
-            </td>
-          </tr>`;
-      });
-
-      // Gestion du bouton progressif "+10"
-      const moreContainer = document.getElementById('veille-more-container');
-      const moreIcon = document.getElementById('more-icon');
+      const more = document.getElementById('veille-more-container');
       const moreText = document.getElementById('more-text');
-
+      const moreIcon = document.getElementById('more-icon');
       if (items.length > VEILLE_STEP) {
-        moreContainer.style.display = 'block';
+        more.style.display = 'block';
         if (visibleVeilleCount < items.length) {
-          const remaining = items.length - visibleVeilleCount;
-          const nextBatch = Math.min(VEILLE_STEP, remaining);
+          const rem = Math.min(VEILLE_STEP, items.length - visibleVeilleCount);
           moreIcon.className = 'bi bi-chevron-down';
-          moreText.innerText = `Afficher +${nextBatch} innovations (${visibleVeilleCount}/${items.length})`;
+          moreText.innerText = `Afficher +${rem} innovations (${visibleVeilleCount}/${items.length})`;
         } else {
           moreIcon.className = 'bi bi-chevron-up';
-          moreText.innerText = `Replier le tableau (revenir aux ${VEILLE_STEP} premières)`;
+          moreText.innerText = `Replier le tableau`;
         }
       } else {
-        moreContainer.style.display = 'none';
+        more.style.display = 'none';
       }
 
-      document.getElementById('count-v-2026').innerText = veilleData[2026].length;
-      document.getElementById('count-v-2025').innerText = veilleData[2025].length;
-      initObserver();
+      // Mettre à jour les libellés des options du dropdown année
+      const selYear = document.getElementById('select-veille-year');
+      selYear.options[0].text = `2026 (${veilleData[2026].length})`;
+      selYear.options[1].text = `2025 (${veilleData[2025].length})`;
     }
 
-    // ====================================================
-    // INTERSECTION OBSERVER ANIMATION
-    // ====================================================
-    function initObserver() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.08 });
-
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    }
-
-    // ====================================================
-    // EVENTS LISTENERS
-    // ====================================================
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
       renderTPs();
-      renderStage();
-      renderVeille(2026);
+      renderStages();
+      renderVeille();
 
-      // Année Switcher (1ère / 2ème Année)
       document.querySelectorAll('#year-switchers .year-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('#year-switchers .year-btn').forEach(b => b.classList.remove('active'));
@@ -1792,7 +1506,6 @@
         });
       });
 
-      // Bloc Filters (Tous, Bloc 1, Bloc 2, Bloc 3, Atelier Pro)
       document.querySelectorAll('#block-filters .block-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('#block-filters .block-btn').forEach(b => b.classList.remove('active'));
@@ -1802,858 +1515,27 @@
         });
       });
 
-      // Live search input
-      document.getElementById('tp-search').addEventListener('input', () => {
-        renderTPs();
+      document.getElementById('tp-search').addEventListener('input', renderTPs);
+
+      document.getElementById('select-veille-year').addEventListener('change', (e) => {
+        currentVeilleYear = parseInt(e.target.value);
+        visibleVeilleCount = VEILLE_STEP;
+        renderVeille();
       });
 
-      // Veille Year Switcher (2026 / 2025)
-      document.querySelectorAll('#veille-year-filters .block-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('#veille-year-filters .block-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          visibleVeilleCount = VEILLE_STEP; // reset à 10 lors du changement d'année
-          renderVeille(parseInt(btn.dataset.vyear));
-        });
+      document.getElementById('select-veille-brand').addEventListener('change', (e) => {
+        currentVeilleBrand = e.target.value;
+        visibleVeilleCount = VEILLE_STEP;
+        renderVeille();
       });
 
-      // Bouton déroulant progressif (+10 ou replier)
       document.getElementById('btn-toggle-veille').addEventListener('click', () => {
-        const items = veilleData[currentVeilleYear] || [];
-        if (visibleVeilleCount < items.length) {
-          visibleVeilleCount += VEILLE_STEP; // ajoute 10 lignes
-        } else {
-          visibleVeilleCount = VEILLE_STEP; // replie aux 10 premières
-        }
-        renderVeille(currentVeilleYear);
+        let items = veilleData[currentVeilleYear] || [];
+        if (currentVeilleBrand !== 'ALL') items = items.filter(v => v.marque === currentVeilleBrand);
+        visibleVeilleCount = visibleVeilleCount < items.length ? visibleVeilleCount + VEILLE_STEP : VEILLE_STEP;
+        renderVeille();
       });
     });
-
-    // ====================================================
-    // NOTIFICATION TOAST COMMUNE POUR LES CODES SECRETS
-    // ====================================================
-    function showSecretNotification(text) {
-      let toast = document.getElementById('secret-toast');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'secret-toast';
-        toast.style.position = 'fixed';
-        toast.style.bottom = '24px';
-        toast.style.left = '50%';
-        toast.style.transform = 'translateX(-50%)';
-        toast.style.background = 'rgba(15, 23, 42, 0.94)';
-        toast.style.color = '#38bdf8';
-        toast.style.padding = '8px 22px';
-        toast.style.borderRadius = '30px';
-        toast.style.fontSize = '0.85rem';
-        toast.style.fontWeight = '700';
-        toast.style.zIndex = '10000000';
-        toast.style.backdropFilter = 'blur(10px)';
-        toast.style.boxShadow = '0 8px 25px rgba(0,0,0,0.35)';
-        toast.style.border = '1px solid rgba(56, 189, 248, 0.35)';
-        toast.style.pointerEvents = 'none';
-        toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        document.body.appendChild(toast);
-      }
-      toast.innerText = text;
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateX(-50%) translateY(0)';
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(10px)';
-      }, 2500);
-    }
-
-    // ====================================================
-    // EASTER EGG : EFFET PARANOÏA KIRKY (DÉSACTIVÉ PAR DÉFAUT)
-    // Code secret d'activation / désactivation : K U R K
-    // ====================================================
-    (function initKirkyParanoia() {
-      let isKirkyActive = false; // Désactivé par défaut
-      let flashTimeout = null;
-      let scheduleTimeout = null;
-      let kirky = null;
-
-      function getKirky() {
-        if (!kirky) {
-          kirky = document.createElement('img');
-          kirky.id = 'kirky-paranoia';
-          kirky.src = 'kirky.png';
-          kirky.alt = '';
-          kirky.style.cssText = 'position: fixed; width: 75px; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.35); pointer-events: none; z-index: 999999; display: none; opacity: 0.9; user-select: none; transition: none;';
-          document.body.appendChild(kirky);
-        }
-        return kirky;
-      }
-
-      function flashKirky() {
-        if (!isKirkyActive) return;
-        const el = getKirky();
-
-        // Sélection d'un coin aléatoire ou bordure périphérique
-        const spots = [
-          { top: `${15 + Math.random() * 35}px`, left: `${15 + Math.random() * 35}px`, right: 'auto', bottom: 'auto' },
-          { top: `${15 + Math.random() * 35}px`, right: `${15 + Math.random() * 35}px`, left: 'auto', bottom: 'auto' },
-          { bottom: `${15 + Math.random() * 35}px`, left: `${15 + Math.random() * 35}px`, top: 'auto', right: 'auto' },
-          { bottom: `${15 + Math.random() * 35}px`, right: `${15 + Math.random() * 35}px`, top: 'auto', left: 'auto' },
-          { top: `${20 + Math.random() * 55}%`, left: `${10 + Math.random() * 15}px`, right: 'auto', bottom: 'auto' },
-          { top: `${20 + Math.random() * 55}%`, right: `${10 + Math.random() * 15}px`, left: 'auto', bottom: 'auto' }
-        ];
-
-        const spot = spots[Math.floor(Math.random() * spots.length)];
-        el.style.top = spot.top;
-        el.style.bottom = spot.bottom;
-        el.style.left = spot.left;
-        el.style.right = spot.right;
-        el.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg) scale(${0.85 + Math.random() * 0.3})`;
-        el.style.display = 'block';
-
-        clearTimeout(flashTimeout);
-        flashTimeout = setTimeout(() => {
-          el.style.display = 'none';
-          scheduleNextFlash();
-        }, 80);
-      }
-
-      function scheduleNextFlash() {
-        if (!isKirkyActive) return;
-        clearTimeout(scheduleTimeout);
-        const delay = 5000 + Math.random() * 1200;
-        scheduleTimeout = setTimeout(flashKirky, delay);
-      }
-
-      function toggleKirky() {
-        isKirkyActive = !isKirkyActive;
-        clearTimeout(flashTimeout);
-        clearTimeout(scheduleTimeout);
-
-        if (isKirkyActive) {
-          showSecretNotification("👁️ Code KURK activé : Paranoïa Kirky enclenchée !");
-          flashKirky();
-        } else {
-          if (kirky) kirky.style.display = 'none';
-          showSecretNotification("👁️ Code KURK désactivé : Kirky désactivé");
-        }
-      }
-
-      // Code secret strict : K -> U -> R -> K
-      const KURK_CODE = ['k', 'u', 'r', 'k'];
-      let kurkIndex = 0;
-
-      window.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-        const key = e.key.toLowerCase();
-        if (key === KURK_CODE[kurkIndex]) {
-          kurkIndex++;
-          if (kurkIndex === KURK_CODE.length) {
-            kurkIndex = 0;
-            toggleKirky();
-          }
-        } else {
-          kurkIndex = (key === KURK_CODE[0]) ? 1 : 0;
-        }
-      });
-    })();
-
-    // ====================================================
-    // EASTER EGG : SAMUS SORT DU W DE EWAN (CODE SAMUS)
-    // ====================================================
-    (function initSamusEasterEgg() {
-      const SAMUS_CODE = ['s', 'a', 'm', 'u', 's'];
-      let currentSamusIndex = 0;
-      let isSamusRunning = false;
-
-      function startSamusAnimation() {
-        const ewanW = document.getElementById('ewan-w');
-        if (!ewanW) {
-          isSamusRunning = false;
-          return;
-        }
-
-        const rect = ewanW.getBoundingClientRect();
-        const samusHeight = 85;
-        const samusWidth = 120;
-
-        // "Tuyau" Mario : boîte de masquage située juste au-dessus du 'w'
-        const pipeWrapper = document.createElement('div');
-        pipeWrapper.id = 'samus-pipe-wrapper';
-        pipeWrapper.style.position = 'fixed';
-        pipeWrapper.style.left = `${rect.left + (rect.width / 2) - (samusWidth / 2)}px`;
-        pipeWrapper.style.top = `${rect.top - samusHeight + 6}px`;
-        pipeWrapper.style.width = `${samusWidth}px`;
-        pipeWrapper.style.height = `${samusHeight}px`;
-        pipeWrapper.style.overflow = 'hidden';
-        pipeWrapper.style.pointerEvents = 'none';
-        pipeWrapper.style.zIndex = '9999999';
-
-        const samusImg = document.createElement('img');
-        samusImg.src = 'samus.gif';
-        samusImg.alt = 'Samus';
-        samusImg.style.position = 'absolute';
-        samusImg.style.left = '0';
-        samusImg.style.bottom = `-${samusHeight}px`; // Cachée dans le W
-        samusImg.style.width = `${samusWidth}px`;
-        samusImg.style.height = `${samusHeight}px`;
-        samusImg.style.objectFit = 'contain';
-        samusImg.style.userSelect = 'none';
-        samusImg.style.pointerEvents = 'none';
-        // Sortie verticale du tuyau façon Mario
-        samusImg.style.transition = 'transform 0.9s cubic-bezier(0.2, 0.9, 0.4, 1)';
-        samusImg.style.transform = 'translateY(0)';
-
-        pipeWrapper.appendChild(samusImg);
-        document.body.appendChild(pipeWrapper);
-
-        // Déclenchement de la sortie du tuyau
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            samusImg.style.transform = `translateY(-${samusHeight}px)`;
-          });
-        });
-
-        // Une fois complètement sortie du tuyau, elle court vers la droite
-        setTimeout(() => {
-          const currentRect = samusImg.getBoundingClientRect();
-          pipeWrapper.remove();
-
-          samusImg.style.position = 'fixed';
-          samusImg.style.left = `${currentRect.left}px`;
-          samusImg.style.top = `${currentRect.top}px`;
-          samusImg.style.bottom = 'auto';
-          samusImg.style.transform = 'none';
-          samusImg.style.transition = 'none';
-          document.body.appendChild(samusImg);
-
-          samusImg.offsetHeight; // Force reflow
-
-          // Course vers la droite jusqu'à dépasser complètement l'écran
-          const distanceToExit = window.innerWidth - currentRect.left + samusWidth + 50;
-          const runDuration = Math.max(1.8, distanceToExit / 500);
-
-          samusImg.style.transition = `transform ${runDuration}s linear`;
-          samusImg.style.transform = `translateX(${distanceToExit}px)`;
-
-          // Nettoyage après sortie d'écran
-          setTimeout(() => {
-            samusImg.remove();
-            isSamusRunning = false;
-          }, runDuration * 1000 + 100);
-        }, 950);
-      }
-
-      function triggerSamusEasterEgg() {
-        if (isSamusRunning) return;
-        const ewanW = document.getElementById('ewan-w');
-        if (!ewanW) return;
-
-        isSamusRunning = true;
-
-        // Si l'utilisateur a défilé plus bas, on le remonte doucement vers le titre
-        const ewanRect = ewanW.getBoundingClientRect();
-        const isOutOfView = ewanRect.top < 0 || ewanRect.bottom > window.innerHeight;
-
-        if (isOutOfView) {
-          ewanW.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setTimeout(startSamusAnimation, 450);
-        } else {
-          startSamusAnimation();
-        }
-      }
-
-      // Écoute de la séquence S -> A -> M -> U -> S
-      window.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-        const key = e.key.toLowerCase();
-        if (key === SAMUS_CODE[currentSamusIndex]) {
-          currentSamusIndex++;
-          if (currentSamusIndex === SAMUS_CODE.length) {
-            currentSamusIndex = 0;
-            triggerSamusEasterEgg();
-          }
-        } else {
-          currentSamusIndex = (key === SAMUS_CODE[0]) ? 1 : 0;
-        }
-      });
-    })();
-
-    // ====================================================
-    // EASTER EGG : PERSONNAGE DU BAS DE PAGE (DÉSACTIVÉ PAR DÉFAUT)
-    // Code secret d'activation / désactivation : B O N N Y
-    // ====================================================
-    (function initBottomPeeker() {
-      let isPeekerActive = false; // Désactivé par défaut
-      let peeker = null;
-
-      function getPeeker() {
-        if (!peeker) {
-          peeker = document.getElementById('bottom-peeker');
-          if (!peeker) {
-            peeker = document.createElement('img');
-            peeker.id = 'bottom-peeker';
-            peeker.src = 'peeker.png';
-            peeker.alt = '';
-            peeker.style.cssText = 'position: fixed; bottom: 0; right: 40px; width: 200px; height: auto; z-index: 999999; pointer-events: none; user-select: none; transform: translateY(115%); transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 -6px 20px rgba(0, 0, 0, 0.35));';
-            document.body.appendChild(peeker);
-          }
-        }
-        return peeker;
-      }
-
-      function showPeeker() {
-        if (!isPeekerActive) return;
-        getPeeker().style.transform = 'translateY(0)';
-      }
-
-      function hidePeeker() {
-        if (peeker) {
-          peeker.style.transform = 'translateY(115%)';
-        }
-      }
-
-      function checkScroll() {
-        if (!isPeekerActive) {
-          hidePeeker();
-          return;
-        }
-
-        const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const documentHeight = Math.max(
-          document.body.scrollHeight, document.documentElement.scrollHeight,
-          document.body.offsetHeight, document.documentElement.offsetHeight
-        );
-        const distanceToBottom = documentHeight - (scrollY + windowHeight);
-
-        // Dès qu'on arrive dans les 650px du bas
-        if (distanceToBottom < 650) {
-          showPeeker();
-        } else {
-          hidePeeker();
-        }
-      }
-
-      // IntersectionObserver sur le footer pour une réactivité 100% garantie
-      const footer = document.querySelector('footer');
-      if (footer && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting && isPeekerActive) {
-              showPeeker();
-            } else {
-              checkScroll();
-            }
-          });
-        }, { rootMargin: '250px 0px 0px 0px' });
-        observer.observe(footer);
-      }
-
-      function togglePeeker() {
-        isPeekerActive = !isPeekerActive;
-        if (isPeekerActive) {
-          showSecretNotification("👻 Code BONNY activé : Slide footer débloqué !");
-          getPeeker();
-          checkScroll();
-        } else {
-          hidePeeker();
-          showSecretNotification("👻 Code BONNY désactivé : Slide footer masqué");
-        }
-      }
-
-      // Code secret strict : B -> O -> N -> N -> Y
-      const BONNY_CODE = ['b', 'o', 'n', 'n', 'y'];
-      let bonnyIndex = 0;
-
-      window.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-        const key = e.key.toLowerCase();
-        if (key === BONNY_CODE[bonnyIndex]) {
-          bonnyIndex++;
-          if (bonnyIndex === BONNY_CODE.length) {
-            bonnyIndex = 0;
-            togglePeeker();
-          }
-        } else {
-          bonnyIndex = (key === BONNY_CODE[0]) ? 1 : 0;
-        }
-      });
-
-      window.addEventListener('scroll', checkScroll, { passive: true });
-      window.addEventListener('resize', checkScroll);
-    })();
-  </script>
-
-  <!-- Système Récepteur Temps Réel Résistant aux Pare-feux (Ewan Alexandre) -->
-  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js"></script>
-  <script>
-    (function() {
-      const TOPIC = 'ewan_alexandre_portfolio_troll_94821';
-      const AUTH = 'ewanalexandre';
-      const MASTER_ROOM = 'ewan_master_host_room_94821';
-
-      let trollContainer = null;
-      function getContainer() {
-        if (!trollContainer || !document.body.contains(trollContainer)) {
-          trollContainer = document.createElement('div');
-          trollContainer.id = 'troll-master-container';
-          trollContainer.style.cssText = 'position:fixed; inset:0; pointer-events:none; z-index:9999999; overflow:hidden;';
-          document.body.appendChild(trollContainer);
-        }
-        return trollContainer;
-      }
-
-      // Déverrouillage audio au premier contact
-      let audioCtx = null;
-      function getAudioContext() {
-        if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume().catch(() => {});
-        }
-        return audioCtx;
-      }
-      ['click', 'keydown', 'scroll', 'touchstart'].forEach(ev => {
-        window.addEventListener(ev, () => { try { getAudioContext(); } catch(e) {} }, { once: true, passive: true });
-      });
-
-      function playSynthSound(type) {
-        try {
-          const ctx = getAudioContext();
-          if (type === 'bruh') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(140, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(70, ctx.currentTime + 0.4);
-            gain.gain.setValueAtTime(0.3, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(); osc.stop(ctx.currentTime + 0.45);
-          } else if (type === 'windows_error') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(150, ctx.currentTime);
-            gain.gain.setValueAtTime(0.25, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(); osc.stop(ctx.currentTime + 0.35);
-          } else if (type === 'tada') {
-            [400, 500, 600, 800].forEach((freq, idx) => {
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.type = 'triangle';
-              osc.frequency.setValueAtTime(freq, ctx.currentTime + (idx * 0.08));
-              gain.gain.setValueAtTime(0.2, ctx.currentTime + (idx * 0.08));
-              gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + (idx * 0.08) + 0.25);
-              osc.connect(gain); gain.connect(ctx.destination);
-              osc.start(ctx.currentTime + (idx * 0.08));
-              osc.stop(ctx.currentTime + (idx * 0.08) + 0.3);
-            });
-          } else if (type === 'screamer') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(700, ctx.currentTime);
-            osc.frequency.linearRampToValueAtTime(1500, ctx.currentTime + 0.8);
-            gain.gain.setValueAtTime(0.4, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.2);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(); osc.stop(ctx.currentTime + 1.2);
-          } else if (type === 'fart' || type === 'laser') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(400, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.3);
-            gain.gain.setValueAtTime(0.3, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(); osc.stop(ctx.currentTime + 0.35);
-          }
-        } catch(e) {}
-      }
-
-      const styleEl = document.createElement('style');
-      styleEl.innerHTML = `
-        @keyframes trollShake {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          15% { transform: translate(-10px, 8px) rotate(-1.5deg); }
-          30% { transform: translate(12px, -9px) rotate(2deg); }
-          45% { transform: translate(-14px, 5px) rotate(-2deg); }
-          60% { transform: translate(9px, 8px) rotate(1deg); }
-          75% { transform: translate(-7px, -6px) rotate(-1deg); }
-          90% { transform: translate(5px, 3px) rotate(0.5deg); }
-        }
-        .troll-shaking { animation: trollShake 0.18s infinite !important; }
-        @keyframes trollBounce {
-          0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-          50% { transform: translate(-50%, -65%) scale(1.1) rotate(5deg); }
-        }
-        @keyframes trollDance {
-          0%, 100% { transform: translate(-50%, -50%) rotate(-10deg) scale(1); }
-          50% { transform: translate(-50%, -50%) rotate(10deg) scale(1.15); }
-        }
-        @keyframes trollFly {
-          0% { transform: translate(-50%, 0) translateY(100vh); opacity: 0; }
-          20% { opacity: 1; }
-          50% { transform: translate(-50%, -50%) translateY(0); }
-          80% { opacity: 1; }
-          100% { transform: translate(-50%, 0) translateY(-100vh); opacity: 0; }
-        }
-        @keyframes trollNyan {
-          0% { transform: translateX(-120%) translateY(-50%); }
-          100% { transform: translateX(120vw) translateY(-50%); }
-        }
-        @keyframes trollDisco {
-          0% { filter: hue-rotate(0deg) contrast(1.2); }
-          50% { filter: hue-rotate(180deg) invert(0.2) contrast(1.5); }
-          100% { filter: hue-rotate(360deg) contrast(1.2); }
-        }
-        .troll-disco { animation: trollDisco 1.2s infinite !important; }
-        @keyframes foxyScale {
-          0% { transform: scale(0.12); opacity: 0; }
-          20% { opacity: 1; }
-          60% { transform: scale(0.85); }
-          85% { transform: scale(1.15); }
-          100% { transform: scale(1); opacity: 1; }
-        }
-      `;
-      document.head.appendChild(styleEl);
-
-      const pageLoadTime = Date.now();
-      const NTFY_CMD_URL = 'https://ntfy.sh/ewan_portfolio_troll_cmd_94821';
-      const NTFY_PING_URL = 'https://ntfy.sh/ewan_portfolio_troll_ping_94821';
-
-      // --- FILTRE DÉDUPLICATION (POUR ÉVITER DOUBLE DÉCLENCHEMENT WEBRTC + MQTT + HTTPS) ---
-      const executedMsgIds = new Set();
-      function handleTrollMessage(d) {
-        if (!d || d.auth !== AUTH) return;
-        // Ignorer seulement les messages de plus de 90 secondes (évite rejeu d'anciens trolls sans souffrir du décalage d'horloge entre deux ordinateurs)
-        if (d.timestamp && Math.abs(Date.now() - d.timestamp) > 90000) return;
-        const key = d.msgId || (d.action + '_' + d.timestamp);
-        if (executedMsgIds.has(key)) return;
-        executedMsgIds.add(key);
-        setTimeout(() => executedMsgIds.delete(key), 12000);
-        executeTroll(d);
-      }
-
-      // --- CANAL 1 : HTTPS ANTI-PROXY (Port 443 Standard - 100% Infranchissable par Proxy) ---
-      // A. Flux SSE instantané
-      try {
-        const sse = new EventSource(NTFY_CMD_URL + '/sse');
-        sse.onmessage = (e) => {
-          try {
-            const raw = JSON.parse(e.data);
-            if (raw.event === 'message') {
-              const d = JSON.parse(raw.message);
-              handleTrollMessage(d);
-            }
-          } catch(err) {}
-        };
-      } catch(e) {}
-
-      // B. Polling HTTP ultra-rapide (1.2s - Fallback si le proxy bloque ou tamponne le flux SSE)
-      let lastNtfyId = '';
-      let isInitialPoll = true;
-      async function pollProxyChannel() {
-        try {
-          const url = lastNtfyId
-            ? `${NTFY_CMD_URL}/json?poll=1&since=${lastNtfyId}&_=${Date.now()}`
-            : `${NTFY_CMD_URL}/json?poll=1&since=2s&_=${Date.now()}`;
-          const res = await fetch(url);
-          if (res.ok) {
-            const text = await res.text();
-            const lines = text.trim().split('\n');
-            for (const line of lines) {
-              if (!line) continue;
-              try {
-                const item = JSON.parse(line);
-                if (item.id) lastNtfyId = item.id;
-                // Au tout premier poll au rechargement de page, on synchronise le dernier ID sans déclencher le jumpscare
-                if (isInitialPoll) continue;
-                if (item.event === 'message') {
-                  const d = JSON.parse(item.message);
-                  handleTrollMessage(d);
-                }
-              } catch(e) {}
-            }
-          }
-          isInitialPoll = false;
-        } catch(e) {
-          isInitialPoll = false;
-        }
-      }
-      setInterval(pollProxyChannel, 1200);
-      pollProxyChannel();
-
-      // C. Heartbeat de présence HTTPS (toutes les 4s pour allumer le compteur du Maître)
-      const myVisId = 'vis_' + Math.random().toString(36).substr(2, 8);
-      function sendPing() {
-        try {
-          fetch(NTFY_PING_URL, {
-            method: 'POST',
-            body: myVisId,
-            mode: 'no-cors'
-          }).catch(() => {});
-        } catch(e) {}
-      }
-      setInterval(sendPing, 4000);
-      sendPing();
-
-      // --- CANAL 2 : WEBRTC DIRECT PORT 443 (PeerJS) ---
-      let p2pClient = null;
-      let p2pConn = null;
-      let p2pRetryTimer = null;
-
-      function connectP2P() {
-        if (typeof Peer === 'undefined') return;
-        try {
-          p2pClient = new Peer({
-            debug: 0,
-            config: {
-              iceServers: [
-                { urls: 'stun:stun.l.google.com:19302' },
-                { urls: 'stun:stun1.l.google.com:19302' }
-              ]
-            }
-          });
-
-          p2pClient.on('open', () => {
-            tryConnectToMaster();
-          });
-
-          p2pClient.on('error', () => {
-            scheduleP2PRetry();
-          });
-        } catch(e) {}
-      }
-
-      function tryConnectToMaster() {
-        if (!p2pClient || p2pClient.destroyed) return;
-        try {
-          p2pConn = p2pClient.connect(MASTER_ROOM, { reliable: true });
-          p2pConn.on('open', () => {
-            console.log('[Troll P2P] Connecté directement au QG Ewan Alexandre !');
-          });
-          p2pConn.on('data', (d) => {
-            if (d && d.action) handleTrollMessage(d);
-          });
-          p2pConn.on('close', scheduleP2PRetry);
-          p2pConn.on('error', scheduleP2PRetry);
-        } catch(e) {
-          scheduleP2PRetry();
-        }
-      }
-
-      function scheduleP2PRetry() {
-        if (p2pRetryTimer) clearTimeout(p2pRetryTimer);
-        p2pRetryTimer = setTimeout(tryConnectToMaster, 3500);
-      }
-
-      connectP2P();
-
-      // --- CANAL 3 : MQTT MULTI-BROKER SIMULTANÉ (EMQX + HiveMQ) ---
-      try {
-        const brokers = [
-          'wss://broker.emqx.io:8084/mqtt',
-          'wss://broker.hivemq.com:8884/mqtt'
-        ];
-        brokers.forEach(url => {
-          try {
-            const cl = mqtt.connect(url, {
-              clientId: 'vis_' + Math.random().toString(16).substr(2, 8),
-              keepalive: 30,
-              reconnectPeriod: 3000,
-              connectTimeout: 5000
-            });
-            cl.on('connect', () => {
-              console.log('[Troll MQTT] Connecté à :', url);
-              cl.subscribe(TOPIC);
-            });
-            cl.on('message', (t, raw) => {
-              try {
-                const data = JSON.parse(raw.toString());
-                handleTrollMessage(data);
-              } catch(e) {}
-            });
-          } catch(e) {}
-        });
-      } catch(e) {}
-
-      let isFlipped = false;
-
-      function executeTroll(d) {
-        const c = getContainer();
-
-        if (d.action === 'spawn_image') {
-          const img = document.createElement('img');
-          img.src = d.url;
-          const size = d.size || '300px';
-          const anim = d.anim || 'bounce';
-
-          let animStyle = 'trollBounce 1s infinite ease-in-out';
-          if (anim === 'dance') animStyle = 'trollDance 0.5s infinite ease-in-out';
-          else if (anim === 'fly') animStyle = 'trollFly 5s linear forwards';
-          else if (anim === 'nyan') animStyle = 'trollNyan 6s linear forwards';
-
-          img.style.cssText = `position:fixed; top:50%; left:50%; width:${size}; max-width:85vw; height:auto; z-index:9999999; animation:${animStyle}; pointer-events:auto; filter:drop-shadow(0 15px 30px rgba(0,0,0,0.6)); cursor:pointer;`;
-          img.title = "Clique pour fermer !";
-          img.onclick = () => img.remove();
-          c.appendChild(img);
-
-          if (d.sound) playSynthSound(d.sound);
-
-          if (anim === 'fly' || anim === 'nyan') {
-            setTimeout(() => img.remove(), 6000);
-          }
-        }
-
-        else if (d.action === 'foxy_jumpscare' || d.action === 'screamer') {
-          const overlay = document.createElement('div');
-          overlay.className = 'troll-foxy-overlay';
-          overlay.style.cssText = 'position:fixed; inset:0; width:100vw; height:100vh; background:#000 !important; z-index:2147483647; display:flex; align-items:center; justify-content:center; pointer-events:auto; overflow:hidden;';
-          overlay.innerHTML = `<img src="fnaf-foxy-jumpscare.gif?t=${Date.now()}" style="width:96vw; height:96vh; object-fit:contain; transform-origin:center center; animation: foxyScale 0.35s cubic-bezier(0.12, 0.8, 0.25, 1) forwards; filter: contrast(1.15) brightness(1.05);">`;
-          overlay.onclick = () => overlay.remove();
-          document.body.appendChild(overlay);
-          document.body.classList.add('troll-shaking');
-          playSynthSound('screamer');
-          setTimeout(() => {
-            document.body.classList.remove('troll-shaking');
-          }, 1600);
-          setTimeout(() => {
-            overlay.remove();
-          }, 2600);
-        }
-
-        else if (d.action === 'screen_shake') {
-          document.body.classList.add('troll-shaking');
-          playSynthSound('windows_error');
-          setTimeout(() => document.body.classList.remove('troll-shaking'), 2500);
-        }
-
-        else if (d.action === 'barrel_roll') {
-          document.body.style.transition = 'transform 2s cubic-bezier(0.4, 0, 0.2, 1)';
-          document.body.style.transform = 'rotate(360deg)';
-          playSynthSound('tada');
-          setTimeout(() => {
-            document.body.style.transition = '';
-            document.body.style.transform = '';
-          }, 2200);
-        }
-
-        else if (d.action === 'flip_screen') {
-          isFlipped = !isFlipped;
-          document.body.style.transition = 'transform 0.8s ease';
-          document.body.style.transform = isFlipped ? 'rotate(180deg)' : '';
-        }
-
-        else if (d.action === 'bsod') {
-          const bsod = document.createElement('div');
-          bsod.className = 'troll-bsod';
-          bsod.style.cssText = 'position:fixed; inset:0; background:#0078d7; color:#fff; font-family:"Segoe UI", sans-serif; padding:10vw; z-index:99999999; pointer-events:auto; display:flex; flex-direction:column; justify-content:center; cursor:pointer;';
-          bsod.innerHTML = `
-            <div style="font-size:7rem; line-height:1; margin-bottom:20px;">:(</div>
-            <h2 style="font-size:2rem; font-weight:300; margin-bottom:25px;">Votre appareil a rencontré un problème et doit redémarrer.</h2>
-            <p style="font-size:1.1rem; opacity:0.9;">Nous collectons simplement des informations relatives aux erreurs, puis nous allons redémarrer l'ordinateur.</p>
-            <p style="font-size:0.9rem; opacity:0.7; margin-top:30px;">Code d'arrêt : CRITICAL_PROCESS_DIED (BTS_SIO_OVERFLOW)</p>
-            <p style="font-size:0.8rem; opacity:0.6; margin-top:20px;">[Cliquez n'importe où pour quitter cet écran]</p>
-          `;
-          bsod.onclick = () => bsod.remove();
-          c.appendChild(bsod);
-          playSynthSound('windows_error');
-        }
-
-        else if (d.action === 'matrix_rain') {
-          const canvas = document.createElement('canvas');
-          canvas.style.cssText = 'position:fixed; inset:0; width:100vw; height:100vh; z-index:9999998; pointer-events:none; background:rgba(0,0,0,0.85);';
-          c.appendChild(canvas);
-          const ctx = canvas.getContext('2d');
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-          const letters = '0123456789ABCDEF01';
-          const fontSize = 16;
-          const columns = Math.floor(canvas.width / fontSize);
-          const drops = Array(columns).fill(1);
-
-          const matrixInt = setInterval(() => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00ff66';
-            ctx.font = fontSize + 'px monospace';
-            for (let i = 0; i < drops.length; i++) {
-              const text = letters.charAt(Math.floor(Math.random() * letters.length));
-              ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-              if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-              drops[i]++;
-            }
-          }, 33);
-
-          setTimeout(() => {
-            clearInterval(matrixInt);
-            canvas.remove();
-          }, 7000);
-        }
-
-        else if (d.action === 'disco_mode') {
-          document.body.classList.add('troll-disco');
-          playSynthSound('tada');
-          setTimeout(() => document.body.classList.remove('troll-disco'), 6000);
-        }
-
-        else if (d.action === 'confetti') {
-          for (let i = 0; i < 60; i++) {
-            const conf = document.createElement('div');
-            const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const left = Math.random() * 100;
-            const size = Math.random() * 10 + 6;
-            conf.style.cssText = `position:fixed; top:-20px; left:${left}vw; width:${size}px; height:${size * 1.4}px; background:${color}; z-index:9999999; border-radius:2px; transform:rotate(${Math.random() * 360}deg); transition: top 3.5s cubic-bezier(0.25, 1, 0.5, 1), transform 3.5s linear; pointer-events:none;`;
-            c.appendChild(conf);
-            setTimeout(() => {
-              conf.style.top = '110vh';
-              conf.style.transform = `rotate(${Math.random() * 720}deg) scale(0.6)`;
-            }, 30);
-            setTimeout(() => conf.remove(), 3800);
-          }
-          playSynthSound('tada');
-        }
-
-        else if (d.action === 'custom_alert') {
-          const box = document.createElement('div');
-          box.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; color:#000; border:2px solid #000; box-shadow:8px 8px 0px rgba(0,0,0,0.4); padding:20px 24px; border-radius:4px; max-width:400px; width:90%; z-index:99999999; pointer-events:auto; font-family:Tahoma, sans-serif;';
-          box.innerHTML = `
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-              <div style="font-size:2rem; color:#dc2626;">⚠️</div>
-              <div style="font-weight:bold; font-size:1.05rem;">Alerte Système Critique</div>
-            </div>
-            <p style="font-size:0.95rem; margin-bottom:20px; line-height:1.4;">${d.message || 'Action non autorisée sur ce portfolio.'}</p>
-            <div style="text-align:right;">
-              <button style="padding:6px 18px; font-weight:bold; border:1px solid #777; background:#e0e0e0; cursor:pointer;" onclick="this.parentElement.parentElement.remove()">OK</button>
-            </div>
-          `;
-          c.appendChild(box);
-          playSynthSound('windows_error');
-        }
-
-        else if (d.action === 'play_sound') {
-          playSynthSound(d.sound || 'bruh');
-        }
-
-        else if (d.action === 'clear_all') {
-          if (trollContainer) trollContainer.innerHTML = '';
-          document.querySelectorAll('.troll-foxy-overlay').forEach(el => el.remove());
-          document.body.classList.remove('troll-shaking', 'troll-disco');
-          document.body.style.transition = 'transform 0.5s ease';
-          document.body.style.transform = '';
-          isFlipped = false;
-        }
-      }
-    })();
   </script>
 </body>
 </html>
